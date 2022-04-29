@@ -49,10 +49,10 @@ const StyledNavbarButton = styled(NavLink)({
     height: '100%',
   },
 
-  '&.active:after, &.active:before': {
-    width: '100%',
-    height: '100%',
-  },
+  // '&.active:after, &.active:before': {
+  //   width: '70%',
+  //   height: '70%',
+  // },
 });
 
 export default StyledNavbarButton;

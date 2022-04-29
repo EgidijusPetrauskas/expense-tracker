@@ -18,12 +18,12 @@ const NavBar: React.FC = () => (
       }}
     >
       <StyledNavbarButton to="/">Home</StyledNavbarButton>
-      <StyledNavbarButton to="/">About</StyledNavbarButton>
+      <StyledNavbarButton to="/about">About</StyledNavbarButton>
       <Typography>
         Logo
       </Typography>
-      <StyledNavbarButton to="/">Register</StyledNavbarButton>
-      <StyledNavbarButton to="/">Sign In</StyledNavbarButton>
+      <StyledNavbarButton to="/register">Register</StyledNavbarButton>
+      <StyledNavbarButton to="/signin">Sign In</StyledNavbarButton>
     </Toolbar>
   </AppBar>
 );
