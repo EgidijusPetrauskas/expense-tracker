@@ -1,8 +1,10 @@
 import React from 'react';
 
 import {
-  AppBar, Toolbar, Box, Link,
+  AppBar, Toolbar, Typography,
 } from '@mui/material';
+
+import StyledNavbarButton from './navbar-styles';
 
 const NavBar: React.FC = () => (
   <AppBar
@@ -15,29 +17,13 @@ const NavBar: React.FC = () => (
         justifyContent: 'space-around',
       }}
     >
-      <Box
-        sx={{
-          width: 1 / 5,
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
-        <Link color="secondary" href="/">Yas</Link>
-        <Link color="secondary" href="/">Yas</Link>
-      </Box>
-      <Box>
+      <StyledNavbarButton to="/">Home</StyledNavbarButton>
+      <StyledNavbarButton to="/">About</StyledNavbarButton>
+      <Typography>
         Logo
-      </Box>
-      <Box
-        sx={{
-          width: 1 / 4,
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
-        <Link color="secondary" href="/">Yas</Link>
-        <Link color="secondary" href="/">Yas</Link>
-      </Box>
+      </Typography>
+      <StyledNavbarButton to="/">Register</StyledNavbarButton>
+      <StyledNavbarButton to="/">Sign In</StyledNavbarButton>
     </Toolbar>
   </AppBar>
 );
