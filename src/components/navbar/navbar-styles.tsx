@@ -4,14 +4,15 @@ import { NavLink } from 'react-router-dom';
 
 const StyledNavbarButton = styled(NavLink)({
   position: 'relative',
-  padding: '0.5em 1em',
+  padding: '0.5em 1.1em',
   border: 'none',
   backgroundColor: 'transparent',
   cursor: 'pointer',
   outline: 'none',
   textDecoration: 'none',
   fontSize: 17,
-  margin: '1em 0.8em',
+  maxHeight: 42.5,
+  minWidth: 86,
   color: 'white',
   // change color
   '&::after, &::before': {
