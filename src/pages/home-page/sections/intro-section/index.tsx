@@ -14,9 +14,7 @@ const IntroSection: React.FC = () => (
       backgroundPosition: 'center',
       backgroundSize: 'cover',
     }}
-  >
-    <Box>Yas</Box>
-  </Box>
+  />
 );
 
 export default IntroSection;
