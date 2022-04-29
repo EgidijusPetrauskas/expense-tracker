@@ -1,7 +1,8 @@
 import React from 'react';
+import IntroSection from './sections/intro-section/index';
 
 const HomePage: React.FC = () => (
-  <div>HomePage</div>
+  <IntroSection />
 );
 
 export default HomePage;
