@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {
-  AppBar, Toolbar, Typography,
+  AppBar, Container, Typography,
 } from '@mui/material';
 
 import StyledNavbarButton from './navbar-styles';
@@ -9,13 +9,10 @@ import StyledNavbarButton from './navbar-styles';
 const NavBar: React.FC = () => (
   <AppBar
     color="transparent"
-    sx={{ alignItems: 'center' }}
+    sx={{ alignItems: 'center', boxShadow: 'none' }}
   >
-    <Toolbar
-      sx={{
-        width: 2 / 3,
-        justifyContent: 'space-around',
-      }}
+    <Container
+      sx={(theme) => theme.mixins.navbar}
     >
       <StyledNavbarButton to="/">Home</StyledNavbarButton>
       <StyledNavbarButton to="/about">About</StyledNavbarButton>
@@ -24,7 +21,7 @@ const NavBar: React.FC = () => (
       </Typography>
       <StyledNavbarButton to="/register">Register</StyledNavbarButton>
       <StyledNavbarButton to="/signin">Sign In</StyledNavbarButton>
-    </Toolbar>
+    </Container>
   </AppBar>
 );
 
