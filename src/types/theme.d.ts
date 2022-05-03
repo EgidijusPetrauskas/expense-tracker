@@ -5,3 +5,13 @@ declare module '@mui/material/styles/createMixins' {
     navbar: CSSProperties;
   }
 }
+
+declare module '@mui/material/styles/createPalette' {
+  interface PaletteOptions {
+    myBlack?: PaletteColorOptions;
+  }
+
+  interface Palette {
+    myBlack: PaletteColor;
+  }
+}

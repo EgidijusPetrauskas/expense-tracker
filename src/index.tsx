@@ -5,11 +5,11 @@ import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@emotion/react';
 import App from './app';
 
-import theme from './styles/theme';
+import customTheme from './styles/theme';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={customTheme}>
       <CssBaseline />
       <App />
     </ThemeProvider>
