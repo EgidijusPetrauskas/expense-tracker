@@ -5,8 +5,8 @@ const theme: Theme = createTheme();
 const customTheme: Theme = createTheme({
   palette: {
     primary: {
-      main: '#66FCF10',
-      dark: '#C5C6C7',
+      main: '#66FCF1',
+      light: '#C5C6C7',
     },
 
     secondary: {
@@ -29,8 +29,8 @@ const customTheme: Theme = createTheme({
       display: 'flex',
       justifyContent: 'space-around',
       alignItems: 'center',
-      minHeight: 65,
-      pt: 2,
+      minHeight: 75,
+      pt: 3,
       [theme.breakpoints.down('md')]: {
         width: 1,
       },

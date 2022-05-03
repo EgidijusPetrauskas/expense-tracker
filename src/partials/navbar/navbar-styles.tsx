@@ -2,7 +2,7 @@ import { styled } from '@mui/material';
 
 import { NavLink } from 'react-router-dom';
 
-const StyledNavbarButton = styled(NavLink)({
+const StyledNavbarButton = styled(NavLink)(({ theme }) => ({
   position: 'relative',
   padding: '0.5em 1.1em',
   border: 'none',
@@ -13,8 +13,7 @@ const StyledNavbarButton = styled(NavLink)({
   fontSize: 17,
   maxHeight: 42.5,
   minWidth: 86,
-  color: 'white',
-  // change color
+  color: theme.palette.primary.light,
   '&::after, &::before': {
     content: '""',
     display: 'block',
@@ -31,28 +30,24 @@ const StyledNavbarButton = styled(NavLink)({
     right: 0,
     borderTopColor: 'transparent',
     borderLeftColor: 'transparent',
-    borderBottomColor: 'white',
-    borderRightColor: 'white',
-    // change color
+    borderBottomColor: theme.palette.primary.main,
+    borderRightColor: theme.palette.primary.main,
   },
   '&::before': {
     top: 0,
     left: 0,
     borderBottomColor: 'transparent',
     borderRightColor: 'transparent',
-    borderTopColor: 'white',
-    borderLeftColor: 'white',
-    // change color
+    borderTopColor: theme.palette.primary.main,
+    borderLeftColor: theme.palette.primary.main,
   },
   '&:hover:after, &:hover:before': {
     width: '100%',
     height: '100%',
   },
-
-  // '&.active:after, &.active:before': {
-  //   width: '70%',
-  //   height: '70%',
-  // },
-});
+  '&:hover': {
+    color: theme.palette.common.white,
+  },
+}));
 
 export default StyledNavbarButton;

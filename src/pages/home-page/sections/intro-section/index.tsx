@@ -13,6 +13,7 @@ const IntroSection: React.FC = () => (
       backgroundImage: `url(${Image})`,
       backgroundPosition: 'center',
       backgroundSize: 'cover',
+      boxShadow: 'inset 5px -60px 90px 30px #0B0C10',
     }}
   />
 );
