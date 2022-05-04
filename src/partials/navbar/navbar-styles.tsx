@@ -21,8 +21,6 @@ const StyledNavbarButton = styled(NavLink)(({ theme }) => ({
     width: '20%',
     height: '20%',
     border: '2px solid',
-    transition: 'all 0.6s ease',
-    // change transition
     borderRadius: 2,
   },
   '&::after': {
@@ -30,6 +28,8 @@ const StyledNavbarButton = styled(NavLink)(({ theme }) => ({
     right: 0,
     borderTopColor: 'transparent',
     borderLeftColor: 'transparent',
+    transition: theme.transitions.create(['all'], { duration: theme.transitions.duration.complex }),
+
     borderBottomColor: theme.palette.primary.main,
     borderRightColor: theme.palette.primary.main,
   },
@@ -38,6 +38,8 @@ const StyledNavbarButton = styled(NavLink)(({ theme }) => ({
     left: 0,
     borderBottomColor: 'transparent',
     borderRightColor: 'transparent',
+    transition: theme.transitions.create(['all'], { duration: theme.transitions.duration.complex }),
+
     borderTopColor: theme.palette.primary.main,
     borderLeftColor: theme.palette.primary.main,
   },

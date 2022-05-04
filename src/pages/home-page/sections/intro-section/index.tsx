@@ -9,7 +9,7 @@ const IntroSection: React.FC = () => (
     component="main"
     sx={{
       width: 1,
-      height: 850,
+      height: '100vh',
       backgroundImage: `url(${Image})`,
       backgroundPosition: 'center',
       backgroundSize: 'cover',
