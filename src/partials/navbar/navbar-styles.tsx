@@ -14,13 +14,14 @@ const StyledNavbarButton = styled(NavLink)(({ theme }) => ({
   maxHeight: 42.5,
   minWidth: 86,
   color: theme.palette.primary.light,
+  transition: theme.transitions.create(['all'], { duration: theme.transitions.duration.complex }),
   '&::after, &::before': {
     content: '""',
     display: 'block',
     position: 'absolute',
     width: '20%',
     height: '20%',
-    border: '2px solid',
+    border: '3px solid',
     borderRadius: 2,
   },
   '&::after': {
@@ -29,7 +30,6 @@ const StyledNavbarButton = styled(NavLink)(({ theme }) => ({
     borderTopColor: 'transparent',
     borderLeftColor: 'transparent',
     transition: theme.transitions.create(['all'], { duration: theme.transitions.duration.complex }),
-
     borderBottomColor: theme.palette.primary.main,
     borderRightColor: theme.palette.primary.main,
   },
@@ -39,7 +39,6 @@ const StyledNavbarButton = styled(NavLink)(({ theme }) => ({
     borderBottomColor: 'transparent',
     borderRightColor: 'transparent',
     transition: theme.transitions.create(['all'], { duration: theme.transitions.duration.complex }),
-
     borderTopColor: theme.palette.primary.main,
     borderLeftColor: theme.palette.primary.main,
   },
@@ -49,6 +48,9 @@ const StyledNavbarButton = styled(NavLink)(({ theme }) => ({
   },
   '&:hover': {
     color: theme.palette.common.white,
+  },
+  '&.active': {
+    color: theme.palette.primary.main,
   },
 }));
 
