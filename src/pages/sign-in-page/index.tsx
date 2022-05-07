@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { Box } from '@mui/material';
-import SignInForm from './components/sign-in-form';
+import StyledTextField from '../../components/custom-form/custom-form-styles';
+import CustomForm from '../../components/custom-form';
 
 const SignInPage: React.FC = () => (
   <Box
@@ -14,7 +15,22 @@ const SignInPage: React.FC = () => (
       alignItems: 'center',
     }}
   >
-    <SignInForm />
+    <CustomForm
+      buttonText="Sign In"
+    >
+      <StyledTextField
+        type="text"
+        label="Username"
+        name="username"
+        fullWidth
+      />
+      <StyledTextField
+        type="password"
+        label="Password"
+        name="password"
+        fullWidth
+      />
+    </CustomForm>
   </Box>
 );
 
