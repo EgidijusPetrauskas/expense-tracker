@@ -43,13 +43,24 @@ const IntroSection: React.FC = () => (
         Expense Tracker
       </Typography>
       <Typography
-        sx={{ fontSize: 25, color: 'primary.light' }}
+        sx={{
+          fontSize: 25,
+          color: 'primary.light',
+          letterSpacing: 1,
+        }}
       >
         Track, analyse and plan your spending
       </Typography>
-      <NavLink style={{ textDecoration: 'none' }} to="/about">
+      <NavLink
+        style={{ textDecoration: 'none' }}
+        to="/about"
+      >
         <Typography
-          sx={{ fontSize: 15, color: 'primary.light', fontFamily: 'Roboto' }}
+          sx={{
+            fontSize: 15,
+            color: 'primary.light',
+            fontFamily: 'Roboto',
+          }}
         >
           Learn more...
         </Typography>

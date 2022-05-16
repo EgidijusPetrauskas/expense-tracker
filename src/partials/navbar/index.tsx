@@ -1,24 +1,25 @@
 import React from 'react';
 
 import {
-  AppBar, Container, Typography,
+  AppBar, Container,
 } from '@mui/material';
 
 import StyledNavbarButton from './navbar-styles';
+import Logo from '../../components/logo';
+
+import LogoLg from '../../images/logo-lg.png';
 
 const NavBar: React.FC = () => (
   <AppBar
     color="transparent"
-    sx={{ alignItems: 'center', boxShadow: 'none' }}
+    sx={{ alignItems: 'center', boxShadow: 'none', position: 'absolute' }}
   >
     <Container
       sx={(theme) => theme.mixins.navbar}
     >
       <StyledNavbarButton to="/">Home</StyledNavbarButton>
       <StyledNavbarButton to="/about">About</StyledNavbarButton>
-      <Typography>
-        Logo
-      </Typography>
+      <Logo src={LogoLg} width={80} />
       <StyledNavbarButton to="/register">Register</StyledNavbarButton>
       <StyledNavbarButton to="/signin">Sign In</StyledNavbarButton>
     </Container>
