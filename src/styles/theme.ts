@@ -36,6 +36,12 @@ const customTheme: Theme = createTheme({
       },
     },
   },
+
+  typography: {
+    fontFamily: [
+      'Playfair Display', 'serif',
+    ].join(','),
+  },
 });
 
 export default customTheme;
