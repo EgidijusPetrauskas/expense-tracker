@@ -5,6 +5,7 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
 import RequireVisitor from './routing/require-visitor';
 import RequireAuth from './routing/require-auth';
@@ -16,55 +17,58 @@ import MainLayout from './layouts/main-layout';
 import AnalysisPage from './pages/analysis-page/index';
 import MyBudgetPage from './pages/my-budget-page/index';
 import ProfilePage from './pages/profile-page/index';
+import store from './store/index';
 
 const App: React.FC = () => (
   <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<MainLayout />}>
-        <Route index element={<HomePage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route
-          path="/register"
-          element={(
-            <RequireVisitor>
-              <RegisterPage />
-            </RequireVisitor>
+    <Provider store={store}>
+      <Routes>
+        <Route path="/" element={<MainLayout />}>
+          <Route index element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route
+            path="/register"
+            element={(
+              <RequireVisitor>
+                <RegisterPage />
+              </RequireVisitor>
         )}
-        />
-        <Route
-          path="/signin"
-          element={(
-            <RequireVisitor>
-              <SignInPage />
-            </RequireVisitor>
+          />
+          <Route
+            path="/signin"
+            element={(
+              <RequireVisitor>
+                <SignInPage />
+              </RequireVisitor>
             )}
-        />
-        <Route
-          path="/analysis"
-          element={(
-            <RequireAuth>
-              <AnalysisPage />
-            </RequireAuth>
+          />
+          <Route
+            path="/analysis"
+            element={(
+              <RequireAuth>
+                <AnalysisPage />
+              </RequireAuth>
             )}
-        />
-        <Route
-          path="/budget"
-          element={(
-            <RequireAuth>
-              <MyBudgetPage />
-            </RequireAuth>
+          />
+          <Route
+            path="/budget"
+            element={(
+              <RequireAuth>
+                <MyBudgetPage />
+              </RequireAuth>
             )}
-        />
-        <Route
-          path="/profile"
-          element={(
-            <RequireAuth>
-              <ProfilePage />
-            </RequireAuth>
+          />
+          <Route
+            path="/profile"
+            element={(
+              <RequireAuth>
+                <ProfilePage />
+              </RequireAuth>
             )}
-        />
-      </Route>
-    </Routes>
+          />
+        </Route>
+      </Routes>
+    </Provider>
   </BrowserRouter>
 );
 
