@@ -23,9 +23,8 @@ const CustomForm: React.FC<CustomFormProps> = ({ children, buttonText, onSubmit 
       gap: 2,
       width: 1.7 / 5,
       minWidth: 250,
-      height: 2.5 / 5,
       backgroundColor: '#222c38',
-      px: 6,
+      p: 7,
 
       input: {
         color: theme.palette.primary.light,
