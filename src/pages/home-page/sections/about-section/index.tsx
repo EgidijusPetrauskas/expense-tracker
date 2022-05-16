@@ -16,9 +16,9 @@ const AboutSection: React.FC = () => (
     sx={(theme) => ({
       display: 'flex',
       justifyContent: 'center',
-      alignItems: 'center',
       width: 1,
-      height: 650,
+      height: 550,
+      pt: 4,
       background: theme.palette.myBlack.main,
     })}
   >
