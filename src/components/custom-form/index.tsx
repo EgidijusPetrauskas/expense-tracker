@@ -8,9 +8,12 @@ import Logo from '../logo';
 type CustomFormProps = {
   buttonText: string,
   onSubmit?: React.FormEventHandler<HTMLFormElement>,
+  isDisabled?: boolean
 };
 
-const CustomForm: React.FC<CustomFormProps> = ({ children, buttonText, onSubmit }) => (
+const CustomForm: React.FC<CustomFormProps> = ({
+  children, buttonText, onSubmit, isDisabled,
+}) => (
   <Paper
     elevation={24}
     component="form"
@@ -36,7 +39,20 @@ const CustomForm: React.FC<CustomFormProps> = ({ children, buttonText, onSubmit 
       <Logo src={logoImg} width={85} />
     </Box>
     {children}
-    <Button size="large" sx={{ maxWidth: 110, mt: 3 }} variant="contained" type="submit">{buttonText}</Button>
+    <Button
+      disabled={isDisabled}
+      size="large"
+      variant="contained"
+      type="submit"
+      sx={{
+        maxWidth: 110,
+        mt: 3,
+        ':disabled': { color: 'secondary.main' },
+      }}
+    >
+      {buttonText}
+
+    </Button>
   </Paper>
 );
 
