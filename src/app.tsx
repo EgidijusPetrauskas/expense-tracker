@@ -15,7 +15,7 @@ import RegisterPage from './pages/register-page';
 import SignInPage from './pages/sign-in-page';
 import MainLayout from './layouts/main-layout';
 import AnalysisPage from './pages/analysis-page/index';
-import MyBudgetPage from './pages/my-budget-page/index';
+import BudgetPage from './pages/budget-page/index';
 import ProfilePage from './pages/profile-page/index';
 import store from './store/index';
 
@@ -54,7 +54,7 @@ const App: React.FC = () => (
             path="/budget"
             element={(
               <RequireAuth>
-                <MyBudgetPage />
+                <BudgetPage />
               </RequireAuth>
             )}
           />

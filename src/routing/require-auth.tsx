@@ -6,8 +6,8 @@ import { State } from '../store/types';
 
 const RequireAuth = ({ children }: { children: JSX.Element }) => {
   const location = useLocation();
-  const logedIn = useRootSelector((state: State) => Boolean(state.auth.user));
-  if (!logedIn) {
+  const loggedIn = useRootSelector((state: State) => Boolean(state.auth.user));
+  if (!loggedIn) {
     return <Navigate to={`/signin?next=${location.pathname}`} />;
   }
 

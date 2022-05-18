@@ -5,9 +5,9 @@ import { useRootSelector } from '../store/hooks';
 import { State } from '../store/types';
 
 const RequireVisitor = ({ children }: { children: JSX.Element }) => {
-  const logedIn = useRootSelector((state: State) => Boolean(state.auth.user));
+  const loggedIn = useRootSelector((state: State) => Boolean(state.auth.user));
 
-  if (logedIn) {
+  if (loggedIn) {
     return <Navigate to="/" />;
   }
 

@@ -1,33 +1,26 @@
 import React from 'react';
 
-import {
-  AppBar, Container,
-} from '@mui/material';
+import { AppBar } from '@mui/material';
 
-import StyledNavbarButton from './navbar-styles';
-import Logo from '../../components/logo';
+import NavBarVisitorMenu from './navbar-visitor-menu';
+import NavBarAuthMenu from './navbar-auth-menu';
+import { useRootSelector } from '../../store/hooks';
+import { State } from '../../store/types';
 
-import LogoLg from '../../images/logo-lg.png';
-
-const NavBar: React.FC = () => (
-  <AppBar
-    color="transparent"
-    sx={{
-      alignItems: 'center',
-      boxShadow: 'none',
-      position: 'absolute',
-    }}
-  >
-    <Container
-      sx={(theme) => theme.mixins.navbar}
+const NavBar: React.FC = () => {
+  const loggedIn = useRootSelector((state: State) => Boolean(state.auth.user));
+  return (
+    <AppBar
+      color="transparent"
+      sx={{
+        alignItems: 'center',
+        boxShadow: 'none',
+        position: 'absolute',
+      }}
     >
-      <StyledNavbarButton to="/">Home</StyledNavbarButton>
-      <StyledNavbarButton to="/about">About</StyledNavbarButton>
-      <Logo src={LogoLg} width={70} />
-      <StyledNavbarButton to="/register">Register</StyledNavbarButton>
-      <StyledNavbarButton to="/signin">Sign In</StyledNavbarButton>
-    </Container>
-  </AppBar>
-);
+      { loggedIn ? <NavBarAuthMenu /> : <NavBarVisitorMenu />}
+    </AppBar>
+  );
+};
 
 export default NavBar;
