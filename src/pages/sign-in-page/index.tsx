@@ -8,7 +8,7 @@ import { SchemaOf } from 'yup';
 import StyledTextField from '../../components/custom-form/custom-form-styles';
 import CustomForm from '../../components/custom-form';
 
-type SignInValues = {
+export type SignInValues = {
   username: string,
   password: string
 };
@@ -54,6 +54,7 @@ const SignInPage: React.FC = () => {
     onSubmit: handleSignIn,
     validationSchema,
   });
+
   return (
     <Box
       component="main"
@@ -89,7 +90,7 @@ const SignInPage: React.FC = () => {
           onChange={handleChange}
           onBlur={handleBlur}
           error={touched.password && Boolean(errors.password)}
-          helperText={touched.password && errors.password ? `${errors.username}` : null}
+          helperText={touched.password && errors.password ? `${errors.password}` : null}
           fullWidth
         />
       </CustomForm>
