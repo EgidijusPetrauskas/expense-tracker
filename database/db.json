@@ -1,0 +1,16 @@
+{
+  "users":[
+    {
+      "id": "1",
+      "username": "Destroyer3000",
+      "password": "Destroy1"
+    }
+  ],
+  "stock_portfolio": [
+    {
+      "id": "1",
+      "userId": "1",
+      "stocks": []
+    }
+  ]
+}
