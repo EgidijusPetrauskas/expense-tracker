@@ -5,10 +5,10 @@ import { AppBar } from '@mui/material';
 import NavBarVisitorMenu from './navbar-visitor-menu';
 import NavBarAuthMenu from './navbar-auth-menu';
 import { useRootSelector } from '../../store/hooks';
-import { State } from '../../store/types';
+import { selectLoggedIn } from '../../store/selectors';
 
 const NavBar: React.FC = () => {
-  const loggedIn = useRootSelector((state: State) => Boolean(state.auth.user));
+  const loggedIn = useRootSelector(selectLoggedIn);
   return (
     <AppBar
       color="transparent"

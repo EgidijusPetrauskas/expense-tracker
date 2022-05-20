@@ -2,10 +2,10 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 
 import { useRootSelector } from '../store/hooks';
-import { State } from '../store/types';
+import { selectLoggedIn } from '../store/selectors';
 
 const RequireVisitor = ({ children }: { children: JSX.Element }) => {
-  const loggedIn = useRootSelector((state: State) => Boolean(state.auth.user));
+  const loggedIn = useRootSelector(selectLoggedIn);
 
   if (loggedIn) {
     return <Navigate to="/" />;
