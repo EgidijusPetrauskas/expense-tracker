@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Container } from '@mui/material';
 
-import StyledNavbarButton from './navbar-styles';
+import { StyledNavbarButton } from './navbar-styles';
 import Logo from '../../components/logo';
 
 import LogoLg from '../../images/logo-lg.png';

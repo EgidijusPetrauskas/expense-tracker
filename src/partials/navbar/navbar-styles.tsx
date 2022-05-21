@@ -1,8 +1,8 @@
-import { styled } from '@mui/material';
+import { styled, MenuList, MenuItem } from '@mui/material';
 
 import { NavLink } from 'react-router-dom';
 
-const StyledNavbarButton = styled(NavLink)(({ theme }) => ({
+export const StyledNavbarButton = styled(NavLink)(({ theme }) => ({
   position: 'relative',
   padding: '0.5em 1.1em',
   border: 'none',
@@ -54,4 +54,23 @@ const StyledNavbarButton = styled(NavLink)(({ theme }) => ({
   },
 }));
 
-export default StyledNavbarButton;
+export const StyledMenuList = styled(MenuList)({
+  display: 'flex',
+  height: 45,
+  marginTop: 5,
+  padding: 0,
+});
+
+export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+  width: 100,
+  height: '100%',
+  fontSize: 18,
+  border: `1px solid ${theme.palette.secondary.main}`,
+  backgroundColor: 'transparent',
+  color: theme.palette.primary.light,
+  transition: theme.transitions.create(['all'], { duration: theme.transitions.duration.short }),
+  ':hover': {
+    background: theme.palette.secondary.dark,
+    color: theme.palette.primary.main,
+  },
+}));
