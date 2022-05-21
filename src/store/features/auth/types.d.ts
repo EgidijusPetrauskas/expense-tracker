@@ -19,7 +19,9 @@ export type AuthLoadingAction = {
 
 export type AuthErrorAction = {
   type: typeof SET_ERROR,
-  payload: string
+  payload: {
+    error: string
+  }
 };
 
 export type AuthClearErrorAction = {
@@ -30,4 +32,4 @@ export type AuthLogoutAction = {
   type: typeof SET_LOGOUT;
 };
 
-export type AuthActions = SetUserAction | SetLoadingAction | SetErrorAction | SetLogoutAction;
+export type AuthActions = AuthUserAction | AuthLoadingAction | AuthErrorAction | AuthLogoutAction;

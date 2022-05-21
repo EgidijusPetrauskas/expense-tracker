@@ -5,3 +5,5 @@ export type MainState = {
 };
 
 export type Action = AuthActions;
+
+export type AppDispatch = ThunkDispatch<RootState, undefined, AppAction>;

@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
-import { useSelector } from 'react-redux';
-import { MainState } from './types';
+import { useSelector, TypedUseSelectorHook, useDispatch } from 'react-redux';
+import { MainState, AppDispatch } from './types';
 
-export const useRootSelector = <Selected = unknown>
-  (selector: (state: MainState) => Selected) => useSelector<MainState, Selected>(selector);
+export const useRootSelector: TypedUseSelectorHook<MainState> = useSelector;
+
+export const useRootDispatch = () => useDispatch<AppDispatch>();

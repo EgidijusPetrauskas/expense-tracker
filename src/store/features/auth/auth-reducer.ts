@@ -4,7 +4,7 @@ import { Reducer } from 'redux';
 import { User } from '../../../types';
 import { getLocalStorage, setLocalStorage } from '../../../helpers/local-storage-helper';
 import {
-  AUTH_USER,
+  AUTH_SET_USER,
   AUTH_LOADING,
   AUTH_ERROR,
   AUTH_CLEAR_ERROR,
@@ -22,12 +22,13 @@ const initialState: AuthState = {
 
 const authReducer: Reducer<AuthState, AuthActions> = (state = initialState, action) => {
   switch (action.type) {
-    case AUTH_USER: {
+    case AUTH_SET_USER: {
       const { payload } = action as AuthUserAction;
       setLocalStorage('user', payload.user);
       return {
         ...state,
         user: payload.user,
+        loading: false,
       };
     }
 
@@ -44,7 +45,7 @@ const authReducer: Reducer<AuthState, AuthActions> = (state = initialState, acti
       const { payload } = action as AuthErrorAction;
       return {
         ...state,
-        error: payload,
+        error: payload.error,
       };
     }
 

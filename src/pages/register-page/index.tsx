@@ -7,9 +7,11 @@ import { SchemaOf } from 'yup';
 
 import StyledTextField from '../../components/custom-form/custom-form-styles';
 import CustomForm from '../../components/custom-form';
-import { SignInValues } from '../sign-in-page';
+import { Credentials } from '../../types/credentials';
+import { useRootDispatch } from '../../store/hooks';
+import { createRegisterAction } from '../../store/features/auth/auth-action-creators';
 
-type RegisterValues = SignInValues & {
+type RegisterValues = Credentials & {
   repPassword: string
 };
 
@@ -45,8 +47,11 @@ const validationSchema: SchemaOf<RegisterValues> = Yup.object({
 });
 
 const RegisterPage: React.FC = () => {
-  const handleRegister: SignInFormikConfig['onSubmit'] = () => {
-    console.log('Čia bus registracijos logiką kai bus serverio logika');
+  const dispatch = useRootDispatch();
+
+  const handleRegister: SignInFormikConfig['onSubmit'] = ({ username, password, repPassword }) => {
+    const registerAction = createRegisterAction({ username, password, repPassword });
+    dispatch(registerAction);
   };
 
   const {

@@ -7,11 +7,11 @@ import { SchemaOf } from 'yup';
 
 import StyledTextField from '../../components/custom-form/custom-form-styles';
 import CustomForm from '../../components/custom-form';
+import { Credentials } from '../../types/credentials';
+import { createSignInAction } from '../../store/features/auth/auth-action-creators';
+import { useRootDispatch } from '../../store/hooks';
 
-export type SignInValues = {
-  username: string,
-  password: string
-};
+type SignInValues = Credentials;
 
 type SignInFormikConfig = FormikConfig<SignInValues>;
 
@@ -36,8 +36,11 @@ const validationSchema: SchemaOf<SignInValues> = Yup.object({
 });
 
 const SignInPage: React.FC = () => {
-  const handleSignIn: SignInFormikConfig['onSubmit'] = () => {
-    console.log('Čia bus prisijungimo logiką kai bus serverio logika');
+  const dispatch = useRootDispatch();
+
+  const handleSignIn: SignInFormikConfig['onSubmit'] = ({ username, password }) => {
+    const signInAction = createSignInAction({ username, password });
+    dispatch(signInAction);
   };
 
   const {
