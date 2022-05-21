@@ -9,7 +9,7 @@ const RequireAuth = ({ children }: { children: JSX.Element }) => {
   const loggedIn = useRootSelector(selectLoggedIn);
 
   if (!loggedIn) {
-    return <Navigate to={`/signin?next=${location.pathname}`} />;
+    return <Navigate to={`/signin?redirect=${location.pathname}`} />;
   }
 
   return children;

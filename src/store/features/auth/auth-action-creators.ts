@@ -1,9 +1,10 @@
 import { Dispatch } from 'redux';
 
 import { Credentials, UserRegistration } from '../../../types';
-import { Action } from '../../types';
+import { GlobalActions } from '../../types';
 import AuthService, { AuthPromiseType } from './auth-service';
 import { User } from '../../../types/user';
+import { createNavSetRedirectAction, createNavClearRedirectAction } from '../navigation/nav-action-creators';
 import {
   AuthLoadingAction,
   AuthErrorAction,
@@ -41,15 +42,19 @@ export const authSetLogoutAction: AuthLogoutAction = {
 };
 
 export const authenticate = async (
-  dispatch: Dispatch<Action>,
+  dispatch: Dispatch<GlobalActions>,
   userData: Credentials,
   authCallBack: AuthPromiseType,
+  redirect: string,
 ) => {
   dispatch(authSetLoadingAction);
   try {
     const user = await authCallBack(userData);
     const authSetUserAction = createAuthSetUserAction(user);
+    const navSetRedirectAction = createNavSetRedirectAction(redirect);
+    dispatch(navSetRedirectAction);
     dispatch(authSetUserAction);
+    dispatch(createNavClearRedirectAction);
   } catch (err) {
     const { message } = err as Error;
     const authSetErrorAction = createAuthSetErrorAction(message);
@@ -59,14 +64,16 @@ export const authenticate = async (
 
 export const createSignInAction = (
   userData: Credentials,
-) => async (dispatch: Dispatch<Action>): Promise<void> => {
-  await authenticate(dispatch, userData, AuthService.login);
+  redirect: string,
+) => async (dispatch: Dispatch<GlobalActions>): Promise<void> => {
+  await authenticate(dispatch, userData, AuthService.login, redirect);
 };
 
 export const createRegisterAction = (
   userRegistration: UserRegistration,
-) => async (dispatch: Dispatch<Action>): Promise<void> => {
+  redirect: string,
+) => async (dispatch: Dispatch<GlobalActions>): Promise<void> => {
   const { username, password } = userRegistration;
   const userData: Credentials = { username, password };
-  await authenticate(dispatch, userData, AuthService.register);
+  await authenticate(dispatch, userData, AuthService.register, redirect);
 };

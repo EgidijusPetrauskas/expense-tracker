@@ -64,7 +64,7 @@ export const StyledMenuList = styled(MenuList)({
 export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
   width: 100,
   height: '100%',
-  fontSize: 18,
+  fontSize: 17,
   border: `1px solid ${theme.palette.secondary.main}`,
   backgroundColor: 'transparent',
   color: theme.palette.primary.light,

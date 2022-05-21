@@ -1,9 +1,11 @@
 import { AuthActions, AuthState } from './features/auth/types';
+import { NavActions, NavState } from './features/navigation/types';
 
 export type MainState = {
-  auth: AuthState
+  auth: AuthState,
+  navigation: NavState
 };
 
-export type Action = AuthActions;
+export type GlobalActions = AuthActions | NavActions;
 
-export type AppDispatch = ThunkDispatch<RootState, undefined, AppAction>;
+export type AppDispatch = ThunkDispatch<RootState, undefined, GlobalActions>;

@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { useSearchParams } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { FormikConfig, useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -36,10 +37,12 @@ const validationSchema: SchemaOf<SignInValues> = Yup.object({
 });
 
 const SignInPage: React.FC = () => {
+  const [searchParams] = useSearchParams();
   const dispatch = useRootDispatch();
 
   const handleSignIn: SignInFormikConfig['onSubmit'] = ({ username, password }) => {
-    const signInAction = createSignInAction({ username, password });
+    const redirect = searchParams.get('redirect') ?? '/';
+    const signInAction = createSignInAction({ username, password }, redirect);
     dispatch(signInAction);
   };
 

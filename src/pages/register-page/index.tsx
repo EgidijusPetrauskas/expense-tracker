@@ -5,6 +5,7 @@ import { FormikConfig, useFormik } from 'formik';
 import * as Yup from 'yup';
 import { SchemaOf } from 'yup';
 
+import { useSearchParams } from 'react-router-dom';
 import StyledTextField from '../../components/custom-form/custom-form-styles';
 import CustomForm from '../../components/custom-form';
 import { Credentials } from '../../types/credentials';
@@ -48,9 +49,11 @@ const validationSchema: SchemaOf<RegisterValues> = Yup.object({
 
 const RegisterPage: React.FC = () => {
   const dispatch = useRootDispatch();
+  const [searchParams] = useSearchParams();
 
   const handleRegister: SignInFormikConfig['onSubmit'] = ({ username, password, repPassword }) => {
-    const registerAction = createRegisterAction({ username, password, repPassword });
+    const redirect = searchParams.get('redirect') ?? '/';
+    const registerAction = createRegisterAction({ username, password, repPassword }, redirect);
     dispatch(registerAction);
   };
 
