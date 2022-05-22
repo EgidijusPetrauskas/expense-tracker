@@ -7,6 +7,11 @@ export type StocksState = {
   error: string | null,
 };
 
+export type ChartData = {
+  date: string,
+  value: string,
+};
+
 export type Stock = {
   id: string,
   symbol: string,

@@ -11,3 +11,5 @@ export const selectAuthError = (state: MainState) => state.auth.error;
 export const selectRedirect = (state: MainState) => state.navigation.redirect;
 
 export const selectStocks = (state: MainState) => state.stocks.stocks;
+
+export const selectStocksError = (state: MainState) => state.stocks.error;

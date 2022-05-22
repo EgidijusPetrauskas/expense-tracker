@@ -1,103 +1,68 @@
 import React, { useState } from 'react';
 
-import {
-  Container, Typography, Box, Button, TextField, Paper,
-} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import { Container, ToggleButtonGroup } from '@mui/material';
 
-import StockChart from './stock-chart';
-import { selectStocks } from '../../store/selectors';
-import { useRootDispatch, useRootSelector } from '../../store/hooks';
-import { createStocksFetchStockAction, createStocksDeleteStockAction } from '../../store/action-creators';
+import { StyledButton } from './analysis-page-styles';
+import AnalisisSection from './sections/analysis';
+import InfoCard from './components/info-card';
+import PortfolioSection from './sections/stock-portfolio/index';
+import ResearchSection from './sections/stock-research/index';
 
-const StockPage: React.FC = () => {
-  const [searchValue, setSearchValue] = useState<string>('');
-  const stocks = useRootSelector(selectStocks);
-  const dispatch = useRootDispatch();
+const AnalysisPage: React.FC = () => {
+  const [section, setSections] = useState<string | null>(null);
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-    const stocksSetStockAction = createStocksFetchStockAction(searchValue);
-    dispatch(stocksSetStockAction);
+  const handleSections = (
+    e: React.MouseEvent<HTMLElement>,
+    updatedSection: string | null,
+  ) => {
+    setSections(updatedSection);
+  };
+
+  const sectionDisplay = (sectionSelect: string | null) => {
+    switch (sectionSelect) {
+      case 'analysis': {
+        return <AnalisisSection />;
+      }
+      case 'portfolio': {
+        return <PortfolioSection />;
+      }
+      case 'research': {
+        return <ResearchSection />;
+      }
+      default: return <InfoCard />;
+    }
   };
 
   return (
-    <Container sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      gap: 3,
-      pt: 12,
-    }}
+    <Container
+      maxWidth={false}
+      sx={{
+        width: 1,
+        height: '100vh',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        mt: 20,
+      }}
     >
-      <Typography
-        color="primary"
-        variant="h2"
-        component="h1"
-      >
-        My Stock Portfolio
-      </Typography>
-      <Paper
-        component="form"
-        autoComplete="off"
-        onSubmit={handleSubmit}
+      <ToggleButtonGroup
+        exclusive
+        value={section}
+        onChange={handleSections}
         sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 2,
-          width: 1 / 5,
-          background: '#aec4c2',
-          p: 1,
+          width: 2 / 3,
+          height: 50,
+          justifyContent: 'space-between',
+          mb: 4,
         }}
       >
-        <TextField
-          label="Stock Symbol"
-          color="primary"
-          variant="outlined"
-          onChange={(e) => setSearchValue(e.target.value)}
-        />
-        <Button type="submit" variant="contained">ADD</Button>
-      </Paper>
-      <Box
-        sx={{
-          display: 'flex', flexWrap: 'wrap', gap: 2, width: 1,
-        }}
-      >
-        {stocks.map((stock) => (
-          <Paper
-            key={stock.id}
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 2,
-              width: 350,
-              p: 2,
-              background: '#15191e',
-            }}
-          >
-            <Box
-              sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
-            >
-              <Typography
-                color="error.dark"
-                variant="h4"
-                sx={{ ml: 2 }}
-              >
-                {stock.symbol}
-              </Typography>
-              <CloseIcon
-                onClick={() => dispatch(createStocksDeleteStockAction(stock.id))}
-                sx={{ color: 'error.dark', '&:hover': { cursor: 'pointer' } }}
-              />
-            </Box>
-            <StockChart chartData={stock.chartData} />
-          </Paper>
-        ))}
-      </Box>
-
+        <StyledButton value="analysis">Analysis</StyledButton>
+        <StyledButton value="portfolio">Portfolio</StyledButton>
+        <StyledButton value="research">Stock Research</StyledButton>
+      </ToggleButtonGroup>
+      {sectionDisplay(section)}
     </Container>
   );
 };
 
-export default StockPage;
+export default AnalysisPage;

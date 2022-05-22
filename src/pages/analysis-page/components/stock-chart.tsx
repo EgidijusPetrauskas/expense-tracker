@@ -10,14 +10,14 @@ import {
 } from 'recharts';
 import { parseISO, format } from 'date-fns';
 
-import { Stock } from '../../store/features/stocks-portfolio/types';
+import { Stock } from '../../../store/features/stocks-portfolio/types';
 
 type StockChartProps = {
   chartData: Stock['chartData']
 };
 
 const StockChart: React.FC<StockChartProps> = ({ chartData }) => (
-  <ResponsiveContainer width="100%" height={220}>
+  <ResponsiveContainer width="100%" height={240}>
     <AreaChart data={chartData}>
       <Area dataKey="value" stroke="#2451b7" fill="transparent" />
       <XAxis
