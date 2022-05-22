@@ -46,6 +46,7 @@ const authReducer: Reducer<AuthState, AuthActions> = (state = initialState, acti
       return {
         ...state,
         error: payload.error,
+        loading: false,
       };
     }
 
@@ -53,6 +54,7 @@ const authReducer: Reducer<AuthState, AuthActions> = (state = initialState, acti
       return {
         ...state,
         error: null,
+        loading: false,
       };
     }
 
@@ -61,6 +63,7 @@ const authReducer: Reducer<AuthState, AuthActions> = (state = initialState, acti
       return {
         ...state,
         user: null,
+        loading: false,
       };
     }
     default:

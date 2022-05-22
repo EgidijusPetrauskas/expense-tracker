@@ -9,8 +9,9 @@ import { useSearchParams } from 'react-router-dom';
 import StyledTextField from '../../components/custom-form/custom-form-styles';
 import CustomForm from '../../components/custom-form';
 import { Credentials } from '../../types/credentials';
-import { useRootDispatch } from '../../store/hooks';
+import { useRootDispatch, useRootSelector } from '../../store/hooks';
 import { createRegisterAction } from '../../store/features/auth/auth-action-creators';
+import { selectAuthError } from '../../store/selectors';
 
 type RegisterValues = Credentials & {
   repPassword: string
@@ -49,6 +50,8 @@ const validationSchema: SchemaOf<RegisterValues> = Yup.object({
 
 const RegisterPage: React.FC = () => {
   const dispatch = useRootDispatch();
+  const error = Boolean(useRootSelector(selectAuthError));
+
   const [searchParams] = useSearchParams();
 
   const handleRegister: SignInFormikConfig['onSubmit'] = ({ username, password, repPassword }) => {
@@ -86,7 +89,7 @@ const RegisterPage: React.FC = () => {
       <CustomForm
         buttonText="Register"
         onSubmit={handleSubmit}
-        isDisabled={!(dirty && isValid)}
+        isDisabled={!(dirty && isValid) || error}
       >
         <StyledTextField
           type="text"
@@ -97,6 +100,7 @@ const RegisterPage: React.FC = () => {
           onBlur={handleBlur}
           error={touched.username && Boolean(errors.username)}
           helperText={touched.username && errors.username ? `${errors.username}` : null}
+          disabled={error}
           fullWidth
         />
         <StyledTextField
@@ -108,6 +112,7 @@ const RegisterPage: React.FC = () => {
           onBlur={handleBlur}
           error={touched.password && Boolean(errors.password)}
           helperText={touched.password && errors.password ? `${errors.password}` : null}
+          disabled={error}
           fullWidth
         />
         <StyledTextField
@@ -119,6 +124,7 @@ const RegisterPage: React.FC = () => {
           onBlur={handleBlur}
           error={touched.repPassword && Boolean(errors.repPassword)}
           helperText={touched.repPassword && errors.repPassword ? `${errors.repPassword}` : null}
+          disabled={error}
           fullWidth
         />
       </CustomForm>

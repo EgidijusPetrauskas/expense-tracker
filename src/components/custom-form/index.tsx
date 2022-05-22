@@ -1,9 +1,16 @@
 import React from 'react';
 
-import { Button, Paper, Box } from '@mui/material';
+import {
+  Button,
+  Paper,
+  Box, Alert, CircularProgress,
+} from '@mui/material';
 
 import logoImg from '../../images/main-logo.png';
 import Logo from '../logo';
+import { useRootSelector, useRootDispatch } from '../../store/hooks';
+import { selectAuthError, selectAuthLoading } from '../../store/selectors';
+import { authClearErrorAction } from '../../store/action-creators';
 
 type CustomFormProps = {
   buttonText: string,
@@ -13,47 +20,83 @@ type CustomFormProps = {
 
 const CustomForm: React.FC<CustomFormProps> = ({
   children, buttonText, onSubmit, isDisabled,
-}) => (
-  <Paper
-    elevation={24}
-    component="form"
-    autoComplete="off"
-    sx={(theme) => ({
+}) => {
+  const error = useRootSelector(selectAuthError);
+  const loading = useRootSelector(selectAuthLoading);
+  const dispatch = useRootDispatch();
+
+  const clearError = () => {
+    dispatch(authClearErrorAction);
+  };
+
+  return (
+    <Box sx={{
+      width: 1,
+      position: 'relative',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      gap: 2,
-      width: 1.7 / 5,
-      minWidth: 250,
-      backgroundColor: '#222c38',
-      p: 7,
-
-      input: {
-        color: theme.palette.primary.light,
-      },
-    })}
-    onSubmit={onSubmit}
-  >
-    <Box sx={{ mb: 2.5 }}>
-      <Logo src={logoImg} width={85} />
-    </Box>
-    {children}
-    <Button
-      disabled={isDisabled}
-      size="large"
-      variant="contained"
-      type="submit"
-      sx={{
-        maxWidth: 110,
-        mt: 3,
-        ':disabled': { color: 'secondary.main' },
-      }}
+    }}
     >
-      {buttonText}
-
-    </Button>
-  </Paper>
-);
+      {error && (
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Alert
+            variant="filled"
+            severity="error"
+            sx={{
+              width: 1.7 / 5,
+              position: 'absolute',
+              top: 0,
+              zIndex: 45,
+            }}
+            onClose={clearError}
+          >
+            {error}
+          </Alert>
+        </Box>
+      )}
+      <Paper
+        elevation={24}
+        component="form"
+        autoComplete="off"
+        sx={(theme) => ({
+          width: 1.7 / 5,
+          minWidth: 250,
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: 2,
+          px: 7,
+          py: 9,
+          backgroundColor: '#222c38',
+          input: {
+            color: theme.palette.primary.light,
+          },
+        })}
+        onSubmit={onSubmit}
+      >
+        <Box sx={{ mb: 2.5 }}>
+          <Logo src={logoImg} width={85} />
+        </Box>
+        {children}
+        <Button
+          disabled={loading || isDisabled}
+          size="large"
+          variant="contained"
+          type="submit"
+          sx={{
+            maxWidth: 110,
+            mt: 3,
+            ':disabled': { color: 'secondary.main' },
+          }}
+        >
+          {loading ? <CircularProgress color="secondary" /> : buttonText}
+        </Button>
+      </Paper>
+    </Box>
+  );
+};
 
 export default CustomForm;

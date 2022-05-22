@@ -10,7 +10,8 @@ import StyledTextField from '../../components/custom-form/custom-form-styles';
 import CustomForm from '../../components/custom-form';
 import { Credentials } from '../../types/credentials';
 import { createSignInAction } from '../../store/features/auth/auth-action-creators';
-import { useRootDispatch } from '../../store/hooks';
+import { useRootDispatch, useRootSelector } from '../../store/hooks';
+import { selectAuthError } from '../../store/selectors';
 
 type SignInValues = Credentials;
 
@@ -38,6 +39,7 @@ const validationSchema: SchemaOf<SignInValues> = Yup.object({
 
 const SignInPage: React.FC = () => {
   const [searchParams] = useSearchParams();
+  const error = Boolean(useRootSelector(selectAuthError));
   const dispatch = useRootDispatch();
 
   const handleSignIn: SignInFormikConfig['onSubmit'] = ({ username, password }) => {
@@ -75,7 +77,7 @@ const SignInPage: React.FC = () => {
       <CustomForm
         buttonText="Sign In"
         onSubmit={handleSubmit}
-        isDisabled={!(dirty && isValid)}
+        isDisabled={!(dirty && isValid) || error}
       >
         <StyledTextField
           type="text"
@@ -86,6 +88,7 @@ const SignInPage: React.FC = () => {
           onBlur={handleBlur}
           error={touched.username && Boolean(errors.username)}
           helperText={touched.username && errors.username ? `${errors.username}` : null}
+          disabled={error}
           fullWidth
         />
         <StyledTextField
@@ -97,6 +100,7 @@ const SignInPage: React.FC = () => {
           onBlur={handleBlur}
           error={touched.password && Boolean(errors.password)}
           helperText={touched.password && errors.password ? `${errors.password}` : null}
+          disabled={error}
           fullWidth
         />
       </CustomForm>
