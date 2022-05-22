@@ -6,12 +6,12 @@ import { getLocalStorage, setLocalStorage } from '../../../helpers/local-storage
 import {
   AUTH_SET_USER,
   AUTH_LOADING,
-  AUTH_ERROR,
+  AUTH_SET_ERROR,
   AUTH_CLEAR_ERROR,
   AUTH_LOGOUT,
 } from './auth-action-types';
 import {
-  AuthErrorAction, AuthUserAction, AuthState, AuthActions,
+  AuthErrorAction, AuthSetUserAction, AuthState, AuthActions,
 } from './types';
 
 const initialState: AuthState = {
@@ -23,7 +23,7 @@ const initialState: AuthState = {
 const authReducer: Reducer<AuthState, AuthActions> = (state = initialState, action) => {
   switch (action.type) {
     case AUTH_SET_USER: {
-      const { payload } = action as AuthUserAction;
+      const { payload } = action as AuthSetUserAction;
       setLocalStorage('user', payload.user);
       return {
         ...state,
@@ -41,7 +41,7 @@ const authReducer: Reducer<AuthState, AuthActions> = (state = initialState, acti
       };
     }
 
-    case AUTH_ERROR: {
+    case AUTH_SET_ERROR: {
       const { payload } = action as AuthErrorAction;
       return {
         ...state,

@@ -62,6 +62,7 @@ export const StyledMenuList = styled(MenuList)({
 });
 
 export const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+  justifyContent: 'center',
   width: 100,
   height: '100%',
   fontSize: 17,

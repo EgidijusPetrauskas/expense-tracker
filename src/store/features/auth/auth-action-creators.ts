@@ -6,6 +6,7 @@ import AuthService, { AuthPromiseType } from './auth-service';
 import { User } from '../../../types/user';
 import { createNavSetRedirectAction, createNavClearRedirectAction } from '../navigation/nav-action-creators';
 import {
+  AuthSetUserAction,
   AuthLoadingAction,
   AuthErrorAction,
   AuthClearErrorAction,
@@ -14,18 +15,18 @@ import {
 import {
   AUTH_SET_USER,
   AUTH_LOADING,
-  AUTH_ERROR,
+  AUTH_SET_ERROR,
   AUTH_CLEAR_ERROR,
   AUTH_LOGOUT,
 } from './auth-action-types';
 
-export const createAuthSetUserAction = (user: User) => ({
+export const createAuthSetUserAction = (user: User): AuthSetUserAction => ({
   type: AUTH_SET_USER,
   payload: { user },
 });
 
 export const createAuthSetErrorAction = (error: string): AuthErrorAction => ({
-  type: AUTH_ERROR,
+  type: AUTH_SET_ERROR,
   payload: { error },
 });
 
