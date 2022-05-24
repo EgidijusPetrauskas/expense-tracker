@@ -12,8 +12,8 @@ import { selectStocks, selectStocksError, selectStocksLoading } from '../../../.
 import { useRootDispatch, useRootSelector } from '../../../../store/hooks';
 import { createStocksFetchStockAction, createStocksDeleteStockAction } from '../../../../store/action-creators';
 import { stocksClearErrorAction } from '../../../../store/features/stocks/stocks-action-creators';
-import WindowButton from './components/window-button';
-import SearchBar from './components/search-bar';
+import WindowButton from './window-button';
+import SearchBar from './search-bar';
 
 const styles = {
   aCenter: {

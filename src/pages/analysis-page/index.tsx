@@ -54,8 +54,8 @@ const AnalysisPage: React.FC = () => {
           mb: 4,
         }}
       >
-        <StyledButton value="analysis">Analysis</StyledButton>
-        <StyledButton value="watchlist">Watchlist</StyledButton>
+        <StyledButton value="analysis">Budget Analysis</StyledButton>
+        <StyledButton value="watchlist">Stock Watchlist</StyledButton>
         <StyledButton value="research">Stock Research</StyledButton>
       </ToggleButtonGroup>
       {sectionDisplay(section)}
