@@ -3,7 +3,7 @@ import React from 'react';
 import {
   Button,
   Paper,
-  Box, Alert, CircularProgress,
+  Box, Alert, CircularProgress, ClickAwayListener,
 } from '@mui/material';
 
 import logoImg from '../../images/main-logo.png';
@@ -40,21 +40,23 @@ const CustomForm: React.FC<CustomFormProps> = ({
     }}
     >
       {error && (
-        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-          <Alert
-            variant="filled"
-            severity="error"
-            sx={{
-              width: 1.7 / 5,
-              position: 'absolute',
-              top: 0,
-              zIndex: 45,
-            }}
-            onClose={clearError}
-          >
-            {error}
-          </Alert>
-        </Box>
+        <ClickAwayListener onClickAway={clearError}>
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Alert
+              variant="filled"
+              severity="error"
+              sx={{
+                width: 1.7 / 5,
+                position: 'absolute',
+                top: 0,
+                zIndex: 45,
+              }}
+              onClose={clearError}
+            >
+              {error}
+            </Alert>
+          </Box>
+        </ClickAwayListener>
       )}
       <Paper
         elevation={24}
