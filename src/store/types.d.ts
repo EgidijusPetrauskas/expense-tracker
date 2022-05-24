@@ -1,6 +1,6 @@
 import { AuthActions, AuthState } from './features/auth/types';
 import { NavActions, NavState } from './features/navigation/types';
-import { StocksActions, StocksState } from './features/stocks-portfolio/types';
+import { StocksActions, StocksState } from './features/stocks/types';
 
 export type MainState = {
   auth: AuthState,

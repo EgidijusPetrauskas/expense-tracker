@@ -2,10 +2,14 @@
 import { Reducer } from 'redux';
 
 import { v4 as createId } from 'uuid';
-
 import {
-  STOCKS_SET_STOCK, STOCKS_DELETE_STOCK, STOCKS_SET_ERROR, STOCKS_CLEAR_ERROR,
+  STOCKS_SET_LOADING,
+  STOCKS_SET_STOCK,
+  STOCKS_DELETE_STOCK,
+  STOCKS_SET_ERROR,
+  STOCKS_CLEAR_ERROR,
 } from './stocks-action-types';
+
 import {
   StocksSetErrorAction,
   StocksActions,
@@ -17,6 +21,7 @@ import {
 const initialState: StocksState = {
   stocks: [],
   error: null,
+  loading: false,
 };
 
 const stocksReducer: Reducer<StocksState, StocksActions> = (state = initialState, action) => {
@@ -33,10 +38,11 @@ const stocksReducer: Reducer<StocksState, StocksActions> = (state = initialState
             chartData:
               Object.entries(payload['Time Series (Daily)']).map((item) => ({
                 date: item[0],
-                value: Object.values(item[1] as object)[0],
-              })),
+                price: Object.values(item[1] as object)[0],
+              })).reverse(),
           },
         ],
+        loading: false,
       };
     }
 
@@ -53,6 +59,7 @@ const stocksReducer: Reducer<StocksState, StocksActions> = (state = initialState
       return {
         ...state,
         error: payload.error,
+        loading: false,
       };
     }
 
@@ -60,6 +67,14 @@ const stocksReducer: Reducer<StocksState, StocksActions> = (state = initialState
       return {
         ...state,
         error: null,
+        loading: false,
+      };
+    }
+
+    case STOCKS_SET_LOADING: {
+      return {
+        ...state,
+        loading: true,
       };
     }
 

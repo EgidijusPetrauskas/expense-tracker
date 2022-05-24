@@ -1,15 +1,16 @@
 import {
-  STOCKS_SET_STOCK, STOCKS_DELETE_STOCK, STOCKS_CLEAR_ERROR, STOCKS_SET_ERROR,
+  STOCKS_SET_STOCK, STOCKS_DELETE_STOCK, STOCKS_CLEAR_ERROR, STOCKS_SET_ERROR, STOCKS_SET_LOADING,
 } from './stocks-action-types';
 
 export type StocksState = {
   stocks: Stocks[],
   error: string | null,
+  loading: boolean,
 };
 
 export type ChartData = {
   date: string,
-  value: string,
+  price: string,
 };
 
 export type Stock = {
@@ -50,4 +51,8 @@ export type StocksClearErrorAction = {
   type: typeof STOCKS_CLEAR_ERROR,
 };
 
-export type StocksActions = StocksSetStockAction | StocksDeleteStockAction | StocksSetErrorAction | StocksClearErrorAction;
+export type StocksSetLoadingAction = {
+  type: typeof STOCKS_SET_LOADING,
+};
+
+export type StocksActions = StocksSetStockAction | StocksDeleteStockAction | StocksSetErrorAction | StocksClearErrorAction | StocksSetLoadingAction;

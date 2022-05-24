@@ -10,16 +10,16 @@ import {
 } from 'recharts';
 import { parseISO, format } from 'date-fns';
 
-import { Stock } from '../../../store/features/stocks-portfolio/types';
+import { Stock } from '../../../store/features/stocks/types';
 
 type StockChartProps = {
   chartData: Stock['chartData']
 };
 
 const StockChart: React.FC<StockChartProps> = ({ chartData }) => (
-  <ResponsiveContainer width="100%" height={240}>
+  <ResponsiveContainer width="100%" height={270}>
     <AreaChart data={chartData}>
-      <Area dataKey="value" stroke="#2451b7" fill="transparent" />
+      <Area dataKey="price" stroke="#2451b7" fill="transparent" />
       <XAxis
         dataKey="date"
         axisLine={false}
@@ -32,11 +32,11 @@ const StockChart: React.FC<StockChartProps> = ({ chartData }) => (
         }}
       />
       <YAxis
-        dataKey="value"
+        dataKey="price"
         axisLine={false}
         tickLine={false}
         fontSize={11}
-        tickCount={4}
+        tickCount={6}
         tickFormatter={(number) => `$${number.toFixed(2)}`}
       />
       <Tooltip />
