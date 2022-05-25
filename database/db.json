@@ -6,11 +6,14 @@
       "password": "Jonas121"
     }
   ],
-  "stock_portfolio": [
+  "stock_watchlist": [
     {
       "id": "1",
       "userId": "1",
-      "stocks": []
+      "stocks": [
+        "AAPL",
+        "AMZN"
+      ]
     }
   ]
 }

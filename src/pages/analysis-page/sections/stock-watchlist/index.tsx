@@ -20,7 +20,7 @@ const tempVal = {
 
 const headerValues = ['SYMBOL', 'EXCHANGE', 'CURRENCY', 'SECTOR', '52 WEEK HIGHT', '52 WEEK LOW', 'REMOVE'];
 
-const WatchlistSection = () => {
+const WatchlistSection: React.FC = () => {
   const customHeaderCell = (value: string) => (
     <TableCell
       sx={(theme) => ({

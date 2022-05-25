@@ -7,13 +7,22 @@ import {
   Alert,
 } from '@mui/material';
 
+import axios from 'axios';
 import StockChart from '../../components/stock-chart';
-import { selectStocks, selectStocksError, selectStocksLoading } from '../../../../store/selectors';
+import {
+  selectStocks, selectStocksError, selectStocksLoading, selectUser,
+} from '../../../../store/selectors';
 import { useRootDispatch, useRootSelector } from '../../../../store/hooks';
 import { createStocksFetchStockAction, createStocksDeleteStockAction } from '../../../../store/action-creators';
-import { stocksClearErrorAction } from '../../../../store/features/stocks/stocks-action-creators';
+import { stocksClearErrorAction, createStocksSetErrorAction } from '../../../../store/features/stocks/stocks-action-creators';
 import WindowButton from './window-button';
 import SearchBar from './search-bar';
+
+type WatchlistItem = {
+  id: string,
+  userId: string,
+  stocks: string[]
+};
 
 const styles = {
   aCenter: {
@@ -35,6 +44,7 @@ const styles = {
 
 const ResearchSection: React.FC = () => {
   const [searchValue, setSearchValue] = useState<string>('');
+  const user = useRootSelector(selectUser);
   const stocks = useRootSelector(selectStocks);
   const error = useRootSelector(selectStocksError);
   const loading = useRootSelector(selectStocksLoading);
@@ -45,6 +55,26 @@ const ResearchSection: React.FC = () => {
     const stocksSetStockAction = createStocksFetchStockAction(searchValue);
     dispatch(stocksSetStockAction);
     setSearchValue('');
+  };
+
+  const addToWatchlist = async (symbol: string) => {
+    if (user === null) {
+      dispatch(createStocksSetErrorAction);
+      return;
+    }
+
+    const { data } = await axios.get<WatchlistItem[]>('http://localhost:5000/stock_watchlist');
+    const userExists = data.map((item) => item.userId).includes(user.id);
+
+    if (userExists) {
+      const [watchlistItem] = data.filter((item: WatchlistItem) => item.userId === user.id);
+      await axios.patch<WatchlistItem>(
+        `http://localhost:5000/stock_watchlist/${user.id}`,
+        { stocks: [...watchlistItem.stocks, symbol] },
+      );
+    } else {
+      await axios.post<WatchlistItem>('http://localhost:5000/stock_watchlist', { userId: user.id, stocks: [symbol] });
+    }
   };
 
   const clearError = () => {
@@ -111,6 +141,7 @@ const ResearchSection: React.FC = () => {
                 />
                 <WindowButton
                   variant="add"
+                  onClick={() => addToWatchlist(stock.symbol)}
                   hoverText="Add To Watchlist"
                   color={styles.chartBlue}
                 />
