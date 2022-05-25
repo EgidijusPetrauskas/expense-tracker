@@ -1,7 +1,3 @@
-import {
-  STOCKS_SET_STOCK, STOCKS_DELETE_STOCK, STOCKS_CLEAR_ERROR, STOCKS_SET_ERROR, STOCKS_SET_LOADING,
-} from './stocks-action-types';
-
 export type StocksState = {
   stocks: Stocks[],
   error: string | null,
@@ -30,29 +26,38 @@ export type ResponseStock = {
   'Time Series (Daily)': object
 };
 
+export enum StocksActionType {
+  STOCKS_SET_STOCK = 'STOCKS_SET_STOCK',
+  STOCKS_DELETE_STOCK = 'STOCKS_DELETE_STOCK',
+  STOCKS_SET_ERROR = 'STOCKS_SET_ERROR',
+  STOCKS_CLEAR_ERROR = 'STOCKS_CLEAR_ERROR',
+  STOCKS_SET_LOADING = 'STOCKS_SET_LOADING',
+
+}
+
 export type StocksSetStockAction = {
-  type: typeof STOCKS_SET_STOCK,
+  type: StocksActionType.STOCKS_SET_STOCK,
   payload: ResponseStock
 };
 
 export type StocksDeleteStockAction = {
-  type: typeof STOCKS_DELETE_STOCK,
+  type: StocksActionType.STOCKS_DELETE_STOCK,
   payload: string
 };
 
 export type StocksSetErrorAction = {
-  type: typeof STOCKS_SET_ERROR,
+  type: StocksActionType.STOCKS_SET_ERROR,
   payload: {
     error: string
   }
 };
 
 export type StocksClearErrorAction = {
-  type: typeof STOCKS_CLEAR_ERROR,
+  type: StocksActionType.STOCKS_CLEAR_ERROR,
 };
 
 export type StocksSetLoadingAction = {
-  type: typeof STOCKS_SET_LOADING,
+  type: StocksActionType.STOCKS_SET_LOADING,
 };
 
 export type StocksActions = StocksSetStockAction | StocksDeleteStockAction | StocksSetErrorAction | StocksClearErrorAction | StocksSetLoadingAction;

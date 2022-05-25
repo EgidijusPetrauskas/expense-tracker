@@ -1,13 +1,7 @@
 /* eslint-disable import/prefer-default-export */
-import axios from 'axios';
 import { Dispatch } from 'redux';
-import {
-  STOCKS_SET_LOADING,
-  STOCKS_DELETE_STOCK,
-  STOCKS_SET_STOCK,
-  STOCKS_SET_ERROR,
-  STOCKS_CLEAR_ERROR,
-} from './stocks-action-types';
+import axios from 'axios';
+
 import {
   StocksSetLoadingAction,
   StocksClearErrorAction, StocksSetErrorAction,
@@ -16,29 +10,30 @@ import {
   ResponseStock,
   StocksSetStockAction,
   Stock,
+  StocksActionType,
 } from './types';
 
 export const createStocksSetStockAction = (stockData: ResponseStock): StocksSetStockAction => ({
-  type: STOCKS_SET_STOCK,
+  type: StocksActionType.STOCKS_SET_STOCK,
   payload: stockData,
 });
 
 export const createStocksDeleteStockAction = (id: Stock['id']): StocksDeleteStockAction => ({
-  type: STOCKS_DELETE_STOCK,
+  type: StocksActionType.STOCKS_DELETE_STOCK,
   payload: id,
 });
 
 export const createStocksSetErrorAction = (error: string): StocksSetErrorAction => ({
-  type: STOCKS_SET_ERROR,
+  type: StocksActionType.STOCKS_SET_ERROR,
   payload: { error },
 });
 
 export const stocksClearErrorAction: StocksClearErrorAction = {
-  type: STOCKS_CLEAR_ERROR,
+  type: StocksActionType.STOCKS_CLEAR_ERROR,
 };
 
 export const stocksSetLoadingAction: StocksSetLoadingAction = {
-  type: STOCKS_SET_LOADING,
+  type: StocksActionType.STOCKS_SET_LOADING,
 };
 
 export const createStocksFetchStockAction = (

@@ -1,7 +1,4 @@
 import { User } from '../../../types/user';
-import {
-  AUTH_SET_USER, AUTH_LOADING, AUTH_SET_ERROR, AUTH_CLEAR_ERROR, AUTH_LOGOUT,
-} from './auth-action-types';
 
 export type AuthState = {
   user: User | null,
@@ -9,30 +6,39 @@ export type AuthState = {
   error: string | null,
 };
 
+export enum AuthActionType {
+  AUTH_SET_USER = 'AUTH_SET_USER',
+  AUTH_LOADING = 'AUTH_LOADING',
+  AUTH_SET_ERROR = 'AUTH_SET_ERROR',
+  AUTH_CLEAR_ERROR = 'AUTH_CLEAR_ERROR',
+  AUTH_LOGOUT = 'AUTH_LOGOUT',
+
+}
+
 export type AuthSetUserAction = {
-  type: typeof AUTH_SET_USER,
+  type: AuthActionType.AUTH_SET_USER,
   payload: {
     user: User
   }
 };
 
 export type AuthLoadingAction = {
-  type: typeof AUTH_LOADING,
+  type: AuthActionType.AUTH_LOADING,
 };
 
 export type AuthErrorAction = {
-  type: typeof AUTH_SET_ERROR,
+  type: AuthActionType.AUTH_SET_ERROR,
   payload: {
     error: string
   }
 };
 
 export type AuthClearErrorAction = {
-  type: typeof AUTH_CLEAR_ERROR,
+  type: AuthActionType.AUTH_CLEAR_ERROR,
 };
 
 export type AuthLogoutAction = {
-  type: typeof AUTH_LOGOUT;
+  type: AuthActionType.AUTH_LOGOUT;
 };
 
 export type AuthActions = AuthSetUserAction | AuthLoadingAction | AuthErrorAction | AuthLogoutAction | AuthClearErrorAction;

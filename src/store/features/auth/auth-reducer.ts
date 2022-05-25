@@ -4,14 +4,9 @@ import { Reducer } from 'redux';
 import { User } from '../../../types';
 import { getLocalStorage, setLocalStorage } from '../../../helpers/local-storage-helper';
 import {
-  AUTH_SET_USER,
-  AUTH_LOADING,
-  AUTH_SET_ERROR,
-  AUTH_CLEAR_ERROR,
-  AUTH_LOGOUT,
-} from './auth-action-types';
-import {
-  AuthErrorAction, AuthSetUserAction, AuthState, AuthActions,
+  AuthActionType,
+  AuthState,
+  AuthActions,
 } from './types';
 
 const initialState: AuthState = {
@@ -22,17 +17,16 @@ const initialState: AuthState = {
 
 const authReducer: Reducer<AuthState, AuthActions> = (state = initialState, action) => {
   switch (action.type) {
-    case AUTH_SET_USER: {
-      const { payload } = action as AuthSetUserAction;
-      setLocalStorage('user', payload.user);
+    case AuthActionType.AUTH_SET_USER: {
+      setLocalStorage('user', action.payload.user);
       return {
         ...state,
-        user: payload.user,
+        user: action.payload.user,
         loading: false,
       };
     }
 
-    case AUTH_LOADING: {
+    case AuthActionType.AUTH_LOADING: {
       let loading: AuthState['loading'];
       if (state.loading) { loading = false; } else { loading = true; }
       return {
@@ -41,16 +35,15 @@ const authReducer: Reducer<AuthState, AuthActions> = (state = initialState, acti
       };
     }
 
-    case AUTH_SET_ERROR: {
-      const { payload } = action as AuthErrorAction;
+    case AuthActionType.AUTH_SET_ERROR: {
       return {
         ...state,
-        error: payload.error,
+        error: action.payload.error,
         loading: false,
       };
     }
 
-    case AUTH_CLEAR_ERROR: {
+    case AuthActionType.AUTH_CLEAR_ERROR: {
       return {
         ...state,
         error: null,
@@ -58,7 +51,7 @@ const authReducer: Reducer<AuthState, AuthActions> = (state = initialState, acti
       };
     }
 
-    case AUTH_LOGOUT: {
+    case AuthActionType.AUTH_LOGOUT: {
       localStorage.removeItem('user');
       return {
         ...state,
