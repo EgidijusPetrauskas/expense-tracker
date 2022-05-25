@@ -12,7 +12,6 @@ export enum AuthActionType {
   AUTH_SET_ERROR = 'AUTH_SET_ERROR',
   AUTH_CLEAR_ERROR = 'AUTH_CLEAR_ERROR',
   AUTH_LOGOUT = 'AUTH_LOGOUT',
-
 }
 
 export type AuthSetUserAction = {

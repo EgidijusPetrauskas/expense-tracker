@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import {
   Paper,
@@ -36,6 +36,30 @@ const WatchlistSection: React.FC = () => {
       {value}
     </TableCell>
   );
+
+  const fetchh = () => {
+    const API_KEY = 'GA62GOU1YT7XJ0OP';
+
+    const url = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=IBM&apikey=${API_KEY}`;
+
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => {
+        console.table(data);
+        const {
+          Symbol, Exchange, Currency, Sector,
+        } = data;
+        const high = data['52WeekHigh'];
+        const low = data['52WeekLow'];
+        console.log({
+          Symbol, Exchange, Currency, Sector, high, low,
+        });
+      });
+  };
+
+  useEffect(() => {
+    fetchh();
+  }, []);
 
   return (
     <Paper sx={{ width: 1 }}>

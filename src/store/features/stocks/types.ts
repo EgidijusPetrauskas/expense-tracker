@@ -1,5 +1,5 @@
 export type StocksState = {
-  stocks: Stocks[],
+  stocks: Stock[],
   error: string | null,
   loading: boolean,
 };
