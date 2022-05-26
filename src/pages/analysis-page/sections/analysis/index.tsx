@@ -1,7 +1,7 @@
 import React from 'react';
 
-const AnalisisSection = () => (
+const AnalysisSection = () => (
   <div>AnalisisSection</div>
 );
 
-export default AnalisisSection;
+export default AnalysisSection;

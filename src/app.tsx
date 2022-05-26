@@ -14,10 +14,14 @@ import AboutPage from './pages/about-page';
 import RegisterPage from './pages/register-page';
 import SignInPage from './pages/sign-in-page';
 import MainLayout from './layouts/main-layout';
-import AnalysisPage from './pages/analysis-page/index';
 import BudgetPage from './pages/budget-page/index';
 import ProfilePage from './pages/profile-page/index';
 import store from './store/index';
+import AnalysisPageLayout from './layouts/analysis-page-layout';
+import AnalysisSection from './pages/analysis-page/sections/analysis';
+import WatchlistSection from './pages/analysis-page/sections/stock-watchlist/index';
+import ResearchSection from './pages/analysis-page/sections/stock-research/index';
+import InfoCard from './pages/analysis-page/components/info-card';
 
 const App: React.FC = () => (
   <BrowserRouter>
@@ -42,14 +46,12 @@ const App: React.FC = () => (
               </RequireVisitor>
             )}
           />
-          <Route
-            path="/analysis"
-            element={(
-              <RequireAuth>
-                <AnalysisPage />
-              </RequireAuth>
-            )}
-          />
+          <Route path="/analysis" element={<AnalysisPageLayout />}>
+            <Route index element={<InfoCard />} />
+            <Route path="/analysis/analysis" element={<AnalysisSection />} />
+            <Route path="/analysis/watchlist" element={<WatchlistSection />} />
+            <Route path="/analysis/research" element={<ResearchSection />} />
+          </Route>
           <Route
             path="/budget"
             element={(
