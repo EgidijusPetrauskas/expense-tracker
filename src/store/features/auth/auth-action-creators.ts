@@ -14,16 +14,6 @@ import {
   AuthActionType,
 } from './types';
 
-export const createAuthSetUserAction = (user: User): AuthSetUserAction => ({
-  type: AuthActionType.AUTH_SET_USER,
-  payload: { user },
-});
-
-export const createAuthSetErrorAction = (error: string): AuthErrorAction => ({
-  type: AuthActionType.AUTH_SET_ERROR,
-  payload: { error },
-});
-
 export const authSetLoadingAction: AuthLoadingAction = {
   type: AuthActionType.AUTH_LOADING,
 };
@@ -35,6 +25,16 @@ export const authClearErrorAction: AuthClearErrorAction = {
 export const authSetLogoutAction: AuthLogoutAction = {
   type: AuthActionType.AUTH_LOGOUT,
 };
+
+export const createAuthSetUserAction = (user: User): AuthSetUserAction => ({
+  type: AuthActionType.AUTH_SET_USER,
+  payload: { user },
+});
+
+export const createAuthSetErrorAction = (error: string): AuthErrorAction => ({
+  type: AuthActionType.AUTH_SET_ERROR,
+  payload: { error },
+});
 
 export const authenticate = async (
   dispatch: Dispatch<GlobalActions>,

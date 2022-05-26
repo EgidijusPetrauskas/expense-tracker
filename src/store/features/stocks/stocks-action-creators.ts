@@ -13,6 +13,16 @@ import {
   StocksActionType,
 } from './types';
 
+const ALPHA_VANTAGE_API_KEY = process.env.REACT_APP_ALPHA_VANTAGE_API_KEY;
+
+export const stocksClearErrorAction: StocksClearErrorAction = {
+  type: StocksActionType.STOCKS_CLEAR_ERROR,
+};
+
+export const stocksSetLoadingAction: StocksSetLoadingAction = {
+  type: StocksActionType.STOCKS_SET_LOADING,
+};
+
 export const createStocksSetStockAction = (stockData: ResponseStock): StocksSetStockAction => ({
   type: StocksActionType.STOCKS_SET_STOCK,
   payload: stockData,
@@ -28,21 +38,12 @@ export const createStocksSetErrorAction = (error: string): StocksSetErrorAction 
   payload: { error },
 });
 
-export const stocksClearErrorAction: StocksClearErrorAction = {
-  type: StocksActionType.STOCKS_CLEAR_ERROR,
-};
-
-export const stocksSetLoadingAction: StocksSetLoadingAction = {
-  type: StocksActionType.STOCKS_SET_LOADING,
-};
-
 export const createStocksFetchStockAction = (
   symbol: string,
 ) => async (dispatch: Dispatch<StocksActions>): Promise<void> => {
   dispatch(stocksSetLoadingAction);
   try {
-    const API_KEY = 'GA62GOU1YT7XJ0OP';
-    const API_URL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&outputsize=compact&apikey=${API_KEY}`;
+    const API_URL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&outputsize=compact&apikey=${ALPHA_VANTAGE_API_KEY}`;
     const response = await axios.get(API_URL);
     const { data } = await response;
     if (data.Note) {

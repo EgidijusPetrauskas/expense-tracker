@@ -9,20 +9,21 @@ import { User } from '../../../types/user';
 type AddToWatchListType = (symbol: string) => Promise<string>;
 type LoadWatchListType = () => Promise<string[]>;
 
+const API_SERVER = process.env.REACT_APP_API_SERVER;
+const USER_KEY_IN_LOCAL_STORAGE = process.env.REACT_APP_USER_KEY_IN_LOCAL_STORAGE;
+
 namespace WatchlistService {
   export const addToWatchlist: AddToWatchListType = async (symbol: string) => {
     let response: 'success' | 'failed';
 
-    const user: User | null = getLocalStorage('user');
+    const user: User | null = getLocalStorage(USER_KEY_IN_LOCAL_STORAGE);
 
     if (!user) {
       throw new Error('You have to Sign in!');
       response = 'failed';
     }
 
-    const { data } = await axios.get<StocksWatchListItem[]>(
-      'http://localhost:5000/stock_watchlist',
-    );
+    const { data } = await axios.get<StocksWatchListItem[]>(`${API_SERVER}/users_watchlist`);
     const existingWatchListItem = data.find((item: StocksWatchListItem) => item.userId === user.id);
 
     if (existingWatchListItem?.stocks.includes(symbol)) {
@@ -32,17 +33,18 @@ namespace WatchlistService {
 
     if (existingWatchListItem) {
       await axios.patch<StocksWatchListItem>(
-        `http://localhost:5000/stock_watchlist/${user.id}`,
+        `${API_SERVER}/stock_watchlist/${user.id}`,
         { stocks: [...existingWatchListItem.stocks, symbol] },
       );
       response = 'success';
     } else {
       await axios.post<StocksWatchListItem>(
-        'http://localhost:5000/stock_watchlist',
+        `${API_SERVER}/users_watchlist`,
         { userId: user.id, stocks: [symbol] },
       );
       response = 'success';
     }
+
     return response;
   };
 
@@ -51,9 +53,7 @@ namespace WatchlistService {
     if (!user) {
       throw new Error('You have to Sign in!');
     }
-    const { data } = await axios.get<StocksWatchListItem>(
-      `http://localhost:5000/stock_watchlist/${user.id}`,
-    );
+    const { data } = await axios.get<StocksWatchListItem>(`${API_SERVER}/users_watchlist/${user.id}`);
     return data.stocks;
   };
 }

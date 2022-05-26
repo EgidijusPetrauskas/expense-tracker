@@ -24,7 +24,7 @@ import {
   watchlistSetLoadingAction,
 } from '../../../../store/features/watchlist/watchlist-action-creators';
 import LoadingError from '../../components/loading-error';
-import CustomBackDrop from '../../../../components/customBackdrop';
+import CustomBackDrop from '../../../../components/custom-backdrop';
 import CustomTableHeader from './custom-table-headers';
 
 const headerValues = ['SYMBOL', 'EXCHANGE', 'CURRENCY', 'SECTOR', '52 WEEK HIGHT', '52 WEEK LOW', 'REMOVE'];

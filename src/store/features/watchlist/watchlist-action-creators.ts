@@ -15,6 +15,24 @@ import {
   WatchlistItem,
 } from './types';
 
+const ALPHA_VANTAGE_API_KEY = process.env.REACT_APP_ALPHA_VANTAGE_API_KEY;
+
+export const watchlistSetLoadingAction: WatchlistSetLoadingAction = {
+  type: WatchlistActionType.WATCHLIST_SET_LOADING,
+};
+
+export const watchlistClearErrorAction: WatchlistClearErrorAction = {
+  type: WatchlistActionType.WATCHLIST_CLEAR_ERROR,
+};
+
+export const watchlistSetIsSetAction: WatchlistSetIsSetAction = {
+  type: WatchlistActionType.WATCHLIST_SET_IS_SET,
+};
+
+export const watchlistRefreshAction: WatchlistRefreshAction = {
+  type: WatchlistActionType.WATCHLIST_REFRESH,
+};
+
 export const createWatchlistSetItemAcion = (itemData: WatchlistItem): WatchlistSetItemAction => ({
   type: WatchlistActionType.WATCHLIST_SET_ITEM,
   payload: itemData,
@@ -25,34 +43,17 @@ export const createWatchlistSetErrorAction = (error: string): WatchlistSetErrorA
   payload: { error },
 });
 
-export const watchlistSetLoadingAction: WatchlistSetLoadingAction = {
-  type: WatchlistActionType.WATCHLIST_SET_LOADING,
-};
-
-export const watchlistClearErrorAction: WatchlistClearErrorAction = {
-  type: WatchlistActionType.WATCHLIST_CLEAR_ERROR,
-};
-
 export const createWatchlistSetSuccessAction = (response: boolean | string): WatchlistSetSuccessAction => ({
   type: WatchlistActionType.WATCHLIST_SET_SUCCESS,
   payload: response,
 });
-
-export const watchlistSetIsSetAction: WatchlistSetIsSetAction = {
-  type: WatchlistActionType.WATCHLIST_SET_IS_SET,
-};
-
-export const watchlistRefreshAction: WatchlistRefreshAction = {
-  type: WatchlistActionType.WATCHLIST_REFRESH,
-};
 
 export const createWatchlistItemFetchAction = async (
   symbol: string,
   dispatch: Dispatch<WatchlistActions>,
 ) => {
   try {
-    const API_KEY = 'GA62GOU1YT7XJ0OP';
-    const API_URL = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${API_KEY}`;
+    const API_URL = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${ALPHA_VANTAGE_API_KEY}`;
     const response = await axios.get(API_URL);
     const { data } = await response;
     if (data.Note) {

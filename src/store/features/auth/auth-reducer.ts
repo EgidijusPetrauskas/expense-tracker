@@ -9,8 +9,10 @@ import {
   AuthActions,
 } from './types';
 
+const USER_KEY_IN_LOCAL_STORAGE = process.env.REACT_APP_USER_KEY_IN_LOCAL_STORAGE;
+
 const initialState: AuthState = {
-  user: getLocalStorage<User>('user'),
+  user: getLocalStorage<User>(USER_KEY_IN_LOCAL_STORAGE),
   loading: false,
   error: null,
 };
@@ -18,7 +20,7 @@ const initialState: AuthState = {
 const authReducer: Reducer<AuthState, AuthActions> = (state = initialState, action) => {
   switch (action.type) {
     case AuthActionType.AUTH_SET_USER: {
-      setLocalStorage('user', action.payload.user);
+      setLocalStorage(USER_KEY_IN_LOCAL_STORAGE, action.payload.user);
       return {
         ...state,
         user: action.payload.user,
@@ -52,7 +54,7 @@ const authReducer: Reducer<AuthState, AuthActions> = (state = initialState, acti
     }
 
     case AuthActionType.AUTH_LOGOUT: {
-      localStorage.removeItem('user');
+      localStorage.removeItem(USER_KEY_IN_LOCAL_STORAGE);
       return {
         ...state,
         user: null,
