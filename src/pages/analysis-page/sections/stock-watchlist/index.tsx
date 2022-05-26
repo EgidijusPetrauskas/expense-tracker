@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import axios from 'axios';
 
 import {
   Paper,
@@ -7,20 +8,21 @@ import {
   TableCell,
   TableRow,
 } from '@mui/material';
-import CustomTableRow from './custom-table-row';
 
-const tempVal = {
-  symbol: 'IBM',
-  exchange: 'NYSE',
-  currency: 'USD',
-  sector: 'Technology',
-  high: '400',
-  low: '200',
-};
+import CustomTableRow from './custom-table-row';
+import { useRootDispatch, useRootSelector } from '../../../../store/hooks';
+import { selectUser } from '../../../../store/selectors';
+import { StocksWatchListItem } from '../../../../types/stock-watchlist-item';
+import { createWatchlistItemFetchAction } from '../../../../store/features/watchlist/watchlist-action-creators';
+import { selectWatchlist } from '../../../../store/features/watchlist/watchlist-selectors';
 
 const headerValues = ['SYMBOL', 'EXCHANGE', 'CURRENCY', 'SECTOR', '52 WEEK HIGHT', '52 WEEK LOW', 'REMOVE'];
 
 const WatchlistSection: React.FC = () => {
+  const user = useRootSelector(selectUser);
+  const dispatch = useRootDispatch();
+  const watchlist = useRootSelector(selectWatchlist);
+
   const customHeaderCell = (value: string) => (
     <TableCell
       sx={(theme) => ({
@@ -37,30 +39,21 @@ const WatchlistSection: React.FC = () => {
     </TableCell>
   );
 
-  const fetchh = () => {
-    const API_KEY = 'GA62GOU1YT7XJ0OP';
+  // ================================== BLOGIS ↓↓↓↓↓↓
 
-    const url = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=IBM&apikey=${API_KEY}`;
-
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        console.table(data);
-        const {
-          Symbol, Exchange, Currency, Sector,
-        } = data;
-        const high = data['52WeekHigh'];
-        const low = data['52WeekLow'];
-        console.log({
-          Symbol, Exchange, Currency, Sector, high, low,
-        });
-      });
+  const loadWatchlist = async () => {
+    if (!user) {
+      throw new Error('Reik padaryt i error');
+    }
+    const { data } = await axios.get<StocksWatchListItem>(`http://localhost:5000/stock_watchlist/${user.id}`);
+    data.stocks.map((stock) => dispatch(createWatchlistItemFetchAction(stock)));
   };
 
   useEffect(() => {
-    fetchh();
+    loadWatchlist();
   }, []);
 
+  //= =================================
   return (
     <Paper sx={{ width: 1 }}>
       <Table>
@@ -68,9 +61,9 @@ const WatchlistSection: React.FC = () => {
           <TableRow sx={(theme) => ({ background: theme.palette.secondary.main })}>
             {headerValues.map((cellValue) => customHeaderCell(cellValue))}
           </TableRow>
-          <CustomTableRow data={tempVal} />
-          <CustomTableRow data={tempVal} />
-          <CustomTableRow data={tempVal} />
+          {watchlist.map((item) => (
+            <CustomTableRow key={item.symbol} data={item} />
+          ))}
         </TableBody>
       </Table>
     </Paper>

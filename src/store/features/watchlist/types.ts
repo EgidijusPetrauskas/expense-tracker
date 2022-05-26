@@ -1,5 +1,4 @@
 export type WatchlistItem = {
-  id: string,
   symbol: string,
   exchange: string,
   currency: string,
@@ -11,7 +10,8 @@ export type WatchlistItem = {
 export type WatchlistState = {
   list: WatchlistItem[],
   loading: boolean,
-  error: string | null
+  error: string | null,
+  success: boolean,
 };
 
 export enum WatchlistActionType {
@@ -19,6 +19,7 @@ export enum WatchlistActionType {
   WATCHLIST_SET_ERROR = 'WATCHLIST_SET_ERROR',
   WATCHLIST_CLEAR_ERROR = 'WATCHLIST_CLEAR_ERROR',
   WATCHLIST_SET_LOADING = 'WATCHLIST_SET_LOADING',
+  WATCHLIST_SET_SUCCESS = 'WATCHLIST_SET_SUCCESS',
 }
 
 export type WatchlistSetItemAction = {
@@ -41,4 +42,8 @@ export type WatchlistSetLoadingAction = {
   type: WatchlistActionType.WATCHLIST_SET_LOADING
 };
 
-export type WatchlistActions = WatchlistSetItemAction | WatchlistSetErrorAction | WatchlistClearErrorAction | WatchlistSetLoadingAction;
+export type WatchlistSetSuccessAction = {
+  type: WatchlistActionType.WATCHLIST_SET_SUCCESS
+};
+
+export type WatchlistActions = WatchlistSetItemAction | WatchlistSetErrorAction | WatchlistClearErrorAction | WatchlistSetLoadingAction | WatchlistSetSuccessAction;

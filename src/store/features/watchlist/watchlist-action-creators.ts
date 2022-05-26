@@ -1,7 +1,8 @@
 import { Dispatch } from 'redux';
 import axios from 'axios';
-
+import WatchlistService from './watchlist-service';
 import {
+  WatchlistSetSuccessAction,
   WatchlistActions,
   WatchlistClearErrorAction,
   WatchlistSetLoadingAction,
@@ -29,6 +30,10 @@ export const watchlistClearErrorAction: WatchlistClearErrorAction = {
   type: WatchlistActionType.WATCHLIST_CLEAR_ERROR,
 };
 
+export const watchlistsetSuccessAction: WatchlistSetSuccessAction = {
+  type: WatchlistActionType.WATCHLIST_SET_SUCCESS,
+};
+
 export const createWatchlistItemFetchAction = (
   symbol: string,
 ) => async (dispatch: Dispatch<WatchlistActions>): Promise<void> => {
@@ -43,8 +48,7 @@ export const createWatchlistItemFetchAction = (
     } = data;
     const high = data['52WeekHigh'];
     const low = data['52WeekLow'];
-    const clearData: WatchlistItem = {
-      id: 'ojsdf', // !!!!
+    const cleanData: WatchlistItem = {
       symbol: Symbol,
       exchange: Exchange,
       currency: Currency,
@@ -52,8 +56,25 @@ export const createWatchlistItemFetchAction = (
       high,
       low,
     };
-    const watchlistSetItemAction = createWatchlistSetItemAcion(clearData);
+    const watchlistSetItemAction = createWatchlistSetItemAcion(cleanData);
     dispatch(watchlistSetItemAction);
+  } catch (error) {
+    const errMsg = error instanceof Error ? error.message : String(error);
+    const watchlistSetErrorAction = createWatchlistSetErrorAction(errMsg);
+    dispatch(watchlistSetErrorAction);
+  }
+};
+
+export const createAppendToWatchListAction = (
+  symbol: string,
+) => async (dispatch: Dispatch<WatchlistActions>): Promise<void> => {
+  dispatch(watchlistSetLoadingAction);
+  try {
+    const response = await WatchlistService.addToWatchlist(symbol);
+    if (response === 'success') dispatch(watchlistsetSuccessAction);
+    setTimeout(() => {
+      dispatch(watchlistsetSuccessAction);
+    }, 1700);
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : String(error);
     const watchlistSetErrorAction = createWatchlistSetErrorAction(errMsg);

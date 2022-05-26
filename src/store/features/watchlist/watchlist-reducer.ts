@@ -7,6 +7,7 @@ const initialState: WatchlistState = {
   list: [],
   error: null,
   loading: false,
+  success: false,
 };
 
 const watchlistReducer: Reducer<WatchlistState, WatchlistActions> = (state = initialState, action) => {
@@ -45,6 +46,20 @@ const watchlistReducer: Reducer<WatchlistState, WatchlistActions> = (state = ini
       return {
         ...state,
         loading,
+      };
+    }
+
+    case WatchlistActionType.WATCHLIST_SET_SUCCESS: {
+      const current: WatchlistState['success'] = state.success;
+      let newVal: WatchlistState['success'];
+      if (current) {
+        newVal = false;
+      } else {
+        newVal = true;
+      }
+      return {
+        ...state,
+        success: newVal,
       };
     }
 

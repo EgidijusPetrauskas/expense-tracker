@@ -7,22 +7,19 @@ import {
   Alert,
 } from '@mui/material';
 
-import axios from 'axios';
 import StockChart from '../../components/stock-chart';
 import {
-  selectStocks, selectStocksError, selectStocksLoading, selectUser,
+  selectStocks,
+  selectStocksError,
+  selectStocksLoading,
 } from '../../../../store/selectors';
 import { useRootDispatch, useRootSelector } from '../../../../store/hooks';
 import { createStocksFetchStockAction, createStocksDeleteStockAction } from '../../../../store/action-creators';
-import { stocksClearErrorAction, createStocksSetErrorAction } from '../../../../store/features/stocks/stocks-action-creators';
+import { stocksClearErrorAction } from '../../../../store/features/stocks/stocks-action-creators';
 import WindowButton from './window-button';
 import SearchBar from './search-bar';
-
-type WatchlistItem = {
-  id: string,
-  userId: string,
-  stocks: string[]
-};
+import { createAppendToWatchListAction } from '../../../../store/features/watchlist/watchlist-action-creators';
+import { selectWatchlistSuccess } from '../../../../store/features/watchlist/watchlist-selectors';
 
 const styles = {
   aCenter: {
@@ -33,21 +30,27 @@ const styles = {
     display: 'flex',
     justifyContent: 'center',
   },
-
   col: {
     display: 'flex',
     flexDirection: 'column',
   },
-
   chartBlue: '#2451b7',
+  successAlert: {
+    height: 1,
+    alignItems: 'center',
+    position: 'absolute',
+    right: 0,
+    fontSize: 15,
+    letterSpacing: 0.7,
+  },
 };
 
 const ResearchSection: React.FC = () => {
   const [searchValue, setSearchValue] = useState<string>('');
-  const user = useRootSelector(selectUser);
   const stocks = useRootSelector(selectStocks);
   const error = useRootSelector(selectStocksError);
   const loading = useRootSelector(selectStocksLoading);
+  const successfullAdd = useRootSelector(selectWatchlistSuccess);
   const dispatch = useRootDispatch();
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
@@ -55,26 +58,6 @@ const ResearchSection: React.FC = () => {
     const stocksSetStockAction = createStocksFetchStockAction(searchValue);
     dispatch(stocksSetStockAction);
     setSearchValue('');
-  };
-
-  const addToWatchlist = async (symbol: string) => {
-    if (user === null) {
-      dispatch(createStocksSetErrorAction);
-      return;
-    }
-
-    const { data } = await axios.get<WatchlistItem[]>('http://localhost:5000/stock_watchlist');
-    const userExists = data.map((item) => item.userId).includes(user.id);
-
-    if (userExists) {
-      const [watchlistItem] = data.filter((item: WatchlistItem) => item.userId === user.id);
-      await axios.patch<WatchlistItem>(
-        `http://localhost:5000/stock_watchlist/${user.id}`,
-        { stocks: [...watchlistItem.stocks, symbol] },
-      );
-    } else {
-      await axios.post<WatchlistItem>('http://localhost:5000/stock_watchlist', { userId: user.id, stocks: [symbol] });
-    }
   };
 
   const clearError = () => {
@@ -89,7 +72,14 @@ const ResearchSection: React.FC = () => {
       gap: 4,
     }}
     >
-      <Box sx={{ height: 60 }}>
+      <Box
+        sx={{
+          width: 1,
+          height: 60,
+          position: 'relative',
+          ...styles.jCenter,
+        }}
+      >
         {error
           ? (
             <Alert
@@ -108,6 +98,18 @@ const ResearchSection: React.FC = () => {
               handleChange={setSearchValue}
             />
           )}
+        {successfullAdd && (
+          <Alert
+            elevation={16}
+            variant="filled"
+            severity="success"
+            sx={{
+              ...styles.successAlert,
+            }}
+          >
+            Added to Your Watchlist!
+          </Alert>
+        )}
       </Box>
       <Box sx={{
         width: 1, ...styles.jCenter, flexWrap: 'wrap', gap: 3,
@@ -141,7 +143,7 @@ const ResearchSection: React.FC = () => {
                 />
                 <WindowButton
                   variant="add"
-                  onClick={() => addToWatchlist(stock.symbol)}
+                  onClick={() => dispatch(createAppendToWatchListAction(stock.symbol))}
                   hoverText="Add To Watchlist"
                   color={styles.chartBlue}
                 />
