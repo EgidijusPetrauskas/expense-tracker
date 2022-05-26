@@ -12,6 +12,7 @@
       "userId": "1",
       "stocks": [
         "AAPL",
+        "IBM",
         "AMZN"
       ]
     }

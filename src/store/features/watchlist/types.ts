@@ -11,7 +11,8 @@ export type WatchlistState = {
   list: WatchlistItem[],
   loading: boolean,
   error: string | null,
-  success: boolean,
+  appendSuccess: boolean | string,
+  isSet: boolean
 };
 
 export enum WatchlistActionType {
@@ -20,6 +21,8 @@ export enum WatchlistActionType {
   WATCHLIST_CLEAR_ERROR = 'WATCHLIST_CLEAR_ERROR',
   WATCHLIST_SET_LOADING = 'WATCHLIST_SET_LOADING',
   WATCHLIST_SET_SUCCESS = 'WATCHLIST_SET_SUCCESS',
+  WATCHLIST_SET_IS_SET = 'WATCHLIST_SET_IS_SET',
+  WATCHLIST_REFRESH = 'WATCHLIST_REFRESH',
 }
 
 export type WatchlistSetItemAction = {
@@ -43,7 +46,16 @@ export type WatchlistSetLoadingAction = {
 };
 
 export type WatchlistSetSuccessAction = {
-  type: WatchlistActionType.WATCHLIST_SET_SUCCESS
+  type: WatchlistActionType.WATCHLIST_SET_SUCCESS,
+  payload: boolean | string
 };
 
-export type WatchlistActions = WatchlistSetItemAction | WatchlistSetErrorAction | WatchlistClearErrorAction | WatchlistSetLoadingAction | WatchlistSetSuccessAction;
+export type WatchlistSetIsSetAction = {
+  type: WatchlistActionType.WATCHLIST_SET_IS_SET
+};
+
+export type WatchlistRefreshAction = {
+  type: WatchlistActionType.WATCHLIST_REFRESH
+};
+
+export type WatchlistActions = WatchlistSetItemAction | WatchlistSetErrorAction | WatchlistClearErrorAction | WatchlistSetLoadingAction | WatchlistSetSuccessAction | WatchlistSetIsSetAction | WatchlistRefreshAction;

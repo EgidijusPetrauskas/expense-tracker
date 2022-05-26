@@ -24,7 +24,6 @@ const StockChart: React.FC<StockChartProps> = ({ chartData }) => (
         dataKey="date"
         axisLine={false}
         tickLine={false}
-        tickCount={4}
         fontSize={10}
         tickFormatter={(str) => {
           const date = parseISO(str);
@@ -36,7 +35,7 @@ const StockChart: React.FC<StockChartProps> = ({ chartData }) => (
         axisLine={false}
         tickLine={false}
         fontSize={11}
-        tickCount={6}
+        tickCount={10}
         tickFormatter={(number) => `$${number.toFixed(2)}`}
       />
       <Tooltip />

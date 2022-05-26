@@ -21,7 +21,6 @@ const stocksReducer: Reducer<StocksState, StocksActions> = (state = initialState
       return {
         ...state,
         stocks: [
-          ...state.stocks,
           {
             id: createId(),
             symbol: action.payload['Meta Data']['2. Symbol'],
@@ -31,6 +30,7 @@ const stocksReducer: Reducer<StocksState, StocksActions> = (state = initialState
                 price: Object.values(item[1] as object)[0],
               })).reverse(),
           },
+          ...state.stocks,
         ],
         loading: false,
       };

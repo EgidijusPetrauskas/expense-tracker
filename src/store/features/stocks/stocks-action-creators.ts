@@ -45,6 +45,15 @@ export const createStocksFetchStockAction = (
     const API_URL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&outputsize=compact&apikey=${API_KEY}`;
     const response = await axios.get(API_URL);
     const { data } = await response;
+    if (data.Note) {
+      throw new Error('To many calls to the server. Try in 1 min');
+    }
+    if (data['Error Message']) {
+      throw new Error(`No stocks found by the name "${symbol}"`);
+    }
+    if (data.Information) {
+      throw new Error('Reached maximum requist\'s per day');
+    }
     const stocksSetStockAction = createStocksSetStockAction(data);
     dispatch(stocksSetStockAction);
   } catch (error) {

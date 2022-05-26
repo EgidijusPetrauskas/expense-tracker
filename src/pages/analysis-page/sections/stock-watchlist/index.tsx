@@ -1,72 +1,78 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 
 import {
   Paper,
   Table,
   TableBody,
-  TableCell,
   TableRow,
+  Box,
 } from '@mui/material';
 
 import CustomTableRow from './custom-table-row';
-import { useRootDispatch, useRootSelector } from '../../../../store/hooks';
-import { selectUser } from '../../../../store/selectors';
-import { StocksWatchListItem } from '../../../../types/stock-watchlist-item';
-import { createWatchlistItemFetchAction } from '../../../../store/features/watchlist/watchlist-action-creators';
-import { selectWatchlist } from '../../../../store/features/watchlist/watchlist-selectors';
+import {
+  useRootSelector,
+  useRootDispatch,
+} from '../../../../store/hooks';
+import {
+  selectWatchlist,
+  selectWatchlistError,
+  selectWatchlistLoading,
+} from '../../../../store/features/watchlist/watchlist-selectors';
+import {
+  createSetWatchlistAction,
+  watchlistRefreshAction,
+  watchlistSetLoadingAction,
+} from '../../../../store/features/watchlist/watchlist-action-creators';
+import LoadingError from '../../components/loading-error';
+import CustomBackDrop from '../../../../components/customBackdrop';
+import CustomTableHeader from './custom-table-headers';
 
 const headerValues = ['SYMBOL', 'EXCHANGE', 'CURRENCY', 'SECTOR', '52 WEEK HIGHT', '52 WEEK LOW', 'REMOVE'];
 
 const WatchlistSection: React.FC = () => {
-  const user = useRootSelector(selectUser);
-  const dispatch = useRootDispatch();
+  const [reload, setReload] = useState(false);
   const watchlist = useRootSelector(selectWatchlist);
-
-  const customHeaderCell = (value: string) => (
-    <TableCell
-      sx={(theme) => ({
-        color: theme.palette.secondary.dark,
-        fontWeight: 700,
-        fontSize: 16,
-        letterSpacing: 1,
-      })}
-      align="center"
-      variant="head"
-      key={value}
-    >
-      {value}
-    </TableCell>
-  );
-
-  // ================================== BLOGIS ↓↓↓↓↓↓
-
-  const loadWatchlist = async () => {
-    if (!user) {
-      throw new Error('Reik padaryt i error');
-    }
-    const { data } = await axios.get<StocksWatchListItem>(`http://localhost:5000/stock_watchlist/${user.id}`);
-    data.stocks.map((stock) => dispatch(createWatchlistItemFetchAction(stock)));
-  };
+  const loading = useRootSelector(selectWatchlistLoading);
+  const error = useRootSelector(selectWatchlistError);
+  const dispatch = useRootDispatch();
 
   useEffect(() => {
-    loadWatchlist();
-  }, []);
+    dispatch(createSetWatchlistAction());
+  }, [reload]);
 
-  //= =================================
+  const refresh = () => {
+    dispatch(watchlistRefreshAction);
+    if (reload) {
+      setReload(false);
+    } else {
+      setReload(true);
+    }
+  };
+
   return (
-    <Paper sx={{ width: 1 }}>
-      <Table>
-        <TableBody>
-          <TableRow sx={(theme) => ({ background: theme.palette.secondary.main })}>
-            {headerValues.map((cellValue) => customHeaderCell(cellValue))}
-          </TableRow>
-          {watchlist.map((item) => (
-            <CustomTableRow key={item.symbol} data={item} />
-          ))}
-        </TableBody>
-      </Table>
-    </Paper>
+    <Box sx={{ width: 1, display: 'flex', justifyContent: 'center' }}>
+      <CustomBackDrop open={loading} handleClose={() => dispatch(watchlistSetLoadingAction)} />
+      {error
+        ? (
+          <LoadingError variant="refresh" error={error} onClick={refresh} />
+        )
+        : (
+          <Paper sx={{ width: 1 }}>
+            <Table>
+              <TableBody>
+                <TableRow sx={(theme) => ({ background: theme.palette.secondary.main })}>
+                  {headerValues.map((headerValue) => (
+                    <CustomTableHeader key={headerValue} value={headerValue} />
+                  ))}
+                </TableRow>
+                {watchlist.map((item) => (
+                  <CustomTableRow key={item.symbol} data={item} />
+                ))}
+              </TableBody>
+            </Table>
+          </Paper>
+        )}
+    </Box>
   );
 };
 

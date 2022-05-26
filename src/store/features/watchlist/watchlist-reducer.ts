@@ -6,8 +6,9 @@ import { WatchlistState, WatchlistActions, WatchlistActionType } from './types';
 const initialState: WatchlistState = {
   list: [],
   error: null,
-  loading: false,
-  success: false,
+  loading: true,
+  appendSuccess: false,
+  isSet: false,
 };
 
 const watchlistReducer: Reducer<WatchlistState, WatchlistActions> = (state = initialState, action) => {
@@ -50,16 +51,23 @@ const watchlistReducer: Reducer<WatchlistState, WatchlistActions> = (state = ini
     }
 
     case WatchlistActionType.WATCHLIST_SET_SUCCESS: {
-      const current: WatchlistState['success'] = state.success;
-      let newVal: WatchlistState['success'];
-      if (current) {
-        newVal = false;
-      } else {
-        newVal = true;
-      }
       return {
         ...state,
-        success: newVal,
+        appendSuccess: action.payload,
+      };
+    }
+
+    case WatchlistActionType.WATCHLIST_SET_IS_SET: {
+      return {
+        ...state,
+        isSet: true,
+      };
+    }
+
+    case WatchlistActionType.WATCHLIST_REFRESH: {
+      return {
+        ...state,
+        isSet: false,
       };
     }
 

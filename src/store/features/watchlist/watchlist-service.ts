@@ -6,10 +6,11 @@ import { StocksWatchListItem } from '../../../types/stock-watchlist-item';
 import { getLocalStorage } from '../../../helpers/local-storage-helper';
 import { User } from '../../../types/user';
 
-export type WatchlistPromiseType = (symbol: string) => Promise<string>;
+type AddToWatchListType = (symbol: string) => Promise<string>;
+type LoadWatchListType = () => Promise<string[]>;
 
 namespace WatchlistService {
-  export const addToWatchlist: WatchlistPromiseType = async (symbol: string) => {
+  export const addToWatchlist: AddToWatchListType = async (symbol: string) => {
     let response: 'success' | 'failed';
 
     const user: User | null = getLocalStorage('user');
@@ -19,30 +20,41 @@ namespace WatchlistService {
       response = 'failed';
     }
 
-    const { data } = await axios.get<StocksWatchListItem[]>('http://localhost:5000/stock_watchlist');
-    // const existingWatchList = data.find((x) => x.userId === user.id);
-    const userExists = data.map((item) => item.userId).includes(user.id);
-    const items = data.filter((item) => item.userId === user.id).map((item) => [...item.stocks]);
+    const { data } = await axios.get<StocksWatchListItem[]>(
+      'http://localhost:5000/stock_watchlist',
+    );
+    const existingWatchListItem = data.find((item: StocksWatchListItem) => item.userId === user.id);
 
-    const [itemSymbols] = items;
-    if (itemSymbols.includes(symbol)) {
+    if (existingWatchListItem?.stocks.includes(symbol)) {
       throw new Error('Already in you Watchlist');
       response = 'failed';
     }
 
-    if (userExists) {
-      const [watchlistItem] = data.filter((item: StocksWatchListItem) => item.userId === user.id);
+    if (existingWatchListItem) {
       await axios.patch<StocksWatchListItem>(
         `http://localhost:5000/stock_watchlist/${user.id}`,
-        { stocks: [...watchlistItem.stocks, symbol] },
+        { stocks: [...existingWatchListItem.stocks, symbol] },
       );
       response = 'success';
     } else {
-      await axios.post<StocksWatchListItem>('http://localhost:5000/stock_watchlist', { userId: user.id, stocks: [symbol] });
+      await axios.post<StocksWatchListItem>(
+        'http://localhost:5000/stock_watchlist',
+        { userId: user.id, stocks: [symbol] },
+      );
       response = 'success';
     }
-
     return response;
+  };
+
+  export const loadWatchlist: LoadWatchListType = async () => {
+    const user: User | null = getLocalStorage('user');
+    if (!user) {
+      throw new Error('You have to Sign in!');
+    }
+    const { data } = await axios.get<StocksWatchListItem>(
+      `http://localhost:5000/stock_watchlist/${user.id}`,
+    );
+    return data.stocks;
   };
 }
 

@@ -20,6 +20,7 @@ import WindowButton from './window-button';
 import SearchBar from './search-bar';
 import { createAppendToWatchListAction } from '../../../../store/features/watchlist/watchlist-action-creators';
 import { selectWatchlistSuccess } from '../../../../store/features/watchlist/watchlist-selectors';
+import LoadingError from '../../components/loading-error';
 
 const styles = {
   aCenter: {
@@ -82,13 +83,7 @@ const ResearchSection: React.FC = () => {
       >
         {error
           ? (
-            <Alert
-              variant="filled"
-              severity="error"
-              onClose={clearError}
-            >
-              Something went wrong.. Try again.
-            </Alert>
+            <LoadingError variant="close" error={error} onClick={clearError} />
           )
           : (
             <SearchBar
@@ -102,12 +97,12 @@ const ResearchSection: React.FC = () => {
           <Alert
             elevation={16}
             variant="filled"
-            severity="success"
+            severity={typeof successfullAdd === 'boolean' ? 'success' : 'error'}
             sx={{
               ...styles.successAlert,
             }}
           >
-            Added to Your Watchlist!
+            { typeof successfullAdd === 'boolean' ? 'Added to Your Watchlist!' : successfullAdd}
           </Alert>
         )}
       </Box>
