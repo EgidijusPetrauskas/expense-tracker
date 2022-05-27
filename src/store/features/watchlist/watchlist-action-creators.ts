@@ -3,6 +3,7 @@ import axios from 'axios';
 import WatchlistService from './watchlist-service';
 import { MainState } from '../../types';
 import {
+  WatchlistDeleteItemAction,
   WatchlistRefreshAction,
   WatchlistSetErrorAction,
   WatchlistSetIsSetAction,
@@ -36,6 +37,11 @@ export const watchlistRefreshAction: WatchlistRefreshAction = {
 export const createWatchlistSetItemAcion = (itemData: WatchlistItem): WatchlistSetItemAction => ({
   type: WatchlistActionType.WATCHLIST_SET_ITEM,
   payload: itemData,
+});
+
+export const createWatchlistDeleteItemAcion = (symbol: WatchlistItem['symbol']): WatchlistDeleteItemAction => ({
+  type: WatchlistActionType.WATCHLIST_DELETE_ITEM,
+  payload: symbol,
 });
 
 export const createWatchlistSetErrorAction = (error: string): WatchlistSetErrorAction => ({
@@ -98,7 +104,6 @@ export const createSetWatchlistAction = () => async (dispatch: Dispatch<Watchlis
 export const createAppendToWatchListAction = (
   symbol: string,
 ) => async (dispatch: Dispatch<WatchlistActions>): Promise<void> => {
-  dispatch(watchlistSetLoadingAction);
   try {
     const response = await WatchlistService.addToWatchlist(symbol);
     if (response === 'success') {
@@ -119,5 +124,22 @@ export const createAppendToWatchListAction = (
       const watchlistSetErrorAction = createWatchlistSetErrorAction(errMsg);
       dispatch(watchlistSetErrorAction);
     }
+  }
+};
+
+export const createRemoveFromWatchlistAction = (
+  symbol: string,
+) => async (dispatch: Dispatch<WatchlistActions>): Promise<void> => {
+  try {
+    await WatchlistService.removeFromWatchlist(symbol);
+    const watchlistDeleteItemAction = createWatchlistDeleteItemAcion(symbol);
+    dispatch(watchlistDeleteItemAction);
+  } catch (error) {
+    const errMsg = error instanceof Error ? error.message : String(error);
+    const watchlistSetErrorAction = createWatchlistSetErrorAction(errMsg);
+    dispatch(watchlistSetErrorAction);
+    setTimeout(() => {
+      dispatch(watchlistClearErrorAction);
+    }, 1700);
   }
 };

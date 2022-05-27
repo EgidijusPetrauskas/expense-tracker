@@ -7,6 +7,7 @@ import { getLocalStorage } from '../../../helpers/local-storage-helper';
 import { User } from '../../../types/user';
 
 type AddToWatchListType = (symbol: string) => Promise<string>;
+type DeleteFromWatchListType = (symbol: string) => Promise<void>;
 type LoadWatchListType = () => Promise<string[]>;
 
 const API_SERVER = process.env.REACT_APP_API_SERVER;
@@ -27,13 +28,13 @@ namespace WatchlistService {
     const existingWatchListItem = data.find((item: StocksWatchListItem) => item.userId === user.id);
 
     if (existingWatchListItem?.stocks.includes(symbol)) {
-      throw new Error('Already in you Watchlist');
+      throw new Error(`${symbol} is already in your Watchlist`);
       response = 'failed';
     }
 
     if (existingWatchListItem) {
       await axios.patch<StocksWatchListItem>(
-        `${API_SERVER}/stock_watchlist/${user.id}`,
+        `${API_SERVER}/users_watchlist/${user.id}`,
         { stocks: [...existingWatchListItem.stocks, symbol] },
       );
       response = 'success';
@@ -48,8 +49,23 @@ namespace WatchlistService {
     return response;
   };
 
+  export const removeFromWatchlist: DeleteFromWatchListType = async (symbol: string) => {
+    const user: User | null = getLocalStorage(USER_KEY_IN_LOCAL_STORAGE);
+    if (!user) {
+      throw new Error('You have to Sign in!');
+    }
+
+    const { data } = await axios.get<StocksWatchListItem[]>(`${API_SERVER}/users_watchlist`);
+    const existingWatchListItem = data.find((item: StocksWatchListItem) => item.userId === user.id);
+
+    await axios.patch<StocksWatchListItem>(
+      `${API_SERVER}/users_watchlist/${user.id}`,
+      { stocks: existingWatchListItem?.stocks.filter((item) => item !== symbol) },
+    );
+  };
+
   export const loadWatchlist: LoadWatchListType = async () => {
-    const user: User | null = getLocalStorage('user');
+    const user: User | null = getLocalStorage(USER_KEY_IN_LOCAL_STORAGE);
     if (!user) {
       throw new Error('You have to Sign in!');
     }

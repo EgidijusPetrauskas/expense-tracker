@@ -6,7 +6,7 @@ import { WatchlistState, WatchlistActions, WatchlistActionType } from './types';
 const initialState: WatchlistState = {
   list: [],
   error: null,
-  loading: true,
+  loading: false,
   appendSuccess: false,
   isSet: false,
 };
@@ -22,6 +22,13 @@ const watchlistReducer: Reducer<WatchlistState, WatchlistActions> = (state = ini
             ...action.payload,
           },
         ],
+      };
+    }
+
+    case WatchlistActionType.WATCHLIST_DELETE_ITEM: {
+      return {
+        ...state,
+        list: state.list.filter((item) => item.symbol !== action.payload),
       };
     }
 
