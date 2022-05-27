@@ -3,6 +3,7 @@ import axios from 'axios';
 import WatchlistService from './watchlist-service';
 import { MainState } from '../../types';
 import {
+  WatchlistClearListAction,
   WatchlistDeleteItemAction,
   WatchlistRefreshAction,
   WatchlistSetErrorAction,
@@ -32,6 +33,10 @@ export const watchlistSetIsSetAction: WatchlistSetIsSetAction = {
 
 export const watchlistRefreshAction: WatchlistRefreshAction = {
   type: WatchlistActionType.WATCHLIST_REFRESH,
+};
+
+export const watchlistClearListAction: WatchlistClearListAction = {
+  type: WatchlistActionType.WATCHLIST_CLEAR_LIST,
 };
 
 export const createWatchlistSetItemAcion = (itemData: WatchlistItem): WatchlistSetItemAction => ({
@@ -95,6 +100,7 @@ export const createSetWatchlistAction = () => async (dispatch: Dispatch<Watchlis
   dispatch(watchlistSetLoadingAction);
   const { watchlist } = getState();
   if (!watchlist.isSet) {
+    dispatch(watchlistClearListAction);
     const watchlistList = await WatchlistService.loadWatchlist();
     await watchlistList.forEach((listItem) => createWatchlistItemFetchAction(listItem, dispatch));
     dispatch(watchlistSetIsSetAction);

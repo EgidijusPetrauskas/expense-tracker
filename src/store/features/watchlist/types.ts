@@ -18,6 +18,7 @@ export type WatchlistState = {
 export enum WatchlistActionType {
   WATCHLIST_SET_ITEM = 'WATCHLIST_SET_ITEM',
   WATCHLIST_DELETE_ITEM = 'WATCHLIST_DELETE_ITEM',
+  WATCHLIST_CLEAR_LIST = 'WATCHLIST_CLEAR_LIST',
   WATCHLIST_SET_ERROR = 'WATCHLIST_SET_ERROR',
   WATCHLIST_CLEAR_ERROR = 'WATCHLIST_CLEAR_ERROR',
   WATCHLIST_SET_LOADING = 'WATCHLIST_SET_LOADING',
@@ -64,4 +65,8 @@ export type WatchlistRefreshAction = {
   type: WatchlistActionType.WATCHLIST_REFRESH
 };
 
-export type WatchlistActions = WatchlistSetItemAction | WatchlistDeleteItemAction | WatchlistSetErrorAction | WatchlistClearErrorAction | WatchlistSetLoadingAction | WatchlistSetSuccessAction | WatchlistSetIsSetAction | WatchlistRefreshAction;
+export type WatchlistClearListAction = {
+  type: WatchlistActionType.WATCHLIST_CLEAR_LIST
+};
+
+export type WatchlistActions = WatchlistSetItemAction | WatchlistDeleteItemAction | WatchlistSetErrorAction | WatchlistClearErrorAction | WatchlistSetLoadingAction | WatchlistSetSuccessAction | WatchlistSetIsSetAction | WatchlistRefreshAction | WatchlistClearListAction;

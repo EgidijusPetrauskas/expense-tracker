@@ -78,6 +78,13 @@ const watchlistReducer: Reducer<WatchlistState, WatchlistActions> = (state = ini
       };
     }
 
+    case WatchlistActionType.WATCHLIST_CLEAR_LIST: {
+      return {
+        ...state,
+        list: [],
+      };
+    }
+
     default: return state;
   }
 };
