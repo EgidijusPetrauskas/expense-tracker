@@ -2,7 +2,7 @@
   * Application used to track your monthly spending, analyse expenses and research investment opportunities
 
 # Previews 
-<img src="https://github.com/EgidijusPetrauskas/expense-tracker/blob/master/previews/homepage.png" width=400, height=550 /><img src="https://github.com/EgidijusPetrauskas/expense-tracker/blob/master/previews/research-section.png" width=400, height=550 /><img src="https://github.com/EgidijusPetrauskas/expense-tracker/blob/master/previews/watchlist-section.png" width=400, height=550 />
+<img src="https://github.com/EgidijusPetrauskas/expense-tracker/blob/master/previews/homepage.png" width=450, height=500 /><img src="https://github.com/EgidijusPetrauskas/expense-tracker/blob/master/previews/research-section.png" width=450, height=500 /><img src="https://github.com/EgidijusPetrauskas/expense-tracker/blob/master/previews/watchlist-section.png" width=450, height=500 />
 
 ## Projeact Status
   * This project is in development. User can create an account, reseach market stock iformation and create their own watchlist.
