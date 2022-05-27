@@ -28,7 +28,7 @@ const stocksReducer: Reducer<StocksState, StocksActions> = (state = initialState
               Object.entries(action.payload['Time Series (Daily)']).map((item) => ({
                 date: item[0],
                 price: Object.values(item[1] as object)[0],
-              })).reverse(),
+              })).filter((a, i) => i % 4 === 0).reverse(),
           },
           ...state.stocks,
         ],

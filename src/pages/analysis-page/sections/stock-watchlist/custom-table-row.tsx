@@ -13,6 +13,13 @@ type CustomTableRowProps = {
   data: WatchlistItem,
 };
 
+const styles = {
+  cell: {
+    fontSize: 16,
+    fontFamily: 'roboto',
+  },
+};
+
 const CustomTableRow: React.FC<CustomTableRowProps> = ({ data }) => {
   const {
     symbol, exchange, currency, sector, high, low,
@@ -29,13 +36,13 @@ const CustomTableRow: React.FC<CustomTableRowProps> = ({ data }) => {
       hover
       sx={(theme) => ({ transition: theme.transitions.create(['all'], { duration: theme.transitions.duration.short }) })}
     >
-      <TableCell align="center">{symbol}</TableCell>
-      <TableCell align="center">{exchange}</TableCell>
-      <TableCell align="center">{currency}</TableCell>
-      <TableCell align="center">{sector}</TableCell>
-      <TableCell align="center">{`$${high}`}</TableCell>
-      <TableCell align="center">{`$${low}`}</TableCell>
-      <TableCell align="center">
+      <TableCell color="secondary.dark" sx={{ ...styles.cell }} align="center">{symbol}</TableCell>
+      <TableCell color="secondary.dark" sx={{ ...styles.cell }} align="center">{exchange}</TableCell>
+      <TableCell color="secondary.dark" sx={{ ...styles.cell }} align="center">{currency}</TableCell>
+      <TableCell color="secondary.dark" sx={{ ...styles.cell }} align="center">{sector}</TableCell>
+      <TableCell color="secondary.dark" sx={{ ...styles.cell }} align="center">{`$${high}`}</TableCell>
+      <TableCell color="secondary.dark" sx={{ ...styles.cell }} align="center">{`$${low}`}</TableCell>
+      <TableCell color="secondary.dark" sx={{ ...styles.cell }} align="center">
         <Tooltip title="Remove from Watchlist" arrow>
           <Button
             variant="contained"

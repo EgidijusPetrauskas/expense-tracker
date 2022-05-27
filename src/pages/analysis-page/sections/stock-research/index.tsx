@@ -71,6 +71,7 @@ const ResearchSection: React.FC = () => {
       ...styles.aCenter,
       flexDirection: 'column',
       gap: 4,
+      pb: 6,
     }}
     >
       <Box
@@ -125,7 +126,7 @@ const ResearchSection: React.FC = () => {
               <Typography
                 color="error.dark"
                 variant="h4"
-                sx={{ ml: 2 }}
+                sx={{ ml: 2, fontFamily: 'roboto' }}
               >
                 {stock.symbol}
               </Typography>
@@ -152,7 +153,9 @@ const ResearchSection: React.FC = () => {
             </Box>
             <Typography
               variant="h4"
-              sx={{ ml: 2, fontSize: 24, color: styles.chartBlue }}
+              sx={{
+                ml: 2, fontSize: 24, fontFamily: 'roboto', color: styles.chartBlue,
+              }}
             >
               {`$${Number(stock.chartData[stock.chartData.length - 1].price).toFixed(2)}`}
             </Typography>
