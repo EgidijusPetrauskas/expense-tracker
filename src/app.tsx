@@ -46,11 +46,39 @@ const App: React.FC = () => (
               </RequireVisitor>
             )}
           />
-          <Route path="/analysis" element={<AnalysisPageLayout />}>
+          <Route
+            path="/analysis"
+            element={(
+              <RequireAuth>
+                <AnalysisPageLayout />
+              </RequireAuth>
+          )}
+          >
             <Route index element={<InfoCard />} />
-            <Route path="/analysis/analysis" element={<AnalysisSection />} />
-            <Route path="/analysis/watchlist" element={<WatchlistSection />} />
-            <Route path="/analysis/research" element={<ResearchSection />} />
+            <Route
+              path="/analysis/analysis"
+              element={(
+                <RequireAuth>
+                  <AnalysisSection />
+                </RequireAuth>
+                        )}
+            />
+            <Route
+              path="/analysis/watchlist"
+              element={(
+                <RequireAuth>
+                  <WatchlistSection />
+                </RequireAuth>
+                        )}
+            />
+            <Route
+              path="/analysis/research"
+              element={(
+                <RequireAuth>
+                  <ResearchSection />
+                </RequireAuth>
+                        )}
+            />
           </Route>
           <Route
             path="/budget"
