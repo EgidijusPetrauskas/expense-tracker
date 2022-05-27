@@ -92,13 +92,14 @@ export const createWatchlistItemFetchAction = async (
 };
 
 export const createSetWatchlistAction = () => async (dispatch: Dispatch<WatchlistActions>, getState: () => MainState): Promise<void> => {
+  dispatch(watchlistSetLoadingAction);
   const { watchlist } = getState();
   if (!watchlist.isSet) {
     const watchlistList = await WatchlistService.loadWatchlist();
     await watchlistList.forEach((listItem) => createWatchlistItemFetchAction(listItem, dispatch));
     dispatch(watchlistSetIsSetAction);
-    dispatch(watchlistSetLoadingAction);
   }
+  dispatch(watchlistSetLoadingAction);
 };
 
 export const createAppendToWatchListAction = (

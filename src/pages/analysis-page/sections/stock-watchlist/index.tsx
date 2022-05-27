@@ -6,6 +6,7 @@ import {
   TableBody,
   TableRow,
   Box,
+  TableCell,
 } from '@mui/material';
 
 import CustomTableRow from './custom-table-row';
@@ -26,6 +27,7 @@ import {
 import LoadingError from '../../components/loading-error';
 import CustomBackDrop from '../../../../components/custom-backdrop';
 import CustomTableHeader from './custom-table-headers';
+import { SpiningHourglass } from './stock-watchlist-styles';
 
 const headerValues = ['SYMBOL', 'EXCHANGE', 'CURRENCY', 'SECTOR', '52 WEEK HIGHT', '52 WEEK LOW', 'REMOVE'];
 
@@ -68,6 +70,13 @@ const WatchlistSection: React.FC = () => {
                 {watchlist.map((item) => (
                   <CustomTableRow key={item.symbol} data={item} />
                 ))}
+                {watchlist.length === 0 && (
+                  <TableRow>
+                    <TableCell sx={{ py: 1 }} align="center" colSpan={headerValues.length}>
+                      <SpiningHourglass color="secondary" />
+                    </TableCell>
+                  </TableRow>
+                )}
               </TableBody>
             </Table>
           </Paper>
