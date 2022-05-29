@@ -20,18 +20,26 @@ const AboutSection: React.FC = () => (
       height: 550,
       pt: 4,
       background: theme.palette.myBlack.main,
+      [theme.breakpoints.down('md')]: {
+        height: 850,
+      },
     })}
   >
     <Container
       maxWidth={false}
-      sx={{
+      sx={(theme) => ({
         display: 'flex',
         justifyContent: 'space-evenly',
         alignItems: 'center',
         gap: 7,
         width: 2 / 3,
         height: 3 / 5,
-      }}
+        [theme.breakpoints.down('md')]: {
+          width: 1,
+          flexDirection: 'column',
+          mt: 14,
+        },
+      })}
     >
       <AboutCard
         text="Track your spending!"

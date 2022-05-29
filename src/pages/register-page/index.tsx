@@ -78,13 +78,17 @@ const RegisterPage: React.FC = () => {
   return (
     <Box
       component="main"
-      sx={{
+      sx={(theme) => ({
         width: 1,
-        height: '100vh',
+        height: '100%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-      }}
+        py: 20,
+        [theme.breakpoints.down('md')]: {
+          py: 16,
+        },
+      })}
     >
       <CustomForm
         buttonText="Register"

@@ -5,25 +5,34 @@ import { StyledButton } from './analysis-page-styles';
 
 const AnalysisPage: React.FC = () => (
   <Container
-    sx={{
+    sx={(theme) => ({
       width: 1,
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       pt: 20,
-    }}
+      [theme.breakpoints.down('md')]: {
+        pt: 15,
+      },
+    })}
   >
     <Box
-      sx={{
+      sx={(theme) => ({
         width: 1,
         height: 50,
         display: 'flex',
         justifyContent: 'space-between',
         mb: 4,
-      }}
+        [theme.breakpoints.down('sm')]: {
+          width: 1,
+          flexDirection: 'column',
+          pb: 19,
+          px: 2,
+        },
+      })}
     >
       <StyledButton to="/analysis/analysis">Budget Analysis</StyledButton>
-      <StyledButton to="/analysis/watchlist">Stock Watchlist</StyledButton>
+      <StyledButton to="/analysis/watchlist">Stocks Watchlist</StyledButton>
       <StyledButton to="/analysis/research">Stock Research</StyledButton>
     </Box>
   </Container>

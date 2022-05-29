@@ -66,21 +66,28 @@ const ResearchSection: React.FC = () => {
   };
 
   return (
-    <Box sx={{
+    <Box sx={(theme) => ({
       width: 1,
       ...styles.aCenter,
       flexDirection: 'column',
       gap: 4,
       pb: 6,
-    }}
+      [theme.breakpoints.down('sm')]: {
+        py: 2,
+      },
+    })}
     >
       <Box
-        sx={{
+        sx={(theme) => ({
           width: 1,
           height: 60,
           position: 'relative',
           ...styles.jCenter,
-        }}
+          [theme.breakpoints.down('md')]: {
+            flexDirection: 'column',
+            gap: 1,
+          },
+        })}
       >
         {error
           ? (
@@ -99,9 +106,15 @@ const ResearchSection: React.FC = () => {
             elevation={16}
             variant="filled"
             severity={typeof successfullAdd === 'boolean' ? 'success' : 'error'}
-            sx={{
+            sx={(theme) => ({
               ...styles.successAlert,
-            }}
+              [theme.breakpoints.down('md')]: {
+                width: 1,
+                height: 35,
+                position: 'static',
+                py: 2,
+              },
+            })}
           >
             { typeof successfullAdd === 'boolean' ? 'Added to Your Watchlist!' : successfullAdd}
           </Alert>

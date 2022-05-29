@@ -23,4 +23,8 @@ export const StyledButton = styled(NavLink)(({ theme }) => ({
     background: theme.palette.secondary.main,
     border: 'none',
   },
+  [theme.breakpoints.down('sm')]: {
+    padding: 10,
+    minWidth: 200,
+  },
 }));

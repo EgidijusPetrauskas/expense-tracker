@@ -63,7 +63,12 @@ const CustomForm: React.FC<CustomFormProps> = ({
         component="form"
         autoComplete="off"
         sx={(theme) => ({
-          width: 1.7 / 5,
+          width: {
+            xl: 1.7 / 5,
+            lg: 2 / 5,
+            md: 3 / 5,
+            sm: 4 / 5,
+          },
           minWidth: 250,
           display: 'flex',
           flexDirection: 'column',

@@ -52,14 +52,22 @@ const WatchlistSection: React.FC = () => {
   };
 
   return (
-    <Box sx={{ width: 1, display: 'flex', justifyContent: 'center' }}>
+    <Box sx={(theme) => ({
+      width: 1,
+      display: 'flex',
+      justifyContent: 'center',
+      [theme.breakpoints.down('md')]: {
+        overflow: 'scroll',
+      },
+    })}
+    >
       <CustomBackDrop open={loading} handleClose={() => dispatch(watchlistSetLoadingAction)} />
       {error
         ? (
           <LoadingError variant="refresh" error={error} onClick={refresh} />
         )
         : (
-          <Paper sx={{ width: 1 }}>
+          <Paper sx={{ width: 1, overflow: 'inherit' }}>
             <Table>
               <TableBody>
                 <TableRow sx={(theme) => ({ background: theme.palette.secondary.main })}>

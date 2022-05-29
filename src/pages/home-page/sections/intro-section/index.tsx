@@ -33,8 +33,15 @@ const IntroSection: React.FC = () => (
         sx={{
           color: 'primary.main',
           fontFamily: 'Roboto',
+          textAlign: 'center',
           fontWeight: 500,
-          fontSize: 110,
+          fontSize: {
+            xl: 110,
+            lg: 100,
+            md: 90,
+            sm: 70,
+            xs: 50,
+          },
         }}
         variant="h1"
         component="h1"
@@ -44,9 +51,16 @@ const IntroSection: React.FC = () => (
       </Typography>
       <Typography
         sx={{
-          fontSize: 25,
           color: 'primary.light',
+          textAlign: 'center',
           letterSpacing: 1,
+          fontSize: {
+            xl: 25,
+            lg: 23,
+            md: 21,
+            sm: 19,
+            xs: 16,
+          },
         }}
       >
         Track, analyse and plan your spending

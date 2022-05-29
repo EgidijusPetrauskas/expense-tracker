@@ -13,6 +13,9 @@ const CustomTableHeader: React.FC<CustomTableHeaderProps> = ({ value }) => (
       fontWeight: 700,
       fontSize: 16,
       letterSpacing: 1,
+      [theme.breakpoints.down('md')]: {
+        p: 1,
+      },
     })}
     align="center"
     variant="head"

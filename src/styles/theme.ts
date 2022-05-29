@@ -31,8 +31,16 @@ const customTheme: Theme = createTheme({
       alignItems: 'center',
       minHeight: 75,
       pt: 3,
+      [theme.breakpoints.down('lg')]: {
+        width: 4 / 5,
+      },
       [theme.breakpoints.down('md')]: {
         width: 1,
+        flexDirection: 'column',
+        gap: 5,
+        background: 'secondary',
+        pt: 4,
+        px: 6,
       },
     },
   },

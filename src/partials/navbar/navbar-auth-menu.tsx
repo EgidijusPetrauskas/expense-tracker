@@ -7,6 +7,8 @@ import {
   Box,
   Divider,
   ClickAwayListener,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 
 import { StyledNavbarButton, StyledMenuList, StyledMenuItem } from './navbar-styles';
@@ -19,6 +21,8 @@ import LogoLg from '../../images/logo-lg.png';
 const NavBarAuthMenu: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const popperPlace = useRef<HTMLDivElement>(null);
+  const defaultTheme = useTheme();
+  const smallerThanMd = useMediaQuery(defaultTheme.breakpoints.down('md'));
   const navigate = useNavigate();
   const dispatch = useRootDispatch();
 
@@ -45,6 +49,7 @@ const NavBarAuthMenu: React.FC = () => {
         <Box
           ref={popperPlace}
           onClick={handleMenu}
+          sx={{ display: smallerThanMd ? 'none' : 'block' }}
         >
           <Logo mode="hover" active={menuOpen} src={LogoLg} width={70} />
           <Popper

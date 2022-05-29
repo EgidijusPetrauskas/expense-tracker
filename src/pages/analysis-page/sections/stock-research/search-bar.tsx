@@ -6,6 +6,7 @@ import {
   InputAdornment,
   Paper,
   TextField,
+  Box,
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
@@ -28,11 +29,16 @@ const SearchBar: React.FC<SearchBarProps> = ({
       background: loading ? 'none' : theme.palette.secondary.main,
       gap: 2,
       p: 1.1,
+      [theme.breakpoints.down('sm')]: {
+        width: 1,
+      },
     })}
   >
     {loading
       ? (
-        <CircularProgress />
+        <Box sx={{ width: 1, display: 'flex', justifyContent: 'center' }}>
+          <CircularProgress />
+        </Box>
       ) : (
         <TextField
           label="Search stock symbol"
@@ -49,6 +55,11 @@ const SearchBar: React.FC<SearchBarProps> = ({
               </InputAdornment>
             ),
           }}
+          sx={(theme) => ({
+            [theme.breakpoints.down('md')]: {
+              width: 1,
+            },
+          })}
         />
       )}
   </Paper>
