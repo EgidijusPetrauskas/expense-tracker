@@ -1,28 +1,24 @@
 import React, { useState } from 'react';
 
 import {
-  Typography,
   Box,
-  Paper,
   Alert,
 } from '@mui/material';
 
-import StockChart from '../../components/stock-chart';
 import {
   selectStocks,
   selectStocksError,
   selectStocksLoading,
 } from '../../../../store/selectors';
 import { useRootDispatch, useRootSelector } from '../../../../store/hooks';
-import { createStocksFetchStockAction, createStocksDeleteStockAction } from '../../../../store/action-creators';
+import { createStocksFetchStockAction } from '../../../../store/action-creators';
 import { stocksClearErrorAction } from '../../../../store/features/stocks/stocks-action-creators';
-import WindowButton from './window-button';
-import SearchBar from './search-bar';
-import { createAppendToWatchListAction } from '../../../../store/features/watchlist/watchlist-action-creators';
 import { selectWatchlistSuccess } from '../../../../store/features/watchlist/watchlist-selectors';
+import SearchBar from './search-bar';
 import LoadingError from '../../components/loading-error';
+import StockContainer from '../../components/stock-container';
 
-const styles = {
+const researchStyles = {
   aCenter: {
     display: 'flex',
     alignItems: 'center',
@@ -68,7 +64,7 @@ const ResearchSection: React.FC = () => {
   return (
     <Box sx={(theme) => ({
       width: 1,
-      ...styles.aCenter,
+      ...researchStyles.aCenter,
       flexDirection: 'column',
       gap: 4,
       pb: 6,
@@ -82,7 +78,7 @@ const ResearchSection: React.FC = () => {
           width: 1,
           height: 60,
           position: 'relative',
-          ...styles.jCenter,
+          ...researchStyles.jCenter,
           [theme.breakpoints.down('md')]: {
             flexDirection: 'column',
             gap: 1,
@@ -107,7 +103,7 @@ const ResearchSection: React.FC = () => {
             variant="filled"
             severity={typeof successfullAdd === 'boolean' ? 'success' : 'error'}
             sx={(theme) => ({
-              ...styles.successAlert,
+              ...researchStyles.successAlert,
               [theme.breakpoints.down('md')]: {
                 width: 1,
                 height: 35,
@@ -121,60 +117,10 @@ const ResearchSection: React.FC = () => {
         )}
       </Box>
       <Box sx={{
-        width: 1, ...styles.jCenter, flexWrap: 'wrap', gap: 3,
+        width: 1, ...researchStyles.jCenter, flexWrap: 'wrap', gap: 3,
       }}
       >
-        {stocks.map((stock) => (
-          <Paper
-            key={stock.id}
-            sx={(theme) => ({
-              ...styles.col,
-              gap: 1.2,
-              width: 1,
-              p: 2,
-              background: theme.palette.myBlack.main,
-            })}
-          >
-            <Box sx={{ ...styles.aCenter, justifyContent: 'space-between' }}>
-              <Typography
-                color="error.dark"
-                variant="h4"
-                sx={{ ml: 2, fontFamily: 'roboto' }}
-              >
-                {stock.symbol}
-              </Typography>
-              <Box sx={{ ...styles.aCenter, gap: 1 }}>
-                <WindowButton
-                  variant="info"
-                  href={`https://finviz.com/quote.ashx?t=${stock.symbol}`}
-                  color="primary.light"
-                  hoverText="More Info"
-                />
-                <WindowButton
-                  variant="add"
-                  onClick={() => dispatch(createAppendToWatchListAction(stock.symbol))}
-                  hoverText="Add To Watchlist"
-                  color={styles.chartBlue}
-                />
-                <WindowButton
-                  variant="close"
-                  onClick={() => dispatch(createStocksDeleteStockAction(stock.id))}
-                  color="error.dark"
-                  hoverText="Close Window"
-                />
-              </Box>
-            </Box>
-            <Typography
-              variant="h4"
-              sx={{
-                ml: 2, fontSize: 24, fontFamily: 'roboto', color: styles.chartBlue,
-              }}
-            >
-              {`$${Number(stock.chartData[stock.chartData.length - 1].price).toFixed(2)}`}
-            </Typography>
-            <StockChart chartData={stock.chartData} />
-          </Paper>
-        ))}
+        {stocks.map((stock) => (<StockContainer stock={stock} />))}
       </Box>
     </Box>
   );

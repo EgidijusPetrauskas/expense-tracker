@@ -58,10 +58,12 @@ namespace WatchlistService {
     const { data } = await axios.get<StocksWatchListItem[]>(`${API_SERVER}/users_watchlist`);
     const existingWatchListItem = data.find((item: StocksWatchListItem) => item.userId === user.id);
 
-    await axios.patch<StocksWatchListItem>(
-      `${API_SERVER}/users_watchlist?userId=${user.id}`,
-      { stocks: existingWatchListItem?.stocks.filter((item) => item !== symbol) },
-    );
+    if (existingWatchListItem) {
+      await axios.patch<StocksWatchListItem>(
+        `${API_SERVER}/users_watchlist/${existingWatchListItem.id}`,
+        { stocks: existingWatchListItem?.stocks.filter((item) => item !== symbol) },
+      );
+    }
   };
 
   export const loadWatchlist: LoadWatchListType = async () => {

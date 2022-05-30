@@ -59,7 +59,7 @@ export const createWatchlistSetSuccessAction = (response: boolean | string): Wat
   payload: response,
 });
 
-export const createWatchlistItemFetchAction = async (
+export const watchListFetchItemAction = async (
   symbol: string,
   dispatch: Dispatch<WatchlistActions>,
 ) => {
@@ -102,7 +102,7 @@ export const createSetWatchlistAction = () => async (dispatch: Dispatch<Watchlis
   if (!watchlist.isSet) {
     dispatch(watchlistClearListAction);
     const watchlistList = await WatchlistService.loadWatchlist();
-    await watchlistList.forEach((listItem) => createWatchlistItemFetchAction(listItem, dispatch));
+    await watchlistList.forEach((listItem) => watchListFetchItemAction(listItem, dispatch));
     dispatch(watchlistSetIsSetAction);
   }
   dispatch(watchlistSetLoadingAction);
@@ -115,7 +115,7 @@ export const createAppendToWatchListAction = (
     const response = await WatchlistService.addToWatchlist(symbol);
     if (response === 'success') {
       dispatch(createWatchlistSetSuccessAction(true));
-      createWatchlistItemFetchAction(symbol, dispatch);
+      watchListFetchItemAction(symbol, dispatch);
       setTimeout(() => {
         dispatch(createWatchlistSetSuccessAction(false));
       }, 1700);

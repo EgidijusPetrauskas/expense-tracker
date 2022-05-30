@@ -29,6 +29,7 @@ const WindowButton: React.FC<WindowButtonProps> = ({
       </Tooltip>
     );
   }
+
   if (variant === 'add') {
     return (
       <Tooltip title={hoverText} arrow>
@@ -57,6 +58,7 @@ const WindowButton: React.FC<WindowButtonProps> = ({
       </Tooltip>
     );
   }
+
   return (
     <Tooltip title={hoverText} arrow>
       <CloseIcon
