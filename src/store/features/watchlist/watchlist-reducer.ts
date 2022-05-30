@@ -82,6 +82,7 @@ const watchlistReducer: Reducer<WatchlistState, WatchlistActions> = (state = ini
       return {
         ...state,
         list: [],
+        isSet: false,
       };
     }
 

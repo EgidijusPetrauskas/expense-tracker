@@ -34,7 +34,7 @@ namespace WatchlistService {
 
     if (existingWatchListItem) {
       await axios.patch<StocksWatchListItem>(
-        `${API_SERVER}/users_watchlist/${user.id}`,
+        `${API_SERVER}/users_watchlist/${existingWatchListItem.id}`,
         { stocks: [...existingWatchListItem.stocks, symbol] },
       );
       response = 'success';
@@ -59,7 +59,7 @@ namespace WatchlistService {
     const existingWatchListItem = data.find((item: StocksWatchListItem) => item.userId === user.id);
 
     await axios.patch<StocksWatchListItem>(
-      `${API_SERVER}/users_watchlist/${user.id}`,
+      `${API_SERVER}/users_watchlist?userId=${user.id}`,
       { stocks: existingWatchListItem?.stocks.filter((item) => item !== symbol) },
     );
   };
@@ -69,8 +69,8 @@ namespace WatchlistService {
     if (!user) {
       throw new Error('You have to Sign in!');
     }
-    const { data } = await axios.get<StocksWatchListItem>(`${API_SERVER}/users_watchlist/${user.id}`);
-    return data.stocks;
+    const { data } = await axios.get<StocksWatchListItem[]>(`${API_SERVER}/users_watchlist?userId=${user.id}`);
+    return data[0].stocks;
   };
 }
 

@@ -5,6 +5,8 @@ import { GlobalActions } from '../../types';
 import AuthService, { AuthPromiseType } from './auth-service';
 import { User } from '../../../types/user';
 import { createNavSetRedirectAction, createNavClearRedirectAction } from '../navigation/nav-action-creators';
+import { watchlistClearListAction } from '../watchlist/watchlist-action-creators';
+
 import {
   AuthSetUserAction,
   AuthLoadingAction,
@@ -71,4 +73,9 @@ export const createRegisterAction = (
   const { username, password } = userRegistration;
   const userData: Credentials = { username, password };
   await authenticate(dispatch, userData, AuthService.register, redirect);
+};
+
+export const createLogOutAction = () => async (dispatch: Dispatch<GlobalActions>): Promise<void> => {
+  dispatch(authSetLogoutAction);
+  dispatch(watchlistClearListAction);
 };
