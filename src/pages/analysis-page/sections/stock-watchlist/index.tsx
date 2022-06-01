@@ -9,7 +9,7 @@ import {
   TableCell,
 } from '@mui/material';
 
-import CustomTableRow from './custom-table-row';
+import CustomTableRow from './components/table-element/custom-table-row';
 import {
   useRootSelector,
   useRootDispatch,
@@ -26,7 +26,7 @@ import {
 } from '../../../../store/features/watchlist/watchlist-action-creators';
 import LoadingError from '../../components/loading-error';
 import CustomBackDrop from '../../../../components/custom-backdrop';
-import CustomTableHeader from './custom-table-headers';
+import CustomTableHeader from './components/table-element/custom-table-headers';
 import { SpiningHourglass } from './stock-watchlist-styles';
 
 const headerValues = ['SYMBOL', 'EXCHANGE', 'CURRENCY', 'SECTOR', '52 WEEK HIGHT', '52 WEEK LOW', 'REMOVE'];

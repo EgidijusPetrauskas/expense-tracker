@@ -5,9 +5,9 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { WatchlistItem } from '../../../../store/features/watchlist/types';
-import { useRootDispatch } from '../../../../store/hooks';
-import { createRemoveFromWatchlistAction } from '../../../../store/features/watchlist/watchlist-action-creators';
+import { WatchlistItem } from '../../../../../../store/features/watchlist/types';
+import { useRootDispatch } from '../../../../../../store/hooks';
+import { createRemoveFromWatchlistAction } from '../../../../../../store/features/watchlist/watchlist-action-creators';
 
 type CustomTableRowProps = {
   data: WatchlistItem,

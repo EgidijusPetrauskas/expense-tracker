@@ -5,7 +5,7 @@ import DataUsageIcon from '@mui/icons-material/DataUsage';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
 
-import AboutCard from './about-section-card';
+import AboutCard from '../../../../components/about-card';
 
 const iconSx = { color: 'secondary.main', fontSize: 60 };
 

@@ -14,9 +14,9 @@ import { useRootDispatch, useRootSelector } from '../../../../store/hooks';
 import { createStocksFetchStockAction } from '../../../../store/action-creators';
 import { stocksClearErrorAction } from '../../../../store/features/stocks/stocks-action-creators';
 import { selectWatchlistSuccess } from '../../../../store/features/watchlist/watchlist-selectors';
-import SearchBar from './search-bar';
+import SearchBar from './components/search-bar';
 import LoadingError from '../../components/loading-error';
-import StockContainer from '../../components/stock-container';
+import StockContainer from './components/stock-element/stock-container';
 
 const researchStyles = {
   aCenter: {

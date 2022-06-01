@@ -10,7 +10,7 @@ import {
 } from 'recharts';
 import { parseISO, format } from 'date-fns';
 
-import { Stock } from '../../../store/features/stocks/types';
+import { Stock } from '../../../../../../store/features/stocks/types';
 
 type StockChartProps = {
   chartData: Stock['chartData']

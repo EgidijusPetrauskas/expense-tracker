@@ -1,11 +1,11 @@
 import React from 'react';
 import { Paper, Typography, Box } from '@mui/material';
-import WindowButton from '../sections/stock-research/window-button';
-import { Stock } from '../../../store/features/stocks/types';
-import { useRootDispatch } from '../../../store/hooks';
+import WindowButton from '../window-button';
+import { Stock } from '../../../../../../store/features/stocks/types';
+import { useRootDispatch } from '../../../../../../store/hooks';
 import StockChart from './stock-chart';
-import { createAppendToWatchListAction } from '../../../store/features/watchlist/watchlist-action-creators';
-import { createStocksDeleteStockAction } from '../../../store/features/stocks/stocks-action-creators';
+import { createAppendToWatchListAction } from '../../../../../../store/features/watchlist/watchlist-action-creators';
+import { createStocksDeleteStockAction } from '../../../../../../store/features/stocks/stocks-action-creators';
 
 type StockContainerProps = {
   stock: Stock
