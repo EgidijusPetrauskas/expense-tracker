@@ -3,8 +3,10 @@ import React, { useState } from 'react';
 import {
   Box,
   Alert,
+  Typography, Paper,
 } from '@mui/material';
 
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import {
   selectStocks,
   selectStocksError,
@@ -17,6 +19,7 @@ import { selectWatchlistSuccess } from '../../../../store/features/watchlist/wat
 import SearchBar from './components/search-bar';
 import LoadingError from '../../components/loading-error';
 import StockContainer from './components/stock-element/stock-container';
+import AboutCard from '../../../../components/about-card';
 
 const researchStyles = {
   aCenter: {
@@ -120,7 +123,26 @@ const ResearchSection: React.FC = () => {
         width: 1, ...researchStyles.jCenter, flexWrap: 'wrap', gap: 3,
       }}
       >
-        {stocks.map((stock) => (<StockContainer stock={stock} />))}
+        {stocks.length <= 0 && (
+          <Paper
+            elevation={16}
+            sx={{
+              width: 1,
+              py: 10,
+              px: {
+                xs: 2,
+              },
+              background: 'inherit',
+              color: 'primary.light',
+            }}
+          >
+            <AboutCard text="Research and analyse the stocks in the market">
+              <Typography variant="h5">Stock Research</Typography>
+              <MoreHorizIcon sx={{ fontSize: 50 }} />
+            </AboutCard>
+          </Paper>
+        )}
+        {stocks.map((stock) => (<StockContainer key={stock.symbol} stock={stock} />))}
       </Box>
     </Box>
   );

@@ -26,12 +26,16 @@ const SearchBar: React.FC<SearchBarProps> = ({
     autoComplete="off"
     onSubmit={handleSubmit}
     sx={(theme) => ({
+      width: {
+        xl: 1 / 3,
+        lg: 1 / 3,
+        md: 1 / 3,
+        sm: 1,
+        xs: 1,
+      },
       background: loading ? 'none' : theme.palette.secondary.main,
       gap: 2,
       p: 1.1,
-      [theme.breakpoints.down('sm')]: {
-        width: 1,
-      },
     })}
   >
     {loading
@@ -48,6 +52,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
           value={searchValue}
           disabled={loading}
           onChange={(e) => handleChange((e.target.value).toUpperCase())}
+          fullWidth
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">

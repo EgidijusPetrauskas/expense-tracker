@@ -40,7 +40,6 @@ const StockContainer: React.FC<StockContainerProps> = ({ stock }) => {
 
   return (
     <Paper
-      key={stock.id}
       sx={(theme) => ({
         ...researchStyles.col,
         gap: 1.2,
