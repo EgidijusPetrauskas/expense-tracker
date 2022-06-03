@@ -94,6 +94,7 @@ const RegisterPage: React.FC = () => {
         buttonText="Register"
         onSubmit={handleSubmit}
         isDisabled={!(dirty && isValid) || error}
+        logo
       >
         <StyledTextField
           type="text"

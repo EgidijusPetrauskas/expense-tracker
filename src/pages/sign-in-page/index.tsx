@@ -82,6 +82,7 @@ const SignInPage: React.FC = () => {
         buttonText="Sign In"
         onSubmit={handleSubmit}
         isDisabled={!(dirty && isValid) || error}
+        logo
       >
         <StyledTextField
           type="text"

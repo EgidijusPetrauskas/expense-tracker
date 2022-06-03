@@ -5,7 +5,6 @@ import {
   Paper,
   Box,
   Alert,
-  CircularProgress,
   ClickAwayListener,
 } from '@mui/material';
 
@@ -19,6 +18,8 @@ type CustomFormProps = {
   buttonText: string,
   onSubmit?: React.FormEventHandler<HTMLFormElement>,
   isDisabled?: boolean
+  logo?: boolean,
+  fullWidth?: boolean,
 };
 
 const formStyles = {
@@ -31,12 +32,6 @@ const formStyles = {
     alignItems: 'center',
   },
   mainContainer: {
-    width: {
-      xl: 1.7 / 5,
-      lg: 2 / 5,
-      md: 3 / 5,
-      sm: 4 / 5,
-    },
     minWidth: 250,
     display: 'flex',
     flexDirection: 'column',
@@ -45,12 +40,11 @@ const formStyles = {
     gap: 2,
     px: 7,
     py: 9,
-    backgroundColor: '#222c38',
   },
 };
 
 const CustomForm: React.FC<CustomFormProps> = ({
-  children, buttonText, onSubmit, isDisabled,
+  children, buttonText, onSubmit, isDisabled, logo, fullWidth,
 }) => {
   const error = useRootSelector(selectAuthError);
   const loading = useRootSelector(selectAuthLoading);
@@ -69,7 +63,13 @@ const CustomForm: React.FC<CustomFormProps> = ({
               variant="filled"
               severity="error"
               sx={{
-                width: 1.7 / 5,
+                width: {
+                  xl: 1.7 / 5,
+                  lg: 1.7 / 5,
+                  md: 2 / 5,
+                  sm: 3 / 5,
+                  xs: 3 / 5,
+                },
                 position: 'absolute',
                 top: 0,
                 zIndex: 45,
@@ -87,15 +87,24 @@ const CustomForm: React.FC<CustomFormProps> = ({
         autoComplete="off"
         sx={(theme) => ({
           ...formStyles.mainContainer,
+          width: fullWidth ? 1 : {
+            xl: 1.7 / 5,
+            lg: 2 / 5,
+            md: 3 / 5,
+            sm: 4 / 5,
+          },
+          backgroundColor: theme.palette.secondary.light,
           input: {
             color: theme.palette.primary.light,
           },
         })}
         onSubmit={onSubmit}
       >
-        <Box sx={{ mb: 2.5 }}>
-          <Logo src={logoImg} width={85} />
-        </Box>
+        {logo && (
+          <Box sx={{ mb: 2.5 }}>
+            <Logo src={logoImg} width={85} />
+          </Box>
+        )}
         {children}
         <Button
           disabled={loading || isDisabled}
@@ -105,10 +114,11 @@ const CustomForm: React.FC<CustomFormProps> = ({
           sx={{
             maxWidth: 110,
             mt: 3,
+            fontWeight: 600,
             ':disabled': { color: 'secondary.main' },
           }}
         >
-          {loading ? <CircularProgress color="secondary" /> : buttonText}
+          {buttonText}
         </Button>
       </Paper>
     </Box>
