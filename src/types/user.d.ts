@@ -6,3 +6,5 @@ export type User = {
   email?: string,
   age?: string,
 };
+
+export type UserDetails = Omit<User, 'id' | 'username'>;

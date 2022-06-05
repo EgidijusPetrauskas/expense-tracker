@@ -1,8 +1,6 @@
 import React from 'react';
 
-import {
-  Paper, Box, Typography, Button,
-} from '@mui/material';
+import { Paper, Box, Typography } from '@mui/material';
 
 import { selectUser } from '../../store/features/auth/auth-selectors';
 import { useRootSelector } from '../../store/hooks';
@@ -24,9 +22,12 @@ const styles = {
     fontWeight: 600,
     color: 'primary.main',
     textAlign: 'center',
+    textDecoration: 'underline',
+    mb: 0.2,
   },
   info: {
     fontFamily: 'roboto',
+    fontSize: 18,
     textAlign: 'center',
   },
   errorSection: {
@@ -66,23 +67,23 @@ const PersonalInfoSection: React.FC = ({ children }) => {
     >
       <Box>
         <Typography sx={{ ...styles.title }}>Username</Typography>
-        <Typography sx={{ ...styles.info }}>Jonas</Typography>
+        <Typography sx={{ ...styles.info }}>{user.username}</Typography>
       </Box>
       <Box>
         <Typography sx={{ ...styles.title }}>First Name</Typography>
-        <Typography sx={{ ...styles.info }}>Jonas</Typography>
+        <Typography sx={{ ...styles.info }}>{user.firstName ? user.firstName : 'First name...'}</Typography>
       </Box>
       <Box>
         <Typography sx={{ ...styles.title }}>Last Name</Typography>
-        <Typography sx={{ ...styles.info }}>Paulius</Typography>
+        <Typography sx={{ ...styles.info }}>{user.lastName ? user.lastName : 'Last name...'}</Typography>
       </Box>
       <Box>
         <Typography sx={{ ...styles.title }}>Email</Typography>
-        <Typography sx={{ ...styles.info }}>neperisikiskia@gmail.com</Typography>
+        <Typography sx={{ ...styles.info }}>{user.email ? user.email : 'Email...'}</Typography>
       </Box>
       <Box>
         <Typography sx={{ ...styles.title }}>Age</Typography>
-        <Typography sx={{ ...styles.info }}>74</Typography>
+        <Typography sx={{ ...styles.info }}>{user.age ? user.age : 'Age...'}</Typography>
       </Box>
       <Box>
         {children}

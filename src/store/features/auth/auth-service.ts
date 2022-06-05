@@ -1,12 +1,17 @@
+/* eslint-disable @typescript-eslint/no-namespace */
 import axios from 'axios';
-import { Credentials, User, TempUser } from '../../../types';
+import {
+  Credentials,
+  User,
+  TempUser,
+  UserDetails,
+} from '../../../types';
 import { StocksWatchListItem } from '../../../types/stock-watchlist-item';
 
 export type AuthPromiseType = (credentials: Credentials) => Promise<User>;
 
 const API_SERVER = process.env.REACT_APP_API_SERVER;
 
-// eslint-disable-next-line @typescript-eslint/no-namespace
 namespace AuthService {
   export const login: AuthPromiseType = async ({ username, password }: Credentials): Promise<User> => {
     const { data: tempUsers } = await axios.get<TempUser[]>(`${API_SERVER}/users?username=${username}`);
@@ -20,9 +25,14 @@ namespace AuthService {
       throw new Error('Wrong Password');
     }
 
+    const { data: users } = await axios.get<User[]>(`${API_SERVER}/users?username=${username}`);
+    const [fullUser] = users;
+    const userDetails = Object.fromEntries(Object.entries(fullUser).filter((detail) => detail[0] !== 'id' && detail[0] !== 'username' && detail[0] !== 'password'));
+
     return {
       id: user.id,
       username: user.username,
+      ...userDetails,
     };
   };
 
@@ -46,6 +56,33 @@ namespace AuthService {
     };
 
     return createdUser;
+  };
+
+  export const update = async (user: User | null, userDetails: UserDetails) => {
+    if (user === null) {
+      throw new Error('Something went wrong..');
+    }
+
+    const filteredUserData = Object.fromEntries(Object.entries(userDetails).map((detail) => (
+      detail[1] === undefined ? [detail[0], ''] : detail))) as Required<User>;
+
+    const fullUserData = {
+      ...user,
+      ...filteredUserData,
+    };
+
+    const {
+      firstName, lastName, email, age,
+    } = filteredUserData;
+
+    await axios.patch<StocksWatchListItem>(
+      `${API_SERVER}/users/${user.id}`,
+      {
+        firstName, lastName, email, age,
+      },
+    );
+
+    return fullUserData;
   };
 }
 
