@@ -24,20 +24,16 @@ let initialValues: AdditionalInfoValues = {
 
 const validationSchema = Yup.object({
   firstName: Yup.string()
-    .required('First Name is required')
     .min(3, 'Min 3 symbols')
     .max(32, 'Max 32 symbols'),
   lastName: Yup.string()
-    .required('Last Name is required')
     .min(2, 'Min 2 symbols')
     .max(32, 'Max 32 symbols'),
   email: Yup.string()
-    .required('Email is required')
     .min(6, 'Min 6 symbols')
     .max(50, 'Max 50 symbols')
     .email('Enter a valid email'),
   age: Yup.string()
-    .required('Age is required')
     .max(3, 'Max 3 symbols')
     .matches(/^\d*$/, 'Only numbers are allowed'),
 });
