@@ -16,7 +16,7 @@ import { createLogOutAction } from '../../store/features/auth/auth-action-creato
 import { useRootDispatch } from '../../store/hooks';
 
 import Logo from '../../components/logo';
-import LogoLg from '../../images/avatar.svg';
+import Avatar from '../../images/avatar.svg';
 
 const NavBarAuthMenu: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
@@ -51,7 +51,7 @@ const NavBarAuthMenu: React.FC = () => {
           onClick={handleMenu}
           sx={{ display: smallerThanMd ? 'none' : 'block' }}
         >
-          <Logo mode="hover" active={menuOpen} src={LogoLg} width={70} />
+          <Logo mode="hover" active={menuOpen} src={Avatar} width={70} />
           <Popper
             anchorEl={popperPlace.current}
             open={menuOpen}

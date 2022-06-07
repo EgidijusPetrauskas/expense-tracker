@@ -14,6 +14,7 @@ import { authSetLogoutAction } from '../../store/action-creators';
 import Logo from '../../components/logo';
 
 import LogoLg from '../../images/logo-lg.png';
+import Avatar from '../../images/avatar.svg';
 
 const SideMenu: React.FC = () => {
   const loggedIn = useRootSelector(selectLoggedIn);
@@ -41,7 +42,9 @@ const SideMenu: React.FC = () => {
         mt: 2,
       }}
     >
-      <Logo src={LogoLg} width={70} />
+      {loggedIn
+        ? <Logo src={Avatar} width={70} />
+        : <Logo src={LogoLg} width={70} />}
       <Button sx={{ position: 'absolute', right: 0 }} onClick={toggleDrawer(true)}>
         <MenuIcon sx={{ fontSize: 32 }} />
       </Button>
