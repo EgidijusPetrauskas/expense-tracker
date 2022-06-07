@@ -104,7 +104,7 @@ const ResearchSection: React.FC = () => {
           <Alert
             elevation={16}
             variant="filled"
-            severity={typeof successfullAdd === 'boolean' ? 'success' : 'error'}
+            severity={String(successfullAdd).split(' ')[1] === 'added' ? 'success' : 'error'}
             sx={(theme) => ({
               ...researchStyles.successAlert,
               [theme.breakpoints.down('md')]: {
@@ -115,7 +115,7 @@ const ResearchSection: React.FC = () => {
               },
             })}
           >
-            { typeof successfullAdd === 'boolean' ? 'Added to Your Watchlist!' : successfullAdd}
+            {successfullAdd}
           </Alert>
         )}
       </Box>

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-duplicate-props */
 import React from 'react';
 
 import {
@@ -53,6 +54,9 @@ const SearchBar: React.FC<SearchBarProps> = ({
           disabled={loading}
           onChange={(e) => handleChange((e.target.value).toUpperCase())}
           fullWidth
+          inputProps={{
+            maxLength: 4,
+          }}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">

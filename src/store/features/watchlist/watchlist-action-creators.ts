@@ -114,7 +114,7 @@ export const createAppendToWatchListAction = (
   try {
     const response = await WatchlistService.addToWatchlist(symbol);
     if (response === 'success') {
-      dispatch(createWatchlistSetSuccessAction(true));
+      dispatch(createWatchlistSetSuccessAction(`${symbol} added to your Watchlist!`));
       watchListFetchItemAction(symbol, dispatch);
       setTimeout(() => {
         dispatch(createWatchlistSetSuccessAction(false));

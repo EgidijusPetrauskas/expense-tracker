@@ -16,7 +16,7 @@ import { createLogOutAction } from '../../store/features/auth/auth-action-creato
 import { useRootDispatch } from '../../store/hooks';
 
 import Logo from '../../components/logo';
-import LogoLg from '../../images/logo-lg.png';
+import LogoLg from '../../images/avatar.svg';
 
 const NavBarAuthMenu: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
