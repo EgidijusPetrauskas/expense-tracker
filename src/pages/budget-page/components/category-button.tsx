@@ -1,13 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Grid, Button } from '@mui/material';
+import { useRootSelector, useRootDispatch } from '../../../store/hooks';
+import { selectBudgetCurrentCategory } from '../../../store/features/budget/budget-selectors';
+import { createBudgetSetCategoryAcion } from '../../../store/features/budget/budget-action-creators';
 
 type GridButtonProps = {
+  id: string,
   btnText: string,
+  height?: number
 };
 
-const CategoryButton: React.FC<GridButtonProps> = ({ btnText }) => {
-  const active = false;
+const CategoryButton: React.FC<GridButtonProps> = ({ id, btnText, height }) => {
+  const [active, setActive] = useState<boolean>(false);
+  const currentCategory = useRootSelector(selectBudgetCurrentCategory);
+  const dispatch = useRootDispatch();
+
+  useEffect(() => {
+    if (id === currentCategory) {
+      setActive(true);
+    } else {
+      setActive(false);
+    }
+  }, [currentCategory]);
+
+  const setCurrentCategory = (newCatId: string) => {
+    dispatch(createBudgetSetCategoryAcion(newCatId));
+  };
+
   return (
     <Grid
       item
@@ -17,11 +37,12 @@ const CategoryButton: React.FC<GridButtonProps> = ({ btnText }) => {
       sm={4}
       xs={4}
       sx={{
-        height: 48,
+        height: height || 48,
       }}
     >
       <Button
         variant="outlined"
+        onClick={() => setCurrentCategory(id)}
         sx={(theme) => ({
           width: 1,
           height: 1,

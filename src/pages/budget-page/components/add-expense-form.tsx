@@ -7,6 +7,8 @@ import { Typography, MenuItem } from '@mui/material';
 import CustomForm from '../../../components/custom-form';
 import StyledTextField from '../../../components/custom-form/custom-form-styles';
 import { Expense, ExpenseCategory } from '../../../types';
+import { useRootDispatch } from '../../../store/hooks';
+import { createBudgetAppendExpenseAction } from '../../../store/features/budget/budget-action-creators';
 
 type NewExpenseValues = Omit<Expense, 'id'>;
 
@@ -66,6 +68,8 @@ const categoryOptions: ExpenseCategory[] = [
 ];
 
 const AddExpenseForm: React.FC = () => {
+  const dispatch = useRootDispatch();
+
   const handleSubmitInfo: AdditionalInfoFomikConfig['onSubmit'] = ({
     title,
     category,
@@ -73,7 +77,9 @@ const AddExpenseForm: React.FC = () => {
     amount,
     description,
   }) => {
-    console.log('Čia bus pridėjimo logiką');
+    dispatch(createBudgetAppendExpenseAction({
+      title, category, price, amount, description,
+    }));
   };
 
   const {

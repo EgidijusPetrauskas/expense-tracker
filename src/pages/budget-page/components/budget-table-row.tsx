@@ -2,6 +2,9 @@ import React from 'react';
 
 import { TableRow, TableCell } from '@mui/material';
 import DeleteButton from '../../../components/delete-button';
+import { useRootDispatch } from '../../../store/hooks';
+import { createBudgetRemoveExpenseAction } from '../../../store/features/budget/budget-action-creators';
+import { Expense } from '../../../types/expense';
 
 const styles = {
   title: {
@@ -15,26 +18,19 @@ const styles = {
   },
 };
 
-type ExpenseType = {
-  title: string,
-  category: string,
-  price: number,
-  amount: number,
-  description: string,
-};
-
 type BudgetTableRowProps = {
-  data: ExpenseType
+  data: Expense
 };
 
 const BudgetTableRow: React.FC<BudgetTableRowProps> = ({ data }) => {
   const {
-    title, category, price, amount, description,
+    id, title, category, price, amount, description,
   } = data;
 
-  const handleDelete = (id: string) => {
-    console.log('Mock function change later');
-    console.log(id);
+  const dispatch = useRootDispatch();
+
+  const handleDelete = (expenseId: string) => {
+    dispatch(createBudgetRemoveExpenseAction(expenseId));
   };
 
   return (
@@ -50,10 +46,10 @@ const BudgetTableRow: React.FC<BudgetTableRowProps> = ({ data }) => {
     >
       <TableCell align="center" sx={{ ...styles.title }}>{title}</TableCell>
       <TableCell align="center" sx={{ ...styles.title }}>{category}</TableCell>
-      <TableCell align="center" sx={{ ...styles.title }}>{price}</TableCell>
+      <TableCell align="center" sx={{ ...styles.title }}>{`${price}€`}</TableCell>
       <TableCell align="center" sx={{ ...styles.title }}>{amount}</TableCell>
       <TableCell align="center" sx={{ ...styles.title, fontSize: 13 }}>{description}</TableCell>
-      <TableCell align="center" sx={{ ...styles.title }}><DeleteButton hoverText="Delete Expense" deleteBy="yas" handleDelete={handleDelete} /></TableCell>
+      <TableCell align="center" sx={{ ...styles.title }}><DeleteButton hoverText="Delete Expense" deleteBy={id} handleDelete={handleDelete} /></TableCell>
     </TableRow>
   );
 };

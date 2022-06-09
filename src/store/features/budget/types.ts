@@ -1,22 +1,26 @@
 import { Expense } from '../../../types';
+import { ExpenseCategory } from '../../../types/expense-category';
 
 export type BudgetState = {
-  expenses: Expense,
+  expenses: Expense[],
+  categories: ExpenseCategory[],
   error: string | null,
   loading: boolean,
   appendSuccess: boolean | string,
-  currentCategory: string // aprašyti categorijų tipą
+  currentCategory: string
 };
 
 export enum BudgetActionType {
   BUDGET_SET_EXPENSE = 'BUDGET_SET_EXPENSE',
-  BUDGET_DELETE_EXPENSE = 'BUDGET_DELETE_EXPENSE',
-  BUDGET_CLEAR_EXPENSES = 'BUDGET_CLEAR_EXPENSES',
   BUDGET_SET_ERROR = 'BUDGET_SET_ERROR',
-  BUDGET_CLEAR_ERROR = 'BUDGET_CLEAR_ERROR',
+  BUDGET_SET_IS_SET = 'BUDGET_SET_IS_SET',
   BUDGET_SET_LOADING = 'BUDGET_SET_LOADING',
   BUDGET_SET_SUCCESS = 'BUDGET_SET_SUCCESS',
-  BUDGET_SET_IS_SET = 'BUDGET_SET_IS_SET',
+  BUDGET_SET_CATEGORIES = 'BUDGET_SET_CATEGORIES',
+  BUDGET_SET_CURRENT_CATEGORY = 'BUDGET_SET_CURRENT_CATEGORY',
+  BUDGET_CLEAR_EXPENSES = 'BUDGET_CLEAR_EXPENSES',
+  BUDGET_CLEAR_ERROR = 'BUDGET_CLEAR_ERROR',
+  BUDGET_DELETE_EXPENSE = 'BUDGET_DELETE_EXPENSE',
   BUDGET_REFRESH = 'BUDGET_REFRESH',
 }
 
@@ -43,6 +47,10 @@ export type BudgetSetErrorAction = {
   }
 };
 
+export type BudgetClearErrorAction = {
+  type: BudgetActionType.BUDGET_CLEAR_ERROR
+};
+
 export type BudgetSetLoadingAction = {
   type: BudgetActionType.BUDGET_SET_LOADING
 };
@@ -60,4 +68,18 @@ export type BudgetRefreshAction = {
   type: BudgetActionType.BUDGET_REFRESH
 };
 
-export type BudgetActions = BudgetSetExpenseAction | BudgetDeleteExpenseAction | BudgetClearExpensesAction | BudgetSetErrorAction | BudgetSetLoadingAction | BudgetSetSuccessAction | BudgetSetIsSetAction | BudgetRefreshAction;
+export type BudgetSetCurrentCategoryAction = {
+  type: BudgetActionType.BUDGET_SET_CURRENT_CATEGORY,
+  payload: {
+    category: string
+  }
+};
+
+export type BudgetSetCategoriesAction = {
+  type: BudgetActionType.BUDGET_SET_CATEGORIES
+  payload: {
+    categories: ExpenseCategory[]
+  }
+};
+
+export type BudgetActions = BudgetSetExpenseAction | BudgetDeleteExpenseAction | BudgetClearExpensesAction | BudgetSetErrorAction | BudgetSetLoadingAction | BudgetSetSuccessAction | BudgetSetIsSetAction | BudgetRefreshAction | BudgetClearErrorAction | BudgetSetCurrentCategoryAction | BudgetSetCategoriesAction;

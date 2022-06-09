@@ -2,7 +2,7 @@ import { AuthActions, AuthState } from './features/auth/types';
 import { NavActions, NavState } from './features/navigation/types';
 import { StocksActions, StocksState } from './features/stocks/types';
 import { WatchlistActions, WatchlistState } from './features/watchlist/types';
-import { BudgetState, BudgetActions } from './features/my-budget/types';
+import { BudgetState, BudgetActions } from './features/budget/types';
 
 export type MainState = {
   auth: AuthState,

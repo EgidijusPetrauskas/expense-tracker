@@ -17,6 +17,9 @@ import BudgetTableHead from './components/budget-table-head';
 import BudgetTableRow from './components/budget-table-row';
 import AddExpenseForm from './components/add-expense-form';
 import { ExpenseCategory } from '../../types/expense-category';
+import { useRootSelector, useRootDispatch } from '../../store/hooks';
+import { selectExpenses } from '../../store/selectors';
+import { budgetClearExpensesAction } from '../../store/features/budget/budget-action-creators';
 
 const styles = {
   outsideContainer: {
@@ -73,20 +76,26 @@ const categoryOptions: ExpenseCategory[] = [
 const BudgetPage: React.FC = () => {
   const [formOpen, setFormOpen] = useState<boolean>(false);
   const [currentDate, setCurrentDate] = useState<string>('Year Month');
+  const expenses = useRootSelector(selectExpenses);
+  const dispatch = useRootDispatch();
 
   useEffect(() => {
     setCurrentDate(format(new Date(), 'yyyy MMMM'));
-  });
+  }, []);
 
   const addExpense = () => {
     setFormOpen(!formOpen);
   };
 
+  const clearAll = () => {
+    dispatch(budgetClearExpensesAction);
+  };
+
   return (
     <Container sx={{ ...styles.outsideContainer }}>
       <Grid container spacing={0.7}>
-        {categoryOptions.map((btn) => (
-          <CategoryButton key={btn.id} btnText={btn.title} />
+        {categoryOptions.map((option) => (
+          <CategoryButton key={option.id} id={option.id} btnText={option.title} />
         ))}
       </Grid>
       <Box
@@ -95,6 +104,7 @@ const BudgetPage: React.FC = () => {
           height: 60,
           display: 'flex',
           justifyContent: 'space-between',
+          gap: 1,
         }}
       >
         <Paper
@@ -110,6 +120,9 @@ const BudgetPage: React.FC = () => {
             {currentDate}
           </Typography>
         </Paper>
+        <Box sx={{ width: 1 / 3 }}>
+          <CategoryButton height={60} id="all" btnText="All" />
+        </Box>
         <Paper
           sx={(theme) => ({ ...styles.middleContainerPaper, background: theme.palette.secondary.light })}
         >
@@ -126,6 +139,7 @@ const BudgetPage: React.FC = () => {
           {!formOpen && (
             <Button
               variant="outlined"
+              onClick={clearAll}
               sx={{ ...styles.addAndClearBtn }}
             >
               Clear All
@@ -139,10 +153,19 @@ const BudgetPage: React.FC = () => {
           <Table>
             <TableBody>
               <BudgetTableHead />
-              <BudgetTableRow data={{
-                title: 'Lunch', category: 'Food and Necessities', price: 14.15, amount: 2, description: 'Burger king for me a.',
-              }}
-              />
+              {expenses.map((expense) => (
+                <BudgetTableRow
+                  key={expense.id}
+                  data={{
+                    id: '1',
+                    title: expense.title,
+                    category: expense.category,
+                    price: expense.price,
+                    amount: expense.amount,
+                    description: expense.description,
+                  }}
+                />
+              ))}
             </TableBody>
           </Table>
         )}
