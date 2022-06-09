@@ -14,6 +14,9 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
   '& .MuiOutlinedInput-root.Mui-error': {
     '& > fieldset': { borderColor: theme.palette.secondary.dark },
   },
+  '& .MuiSelect-select': { color: theme.palette.primary.light },
+  '& .MuiSvgIcon-root.MuiSelect-icon': { color: theme.palette.primary.main },
+
 }));
 
 export default StyledTextField;

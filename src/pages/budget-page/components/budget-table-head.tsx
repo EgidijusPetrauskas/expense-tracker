@@ -20,10 +20,9 @@ const BudgetTableHead: React.FC = () => (
       width: 1,
       height: 50,
       display: 'flex',
-      justifyContent: 'space-around',
+      justifyContent: 'space-evenly',
       alignItems: 'center',
       background: theme.palette.secondary.main,
-      mt: 3,
     })}
   >
     <TableCell align="center" variant="head" sx={{ ...styles.title }}>Title</TableCell>
@@ -31,6 +30,7 @@ const BudgetTableHead: React.FC = () => (
     <TableCell align="center" variant="head" sx={{ ...styles.title }}>Price</TableCell>
     <TableCell align="center" variant="head" sx={{ ...styles.title }}>Amount</TableCell>
     <TableCell align="center" variant="head" sx={{ ...styles.title }}>Description</TableCell>
+    <TableCell align="center" variant="head" sx={{ ...styles.title }}>Remove</TableCell>
   </TableRow>
 );
 

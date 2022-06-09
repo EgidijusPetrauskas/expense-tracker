@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { TableRow, TableCell } from '@mui/material';
+import DeleteButton from '../../../components/delete-button';
 
 const styles = {
   title: {
@@ -30,13 +31,19 @@ const BudgetTableRow: React.FC<BudgetTableRowProps> = ({ data }) => {
   const {
     title, category, price, amount, description,
   } = data;
+
+  const handleDelete = (id: string) => {
+    console.log('Mock function change later');
+    console.log(id);
+  };
+
   return (
     <TableRow
       sx={(theme) => ({
         width: 1,
         height: 50,
         display: 'flex',
-        justifyContent: 'space-around',
+        justifyContent: 'space-evenly',
         alignItems: 'center',
         background: theme.palette.secondary.light,
       })}
@@ -46,6 +53,7 @@ const BudgetTableRow: React.FC<BudgetTableRowProps> = ({ data }) => {
       <TableCell align="center" sx={{ ...styles.title }}>{price}</TableCell>
       <TableCell align="center" sx={{ ...styles.title }}>{amount}</TableCell>
       <TableCell align="center" sx={{ ...styles.title, fontSize: 13 }}>{description}</TableCell>
+      <TableCell align="center" sx={{ ...styles.title }}><DeleteButton hoverText="Delete Expense" deleteBy="yas" handleDelete={handleDelete} /></TableCell>
     </TableRow>
   );
 };

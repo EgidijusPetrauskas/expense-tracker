@@ -14,5 +14,41 @@
         "AAPL"
       ]
     }
+  ],
+  "expenses": [
+    {
+      "id": 1,
+      "title": "Lunch",
+      "category": "foof and necessities",
+      "price": 14.50,
+      "amount": 2,
+      "description": "Bueger king for me and Lisa"
+    }
+  ],
+  "expense_categories": [
+    {
+      "id": "1",
+      "title": "Food and Necessities"
+    },
+    {
+      "id": "2",
+      "title": "Transport"
+    },
+    {
+      "id": "3",
+      "title": "Leisure and Entertainment"
+    },
+    {
+      "id": "4",
+      "title": "Health"
+    },
+    {
+      "id": "5",
+      "title": "Investment"
+    },
+    {
+      "id": "6",
+      "title": "Other"
+    }
   ]
 }
