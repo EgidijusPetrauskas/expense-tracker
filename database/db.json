@@ -17,12 +17,22 @@
   ],
   "expenses": [
     {
-      "id": 1,
-      "title": "Lunch",
-      "category": "foof and necessities",
-      "price": 14.50,
-      "amount": 2,
-      "description": "Bueger king for me and Lisa"
+      "userId": 1,
+      "id": "2834ab9a-ffa4-4f82-967e-ee94112425fd",
+      "title": "Apple shares",
+      "category": "5",
+      "price": 660,
+      "amount": 3,
+      "description": "Bought apple shares"
+    },
+    {
+      "userId": 1,
+      "id": "4ae0791c-2df9-4ae3-8813-1624d17945e6",
+      "title": "Gas",
+      "category": "2",
+      "price": 50,
+      "amount": 20,
+      "description": "Trip to the beach."
     }
   ],
   "expense_categories": [

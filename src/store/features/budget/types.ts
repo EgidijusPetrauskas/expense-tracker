@@ -6,8 +6,9 @@ export type BudgetState = {
   categories: ExpenseCategory[],
   error: string | null,
   loading: boolean,
-  appendSuccess: boolean | string,
-  currentCategory: string
+  formOpen: boolean,
+  currentCategory: string,
+  isSet: boolean,
 };
 
 export enum BudgetActionType {
@@ -15,13 +16,12 @@ export enum BudgetActionType {
   BUDGET_SET_ERROR = 'BUDGET_SET_ERROR',
   BUDGET_SET_IS_SET = 'BUDGET_SET_IS_SET',
   BUDGET_SET_LOADING = 'BUDGET_SET_LOADING',
-  BUDGET_SET_SUCCESS = 'BUDGET_SET_SUCCESS',
+  BUDGET_SET_FORM_OPEN = 'BUDGET_SET_FORM_OPEN',
   BUDGET_SET_CATEGORIES = 'BUDGET_SET_CATEGORIES',
   BUDGET_SET_CURRENT_CATEGORY = 'BUDGET_SET_CURRENT_CATEGORY',
   BUDGET_CLEAR_EXPENSES = 'BUDGET_CLEAR_EXPENSES',
   BUDGET_CLEAR_ERROR = 'BUDGET_CLEAR_ERROR',
   BUDGET_DELETE_EXPENSE = 'BUDGET_DELETE_EXPENSE',
-  BUDGET_REFRESH = 'BUDGET_REFRESH',
 }
 
 export type BudgetSetExpenseAction = {
@@ -52,20 +52,17 @@ export type BudgetClearErrorAction = {
 };
 
 export type BudgetSetLoadingAction = {
-  type: BudgetActionType.BUDGET_SET_LOADING
+  type: BudgetActionType.BUDGET_SET_LOADING,
+  payload: boolean,
 };
 
-export type BudgetSetSuccessAction = {
-  type: BudgetActionType.BUDGET_SET_SUCCESS,
-  payload: boolean | string,
+export type BudgetSetFormOpenAction = {
+  type: BudgetActionType.BUDGET_SET_FORM_OPEN,
+  payload: boolean,
 };
 
 export type BudgetSetIsSetAction = {
   type: BudgetActionType.BUDGET_SET_IS_SET
-};
-
-export type BudgetRefreshAction = {
-  type: BudgetActionType.BUDGET_REFRESH
 };
 
 export type BudgetSetCurrentCategoryAction = {
@@ -82,4 +79,4 @@ export type BudgetSetCategoriesAction = {
   }
 };
 
-export type BudgetActions = BudgetSetExpenseAction | BudgetDeleteExpenseAction | BudgetClearExpensesAction | BudgetSetErrorAction | BudgetSetLoadingAction | BudgetSetSuccessAction | BudgetSetIsSetAction | BudgetRefreshAction | BudgetClearErrorAction | BudgetSetCurrentCategoryAction | BudgetSetCategoriesAction;
+export type BudgetActions = BudgetSetExpenseAction | BudgetDeleteExpenseAction | BudgetClearExpensesAction | BudgetSetErrorAction | BudgetSetLoadingAction | BudgetSetFormOpenAction | BudgetSetIsSetAction | BudgetClearErrorAction | BudgetSetCurrentCategoryAction | BudgetSetCategoriesAction;

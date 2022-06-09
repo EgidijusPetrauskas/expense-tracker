@@ -2,13 +2,15 @@ import React from 'react';
 
 import { useFormik, FormikConfig } from 'formik';
 import * as Yup from 'yup';
+import { v4 } from 'uuid';
 import { Typography, MenuItem } from '@mui/material';
 
 import CustomForm from '../../../components/custom-form';
 import StyledTextField from '../../../components/custom-form/custom-form-styles';
 import { Expense, ExpenseCategory } from '../../../types';
-import { useRootDispatch } from '../../../store/hooks';
-import { createBudgetAppendExpenseAction } from '../../../store/features/budget/budget-action-creators';
+import { useRootDispatch, useRootSelector } from '../../../store/hooks';
+import { createBudgetAppendExpenseAction, createBudgetSetFormOpenAction } from '../../../store/features/budget/budget-action-creators';
+import { selectBudgetFormOpen } from '../../../store/features/budget/budget-selectors';
 
 type NewExpenseValues = Omit<Expense, 'id'>;
 
@@ -69,6 +71,7 @@ const categoryOptions: ExpenseCategory[] = [
 
 const AddExpenseForm: React.FC = () => {
   const dispatch = useRootDispatch();
+  const formOpen = useRootSelector(selectBudgetFormOpen);
 
   const handleSubmitInfo: AdditionalInfoFomikConfig['onSubmit'] = ({
     title,
@@ -78,8 +81,9 @@ const AddExpenseForm: React.FC = () => {
     description,
   }) => {
     dispatch(createBudgetAppendExpenseAction({
-      title, category, price, amount, description,
+      id: v4(), title, category, price, amount, description,
     }));
+    dispatch(createBudgetSetFormOpenAction(!formOpen));
   };
 
   const {

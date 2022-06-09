@@ -7,9 +7,10 @@ const initialState: BudgetState = {
   expenses: [],
   categories: [],
   error: null,
-  loading: false,
-  appendSuccess: false,
+  loading: true,
+  formOpen: false,
   currentCategory: 'all',
+  isSet: false,
 };
 
 const budgetReducer: Reducer<BudgetState, BudgetActions> = (state = initialState, action) => {
@@ -50,18 +51,9 @@ const budgetReducer: Reducer<BudgetState, BudgetActions> = (state = initialState
     }
 
     case BudgetActionType.BUDGET_SET_LOADING: {
-      let loading: BudgetState['loading'];
-      if (state.loading) { loading = false; } else { loading = true; }
       return {
         ...state,
-        loading,
-      };
-    }
-
-    case BudgetActionType.BUDGET_SET_SUCCESS: {
-      return {
-        ...state,
-        appendSuccess: action.payload,
+        loading: action.payload,
       };
     }
 
@@ -72,18 +64,12 @@ const budgetReducer: Reducer<BudgetState, BudgetActions> = (state = initialState
       };
     }
 
-    case BudgetActionType.BUDGET_REFRESH: {
-      return {
-        ...state,
-        isSet: false,
-      };
-    }
-
     case BudgetActionType.BUDGET_CLEAR_EXPENSES: {
       return {
         ...state,
         expenses: [],
         isSet: false,
+        loading: false,
       };
     }
 
@@ -98,6 +84,13 @@ const budgetReducer: Reducer<BudgetState, BudgetActions> = (state = initialState
       return {
         ...state,
         categories: action.payload.categories,
+      };
+    }
+
+    case BudgetActionType.BUDGET_SET_FORM_OPEN: {
+      return {
+        ...state,
+        formOpen: action.payload,
       };
     }
 

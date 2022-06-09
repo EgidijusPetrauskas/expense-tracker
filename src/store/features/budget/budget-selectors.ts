@@ -4,8 +4,12 @@ export const selectExpenses = (state: MainState) => state.budget.expenses;
 
 export const selectBudgetError = (state: MainState) => state.budget.error;
 
+export const selectBudgetCategories = (state: MainState) => state.budget.categories;
+
 export const selectBudgetCurrentCategory = (state: MainState) => state.budget.currentCategory;
+
+export const selectBudgetIsSet = (state: MainState) => state.budget.isSet;
 
 export const selectBudgetLoading = (state: MainState) => state.budget.loading;
 
-export const selectBudgetSuccess = (state: MainState) => state.budget.appendSuccess;
+export const selectBudgetFormOpen = (state: MainState) => state.budget.formOpen;

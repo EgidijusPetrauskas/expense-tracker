@@ -16,10 +16,22 @@ import CategoryButton from './components/category-button';
 import BudgetTableHead from './components/budget-table-head';
 import BudgetTableRow from './components/budget-table-row';
 import AddExpenseForm from './components/add-expense-form';
-import { ExpenseCategory } from '../../types/expense-category';
 import { useRootSelector, useRootDispatch } from '../../store/hooks';
 import { selectExpenses } from '../../store/selectors';
-import { budgetClearExpensesAction } from '../../store/features/budget/budget-action-creators';
+import {
+  createSetCategoriesAction,
+  createSetBudgetExpenses,
+  createClearAllExpensesAction,
+  createBudgetSetFormOpenAction,
+  createBudgetSetLoadingAction,
+} from '../../store/features/budget/budget-action-creators';
+import {
+  selectBudgetCategories,
+  selectBudgetCurrentCategory,
+  selectBudgetFormOpen,
+  selectBudgetLoading,
+} from '../../store/features/budget/budget-selectors';
+import CustomBackDrop from '../../components/custom-backdrop';
 
 const styles = {
   outsideContainer: {
@@ -46,58 +58,35 @@ const styles = {
   },
 };
 
-const categoryOptions: ExpenseCategory[] = [
-  {
-    id: '1',
-    title: 'Food and Necessities',
-  },
-  {
-    id: '2',
-    title: 'Transport',
-  },
-  {
-    id: '3',
-    title: 'Leisure and Entertainment',
-  },
-  {
-    id: '4',
-    title: 'Health',
-  },
-  {
-    id: '5',
-    title: 'Investment',
-  },
-  {
-    id: '6',
-    title: 'Other',
-  },
-];
-
 const BudgetPage: React.FC = () => {
-  const [formOpen, setFormOpen] = useState<boolean>(false);
   const [currentDate, setCurrentDate] = useState<string>('Year Month');
   const expenses = useRootSelector(selectExpenses);
+  const currentCategory = useRootSelector(selectBudgetCurrentCategory);
+  const categoryOptions = useRootSelector(selectBudgetCategories);
+  const loading = useRootSelector(selectBudgetLoading);
+  const formOpen = useRootSelector(selectBudgetFormOpen);
   const dispatch = useRootDispatch();
 
   useEffect(() => {
     setCurrentDate(format(new Date(), 'yyyy MMMM'));
+    dispatch(createSetCategoriesAction());
   }, []);
 
+  useEffect(() => {
+    dispatch(createSetBudgetExpenses(currentCategory));
+  }, [currentCategory]);
+
   const addExpense = () => {
-    setFormOpen(!formOpen);
+    dispatch(createBudgetSetFormOpenAction(!formOpen));
   };
 
   const clearAll = () => {
-    dispatch(budgetClearExpensesAction);
+    dispatch(createClearAllExpensesAction());
   };
 
   return (
     <Container sx={{ ...styles.outsideContainer }}>
-      <Grid container spacing={0.7}>
-        {categoryOptions.map((option) => (
-          <CategoryButton key={option.id} id={option.id} btnText={option.title} />
-        ))}
-      </Grid>
+      <CustomBackDrop open={loading} handleClose={() => dispatch(createBudgetSetLoadingAction(false))} />
       <Box
         sx={{
           width: 1,
@@ -147,6 +136,11 @@ const BudgetPage: React.FC = () => {
           )}
         </Paper>
       </Box>
+      <Grid container spacing={0.7}>
+        {categoryOptions.map((option) => (
+          <CategoryButton key={option.id} id={option.id} btnText={option.title} />
+        ))}
+      </Grid>
       {formOpen
         ? <AddExpenseForm />
         : (
@@ -157,7 +151,7 @@ const BudgetPage: React.FC = () => {
                 <BudgetTableRow
                   key={expense.id}
                   data={{
-                    id: '1',
+                    id: expense.id,
                     title: expense.title,
                     category: expense.category,
                     price: expense.price,

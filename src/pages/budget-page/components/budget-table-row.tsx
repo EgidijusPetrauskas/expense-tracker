@@ -2,9 +2,10 @@ import React from 'react';
 
 import { TableRow, TableCell } from '@mui/material';
 import DeleteButton from '../../../components/delete-button';
-import { useRootDispatch } from '../../../store/hooks';
+import { useRootDispatch, useRootSelector } from '../../../store/hooks';
 import { createBudgetRemoveExpenseAction } from '../../../store/features/budget/budget-action-creators';
 import { Expense } from '../../../types/expense';
+import { selectBudgetCategories } from '../../../store/features/budget/budget-selectors';
 
 const styles = {
   title: {
@@ -28,6 +29,7 @@ const BudgetTableRow: React.FC<BudgetTableRowProps> = ({ data }) => {
   } = data;
 
   const dispatch = useRootDispatch();
+  const categories = useRootSelector(selectBudgetCategories);
 
   const handleDelete = (expenseId: string) => {
     dispatch(createBudgetRemoveExpenseAction(expenseId));
@@ -37,7 +39,7 @@ const BudgetTableRow: React.FC<BudgetTableRowProps> = ({ data }) => {
     <TableRow
       sx={(theme) => ({
         width: 1,
-        height: 50,
+        height: 60,
         display: 'flex',
         justifyContent: 'space-evenly',
         alignItems: 'center',
@@ -45,7 +47,7 @@ const BudgetTableRow: React.FC<BudgetTableRowProps> = ({ data }) => {
       })}
     >
       <TableCell align="center" sx={{ ...styles.title }}>{title}</TableCell>
-      <TableCell align="center" sx={{ ...styles.title }}>{category}</TableCell>
+      <TableCell align="center" sx={{ ...styles.title }}>{categories.find((ctgr) => ctgr.id === category)?.title}</TableCell>
       <TableCell align="center" sx={{ ...styles.title }}>{`${price}€`}</TableCell>
       <TableCell align="center" sx={{ ...styles.title }}>{amount}</TableCell>
       <TableCell align="center" sx={{ ...styles.title, fontSize: 13 }}>{description}</TableCell>
