@@ -6,7 +6,6 @@ import {
   TempUser,
   UserDetails,
 } from '../../../types';
-import { StocksWatchListItem } from '../../../types/stock-watchlist-item';
 
 export type AuthPromiseType = (credentials: Credentials) => Promise<User>;
 
@@ -32,6 +31,8 @@ namespace AuthService {
     return {
       id: user.id,
       username: user.username,
+      watchlist: fullUser.watchlist,
+      expenses: fullUser.expenses,
       ...userDetails,
     };
   };
@@ -44,15 +45,15 @@ namespace AuthService {
       throw new Error('Username already exists');
     }
 
-    const { data: createdNewUser } = await axios.post(`${API_SERVER}/users`, { username, password });
-    await axios.post<StocksWatchListItem>(
-      `${API_SERVER}/users_watchlist`,
-      { userId: createdNewUser.id, stocks: [] },
-    );
+    const { data: createdNewUser } = await axios.post(`${API_SERVER}/users`, {
+      username, password, watchlist: [], expenses: [],
+    });
 
     const createdUser: User = {
       id: createdNewUser.id,
       username: createdNewUser.username,
+      watchlist: createdNewUser.watchlist,
+      expenses: createdNewUser.expenses,
     };
 
     return createdUser;
@@ -64,7 +65,7 @@ namespace AuthService {
     }
 
     const filteredUserData = Object.fromEntries(Object.entries(userDetails).map((detail) => (
-      detail[1] === undefined ? [detail[0], ''] : detail))) as Required<User>;
+      detail[1] === undefined ? [detail[0], ''] : detail)));
 
     const fullUserData = {
       ...user,
@@ -75,7 +76,7 @@ namespace AuthService {
       firstName, lastName, email, age,
     } = filteredUserData;
 
-    await axios.patch<StocksWatchListItem>(
+    await axios.patch(
       `${API_SERVER}/users/${user.id}`,
       {
         firstName, lastName, email, age,

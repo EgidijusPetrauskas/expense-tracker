@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import axios from 'axios';
 
-import { StocksWatchListItem } from '../../../types/stock-watchlist-item';
 import { getLocalStorage } from '../../../helpers/local-storage-helper';
 import { User } from '../../../types/user';
 
@@ -20,31 +19,23 @@ namespace WatchlistService {
     const user: User | null = getLocalStorage(USER_KEY_IN_LOCAL_STORAGE);
 
     if (!user) {
-      throw new Error('You have to Sign in!');
       response = 'failed';
+      throw new Error('You have to Sign in!');
     }
 
-    const { data } = await axios.get<StocksWatchListItem[]>(`${API_SERVER}/users_watchlist`);
-    const existingWatchListItem = data.find((item: StocksWatchListItem) => item.userId === user.id);
+    const { data } = await axios.get<User>(`${API_SERVER}/users/${user.id}`);
+    const { watchlist } = data;
 
-    if (existingWatchListItem?.stocks.includes(symbol)) {
+    if (watchlist.includes(symbol)) {
       throw new Error(`${symbol} is already in your Watchlist`);
       response = 'failed';
     }
 
-    if (existingWatchListItem) {
-      await axios.patch<StocksWatchListItem>(
-        `${API_SERVER}/users_watchlist/${existingWatchListItem.id}`,
-        { stocks: [...existingWatchListItem.stocks, symbol] },
-      );
-      response = 'success';
-    } else {
-      await axios.post<StocksWatchListItem>(
-        `${API_SERVER}/users_watchlist`,
-        { userId: user.id, stocks: [symbol] },
-      );
-      response = 'success';
-    }
+    await axios.patch<User>(
+      `${API_SERVER}/users/${user.id}`,
+      { watchlist: [...watchlist, symbol] },
+    );
+    response = 'success';
 
     return response;
   };
@@ -55,15 +46,13 @@ namespace WatchlistService {
       throw new Error('You have to Sign in!');
     }
 
-    const { data } = await axios.get<StocksWatchListItem[]>(`${API_SERVER}/users_watchlist`);
-    const existingWatchListItem = data.find((item: StocksWatchListItem) => item.userId === user.id);
+    const { data } = await axios.get<User>(`${API_SERVER}/users/${user.id}`);
+    const { watchlist } = data;
 
-    if (existingWatchListItem) {
-      await axios.patch<StocksWatchListItem>(
-        `${API_SERVER}/users_watchlist/${existingWatchListItem.id}`,
-        { stocks: existingWatchListItem?.stocks.filter((item) => item !== symbol) },
-      );
-    }
+    await axios.patch<User>(
+      `${API_SERVER}/users/${user.id}`,
+      { watchlist: watchlist.filter((item) => item !== symbol) },
+    );
   };
 
   export const loadWatchlist: LoadWatchListType = async () => {
@@ -71,8 +60,8 @@ namespace WatchlistService {
     if (!user) {
       throw new Error('You have to Sign in!');
     }
-    const { data } = await axios.get<StocksWatchListItem[]>(`${API_SERVER}/users_watchlist?userId=${user.id}`);
-    return data[0].stocks;
+    const { data } = await axios.get<User>(`${API_SERVER}/users/${user.id}`);
+    return data.watchlist;
   };
 }
 

@@ -10,7 +10,7 @@ const USER_KEY_IN_LOCAL_STORAGE = process.env.REACT_APP_USER_KEY_IN_LOCAL_STORAG
 
 type GetCategoriesType = () => Promise<ExpenseCategory[]>;
 type GetExpensesType = (categoryId: string) => Promise<Expense[]>;
-type CreateExpenseType = (expenseData: Omit<Expense, 'id'>) => Promise<Expense>;
+type CreateExpenseType = (expenseData: Expense) => Promise<Expense>;
 type RemoveExpenseType = (id: string) => Promise<string>;
 type ClearAllExpensesType = () => Promise<void>;
 
@@ -30,12 +30,12 @@ namespace BudgetService {
       throw new Error('You have to Sign in!');
     }
 
-    const { data } = await axios.get<Expense[]>(`${API_SERVER}/expenses?userId=${user.id}`);
+    const { data } = await axios.get<User>(`${API_SERVER}/users/${user.id}`);
 
     if (categoryId === 'all') {
-      return data;
+      return data.expenses;
     }
-    const filteredExpenses = data.filter((expense) => expense.category === categoryId);
+    const filteredExpenses = data.expenses.filter((expense) => expense.category === categoryId);
     return filteredExpenses;
   };
 
@@ -46,12 +46,14 @@ namespace BudgetService {
       throw new Error('You have to Sign in!');
     }
 
-    const { data } = await axios.post(`${API_SERVER}/expenses`, { userId: user.id, ...expenseData });
+    const { data } = await axios.get<User>(`${API_SERVER}/users/${user.id}`);
 
-    const noUserIdData = data;
-    delete noUserIdData.userId;
+    await axios.patch(
+      `${API_SERVER}/users/${user.id}`,
+      { expenses: [expenseData, ...data.expenses] },
+    );
 
-    return noUserIdData;
+    return expenseData;
   };
 
   export const removeExpense: RemoveExpenseType = async (id) => {
@@ -61,7 +63,12 @@ namespace BudgetService {
       throw new Error('You have to Sign in!');
     }
 
-    await axios.delete(`${API_SERVER}/expenses/${id}`);
+    const { data } = await axios.get<User>(`${API_SERVER}/users/${user.id}`);
+
+    await axios.patch(
+      `${API_SERVER}/users/${user.id}`,
+      { expenses: data.expenses.filter((expense) => expense.id !== id) },
+    );
 
     return id;
   };
@@ -73,11 +80,10 @@ namespace BudgetService {
       throw new Error('You have to Sign in!');
     }
 
-    const { data: userExpenses } = await axios.get<Expense[]>(`${API_SERVER}/expenses?userId${user.id}`);
-
-    userExpenses.forEach(async (expense) => {
-      await axios.delete(`${API_SERVER}/expenses/${expense.id}`);
-    });
+    await axios.patch(
+      `${API_SERVER}/users/${user.id}`,
+      { expenses: [] },
+    );
   };
 }
 

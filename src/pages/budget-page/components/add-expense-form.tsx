@@ -38,7 +38,7 @@ const validationSchema = Yup.object({
     .max(999999999, 'Max 999999999')
     .required('Amount is rquired'),
   description: Yup.string()
-    .min(6, 'Min 6 symbols')
+    .min(3, 'Min 3 symbols')
     .max(50, 'Max 50 symbols'),
 });
 

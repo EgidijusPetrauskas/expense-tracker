@@ -3,36 +3,46 @@
     {
       "id": "1",
       "username": "Jonas",
-      "password": "Jonas121"
-    }
-  ],
-  "users_watchlist": [
-    {
-      "id": "1",
-      "userId": "1",
-      "stocks": [
-        "AAPL"
-      ]
-    }
-  ],
-  "expenses": [
-    {
-      "userId": 1,
-      "id": "2834ab9a-ffa4-4f82-967e-ee94112425fd",
-      "title": "Apple shares",
-      "category": "5",
-      "price": 660,
-      "amount": 3,
-      "description": "Bought apple shares"
+      "password": "Jonas121",
+      "watchlist": [
+        "MSFT"
+      ],
+      "expenses": [
+        {
+          "id": "b304ac52-4efa-40cb-b837-add18fb01e4a",
+          "title": "Gas",
+          "category": "2",
+          "price": 420,
+          "amount": 50,
+          "description": "Trip to helll"
+        }
+      ],
+      "firstName": "Jonas",
+      "lastName": "Jonaitis",
+      "email": "jonukas@gmail.com",
+      "age": "21"
     },
     {
-      "userId": 1,
-      "id": "4ae0791c-2df9-4ae3-8813-1624d17945e6",
-      "title": "Gas",
-      "category": "2",
-      "price": 50,
-      "amount": 20,
-      "description": "Trip to the beach."
+      "username": "Tomas",
+      "password": "Tomas121",
+      "watchlist": [
+        "AAPL"
+      ],
+      "expenses": [
+        {
+          "id": "26b3ddbb-a0ac-43aa-ad44-f124fc000792",
+          "title": "AAPL shares",
+          "category": "5",
+          "price": 420,
+          "amount": 2,
+          "description": "Bought apple shares."
+        }
+      ],
+      "id": "jaPcUpZ",
+      "firstName": "Tomas",
+      "lastName": "Tomasas",
+      "email": "tomusas@gmail.com",
+      "age": "42"
     }
   ],
   "expense_categories": [
