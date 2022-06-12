@@ -90,6 +90,7 @@ const budgetReducer: Reducer<BudgetState, BudgetActions> = (state = initialState
     case BudgetActionType.BUDGET_SET_FORM_OPEN: {
       return {
         ...state,
+        currentCategory: 'all',
         formOpen: action.payload,
       };
     }

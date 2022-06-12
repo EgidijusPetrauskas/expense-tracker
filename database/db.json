@@ -7,33 +7,30 @@
       "watchlist": [
         "AAPL"
       ],
-      "expenses": [],
+      "user_expenses": [
+        "fe1a3b34-f14a-4e29-8daa-141e024d555b"
+      ],
       "firstName": "Jonas",
       "lastName": "Jonukas",
       "email": "jonukas@gmail.com",
-      "age": "21"
+      "age": "23"
     },
     {
       "username": "Tomas",
       "password": "Tomas121",
-      "watchlist": [
-        "AAPL"
-      ],
-      "expenses": [
-        {
-          "id": "26b3ddbb-a0ac-43aa-ad44-f124fc000792",
-          "title": "AAPL shares",
-          "category": "5",
-          "price": 420,
-          "amount": 2,
-          "description": "Bought apple shares."
-        }
-      ],
-      "id": "jaPcUpZ",
-      "firstName": "Tomas",
-      "lastName": "Tomasas",
-      "email": "tomusas@gmail.com",
-      "age": "42"
+      "watchlist": [],
+      "user_expenses": [],
+      "id": "8l64lSj"
+    }
+  ],
+  "expenses": [
+    {
+      "id": "fe1a3b34-f14a-4e29-8daa-141e024d555b",
+      "title": "Gas",
+      "category": "2",
+      "price": 50,
+      "amount": 25,
+      "description": "Trip"
     }
   ],
   "expense_categories": [

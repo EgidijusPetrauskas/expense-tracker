@@ -32,7 +32,7 @@ namespace AuthService {
       id: user.id,
       username: user.username,
       watchlist: fullUser.watchlist,
-      expenses: fullUser.expenses,
+      user_expenses: fullUser.user_expenses,
       ...userDetails,
     };
   };
@@ -46,14 +46,14 @@ namespace AuthService {
     }
 
     const { data: createdNewUser } = await axios.post(`${API_SERVER}/users`, {
-      username, password, watchlist: [], expenses: [],
+      username, password, watchlist: [], user_expenses: [],
     });
 
     const createdUser: User = {
       id: createdNewUser.id,
       username: createdNewUser.username,
       watchlist: createdNewUser.watchlist,
-      expenses: createdNewUser.expenses,
+      user_expenses: createdNewUser.user_expenses,
     };
 
     return createdUser;

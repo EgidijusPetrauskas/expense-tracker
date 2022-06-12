@@ -1,14 +1,12 @@
-import { Expense } from './expense';
-
 export type User = {
   id:string,
   username: string,
   watchlist: string[],
-  expenses: Expense[],
+  user_expenses: string[],
   firstName?: string,
   lastName?: string,
   email?: string,
   age?: string,
 };
 
-export type UserDetails = Omit<User, 'id' | 'username' | 'watchlist' | 'expenses'>;
+export type UserDetails = Omit<User, 'id' | 'username' | 'watchlist' | 'user_expenses'>;
