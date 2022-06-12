@@ -20,7 +20,7 @@ const initialState: AuthState = {
 const authReducer: Reducer<AuthState, AuthActions> = (state = initialState, action) => {
   switch (action.type) {
     case AuthActionType.AUTH_SET_USER: {
-      setLocalStorage(USER_KEY_IN_LOCAL_STORAGE, action.payload.user);
+      setLocalStorage(USER_KEY_IN_LOCAL_STORAGE, { id: action.payload.user.id, username: action.payload.user.username });
       return {
         ...state,
         user: action.payload.user,

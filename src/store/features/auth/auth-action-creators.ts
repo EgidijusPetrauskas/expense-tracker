@@ -93,3 +93,17 @@ export const createUpdateUserAction = (userDetails: UserDetails) => async (dispa
     dispatch(authSetErrorAction);
   }
 };
+
+export const createSetUserDetailsAction = () => async (dispatch: Dispatch<AuthActions>, getState: () => MainState): Promise<void> => {
+  const { auth } = getState();
+  try {
+    const { user } = auth;
+    const userDetails = await AuthService.getDetails(user?.username);
+    const fullUserData = await AuthService.update(user, userDetails);
+    dispatch(createAuthSetUserAction(fullUserData));
+  } catch (error) {
+    const errMsg = error instanceof Error ? error.message : String(error);
+    const authSetErrorAction = createAuthSetErrorAction(errMsg);
+    dispatch(authSetErrorAction);
+  }
+};

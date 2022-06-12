@@ -5,20 +5,11 @@
       "username": "Jonas",
       "password": "Jonas121",
       "watchlist": [
-        "MSFT"
+        "AAPL"
       ],
-      "expenses": [
-        {
-          "id": "b304ac52-4efa-40cb-b837-add18fb01e4a",
-          "title": "Gas",
-          "category": "2",
-          "price": 420,
-          "amount": 50,
-          "description": "Trip to helll"
-        }
-      ],
+      "expenses": [],
       "firstName": "Jonas",
-      "lastName": "Jonaitis",
+      "lastName": "Jonukas",
       "email": "jonukas@gmail.com",
       "age": "21"
     },

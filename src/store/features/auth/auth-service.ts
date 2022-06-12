@@ -26,7 +26,7 @@ namespace AuthService {
 
     const { data: users } = await axios.get<User[]>(`${API_SERVER}/users?username=${username}`);
     const [fullUser] = users;
-    const userDetails = Object.fromEntries(Object.entries(fullUser).filter((detail) => detail[0] !== 'id' && detail[0] !== 'username' && detail[0] !== 'password'));
+    const userDetails = Object.fromEntries(Object.entries(fullUser).filter((detail) => detail[0] !== 'id' && detail[0] !== 'username' && detail[0] !== 'password' && detail[0] !== 'watchlist' && detail[0] !== 'expenses'));
 
     return {
       id: user.id,
@@ -84,6 +84,17 @@ namespace AuthService {
     );
 
     return fullUserData;
+  };
+
+  export const getDetails = async (username : Credentials['username'] | undefined): Promise<Required<UserDetails>> => {
+    if (username === undefined) {
+      throw new Error('User doesnt exist!');
+    }
+    const { data: users } = await axios.get<User[]>(`${API_SERVER}/users?username=${username}`);
+    const [fullUser] = users;
+    const userDetails = Object.fromEntries(Object.entries(fullUser).filter((detail) => detail[0] !== 'id' && detail[0] !== 'username' && detail[0] !== 'password' && detail[0] !== 'watchlist' && detail[0] !== 'expenses')) as Required<UserDetails>;
+
+    return userDetails;
   };
 }
 
