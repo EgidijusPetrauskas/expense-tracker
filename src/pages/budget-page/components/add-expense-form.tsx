@@ -3,7 +3,7 @@ import React from 'react';
 import { useFormik, FormikConfig } from 'formik';
 import * as Yup from 'yup';
 import { v4 } from 'uuid';
-import { Typography, MenuItem } from '@mui/material';
+import { Typography, MenuItem, Dialog } from '@mui/material';
 
 import CustomForm from '../../../components/custom-form';
 import StyledTextField from '../../../components/custom-form/custom-form-styles';
@@ -15,6 +15,23 @@ import { selectBudgetFormOpen } from '../../../store/features/budget/budget-sele
 type NewExpenseValues = Omit<Expense, 'id'>;
 
 type AdditionalInfoFomikConfig = FormikConfig<NewExpenseValues>;
+
+type AddExpenseFormProps = {
+  openForm: boolean,
+  closeForm: () => void
+};
+
+const styles = {
+  textFieldExtraStyles: {
+    width: {
+      xl: 4 / 5,
+      lg: 4 / 5,
+      md: 4 / 5,
+      sm: 4 / 5,
+      xs: 1,
+    },
+  },
+};
 
 const initialValues: NewExpenseValues = {
   title: '',
@@ -69,7 +86,7 @@ const categoryOptions: ExpenseCategory[] = [
   },
 ];
 
-const AddExpenseForm: React.FC = () => {
+const AddExpenseForm: React.FC<AddExpenseFormProps> = ({ openForm, closeForm }) => {
   const dispatch = useRootDispatch();
   const formOpen = useRootSelector(selectBudgetFormOpen);
 
@@ -102,91 +119,98 @@ const AddExpenseForm: React.FC = () => {
   });
 
   return (
-    <CustomForm
+    <Dialog
+      open={openForm}
+      onClose={closeForm}
       fullWidth
-      buttonText="Submit"
-      onSubmit={handleSubmit}
-      isDisabled={!(dirty && isValid)}
     >
-      <Typography
-        sx={{
-          fontSize: 26,
-          color: 'primary.light',
-          textAlign: 'center',
-        }}
+
+      <CustomForm
+        fullWidth
+        buttonText="Submit"
+        onSubmit={handleSubmit}
+        isDisabled={!(dirty && isValid)}
       >
-        Add New Expense
-      </Typography>
-      <StyledTextField
-        sx={{ width: 2 / 5 }}
-        autoComplete="off"
-        type="text"
-        name="title"
-        label="Title"
-        value={values.title}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        error={touched.title && Boolean(errors.title)}
-        helperText={touched.title && errors.title}
-      />
-      <StyledTextField
-        sx={{ width: 2 / 5 }}
-        autoComplete="off"
-        name="category"
-        label="Category"
-        select
-        value={values.category}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        error={touched.category && Boolean(errors.category)}
-        helperText={touched.category && errors.category}
-      >
-        {categoryOptions.map((opt) => (
-          <MenuItem
-            key={opt.id}
-            value={opt.id}
-          >
-            {opt.title}
-          </MenuItem>
-        ))}
-      </StyledTextField>
-      <StyledTextField
-        sx={{ width: 2 / 5 }}
-        autoComplete="off"
-        type="number"
-        name="price"
-        label="Price"
-        value={values.price}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        error={touched.price && Boolean(errors.price)}
-        helperText={touched.price && errors.price}
-      />
-      <StyledTextField
-        sx={{ width: 2 / 5 }}
-        autoComplete="new-password"
-        type="number"
-        name="amount"
-        label="Amount"
-        value={values.amount}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        error={touched.amount && Boolean(errors.amount)}
-        helperText={touched.amount && errors.amount}
-      />
-      <StyledTextField
-        sx={{ width: 2 / 5 }}
-        autoComplete="off"
-        type="text"
-        name="description"
-        label="Description"
-        value={values.description}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        error={touched.description && Boolean(errors.description)}
-        helperText={touched.description && errors.description}
-      />
-    </CustomForm>
+        <Typography
+          sx={{
+            fontSize: 26,
+            color: 'primary.light',
+            textAlign: 'center',
+          }}
+        >
+          Add New Expense
+        </Typography>
+        <StyledTextField
+          sx={{ ...styles.textFieldExtraStyles }}
+          autoComplete="off"
+          type="text"
+          name="title"
+          label="Title"
+          value={values.title}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={touched.title && Boolean(errors.title)}
+          helperText={touched.title && errors.title}
+        />
+        <StyledTextField
+          sx={{ ...styles.textFieldExtraStyles }}
+          autoComplete="off"
+          name="category"
+          label="Category"
+          select
+          value={values.category}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={touched.category && Boolean(errors.category)}
+          helperText={touched.category && errors.category}
+        >
+          {categoryOptions.map((opt) => (
+            <MenuItem
+              key={opt.id}
+              value={opt.id}
+            >
+              {opt.title}
+            </MenuItem>
+          ))}
+        </StyledTextField>
+        <StyledTextField
+          sx={{ ...styles.textFieldExtraStyles }}
+          autoComplete="off"
+          type="number"
+          name="price"
+          label="Price"
+          value={values.price}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={touched.price && Boolean(errors.price)}
+          helperText={touched.price && errors.price}
+        />
+        <StyledTextField
+          sx={{ ...styles.textFieldExtraStyles }}
+          autoComplete="new-password"
+          type="number"
+          name="amount"
+          label="Amount"
+          value={values.amount}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={touched.amount && Boolean(errors.amount)}
+          helperText={touched.amount && errors.amount}
+        />
+        <StyledTextField
+          sx={{ ...styles.textFieldExtraStyles }}
+          autoComplete="off"
+          type="text"
+          name="description"
+          label="Description"
+          value={values.description}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={touched.description && Boolean(errors.description)}
+          helperText={touched.description && errors.description}
+        />
+      </CustomForm>
+    </Dialog>
   );
 };
 

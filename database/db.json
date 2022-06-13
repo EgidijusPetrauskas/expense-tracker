@@ -7,32 +7,14 @@
       "watchlist": [
         "AAPL"
       ],
-      "user_expenses": [
-        "fe1a3b34-f14a-4e29-8daa-141e024d555b"
-      ],
+      "user_expenses": [],
       "firstName": "Jonas",
       "lastName": "Jonukas",
       "email": "jonukas@gmail.com",
       "age": "23"
-    },
-    {
-      "username": "Tomas",
-      "password": "Tomas121",
-      "watchlist": [],
-      "user_expenses": [],
-      "id": "8l64lSj"
     }
   ],
-  "expenses": [
-    {
-      "id": "fe1a3b34-f14a-4e29-8daa-141e024d555b",
-      "title": "Gas",
-      "category": "2",
-      "price": 50,
-      "amount": 25,
-      "description": "Trip"
-    }
-  ],
+  "expenses": [],
   "expense_categories": [
     {
       "id": "1",

@@ -56,7 +56,7 @@ export const StyledNavbarButton = styled(NavLink)(({ theme }) => ({
 
 export const StyledMenuList = styled(MenuList)({
   display: 'flex',
-  height: 45,
+  height: 33,
   padding: 0,
 });
 

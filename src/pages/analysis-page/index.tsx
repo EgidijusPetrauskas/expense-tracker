@@ -10,7 +10,7 @@ const AnalysisPage: React.FC = () => (
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
-      pt: 20,
+      pt: 17.5,
       [theme.breakpoints.down('md')]: {
         pt: 15,
       },

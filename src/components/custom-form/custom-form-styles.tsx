@@ -16,7 +16,9 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
   },
   '& .MuiSelect-select': { color: theme.palette.primary.light },
   '& .MuiSvgIcon-root.MuiSelect-icon': { color: theme.palette.primary.main },
-
+  '& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button': {
+    display: 'none',
+  },
 }));
 
 export default StyledTextField;

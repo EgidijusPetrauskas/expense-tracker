@@ -28,13 +28,13 @@ const ProfilePage: React.FC = () => {
           display: 'flex',
           gap: 1,
           mt: {
-            xl: 20,
-            lg: 20,
-            md: 20,
+            xl: 17.5,
+            lg: 17.5,
+            md: 17.5,
             sm: 13,
             xs: 14,
           },
-          pb: 6,
+          pb: 7,
           [theme.breakpoints.down('md')]: {
             flexDirection: 'column',
             gap: 2,

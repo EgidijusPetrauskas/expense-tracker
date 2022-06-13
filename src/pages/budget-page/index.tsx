@@ -21,7 +21,6 @@ import { selectExpenses } from '../../store/selectors';
 import {
   createSetCategoriesAction,
   createSetBudgetExpenses,
-  createClearAllExpensesAction,
   createBudgetSetFormOpenAction,
   createBudgetSetLoadingAction,
 } from '../../store/features/budget/budget-action-creators';
@@ -32,6 +31,7 @@ import {
   selectBudgetLoading,
 } from '../../store/features/budget/budget-selectors';
 import CustomBackDrop from '../../components/custom-backdrop';
+import ClearAllDialog from './components/clear-all-dialog';
 
 const styles = {
   outsideContainer: {
@@ -39,10 +39,17 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    gap: 3,
-    py: 20,
+    gap: 2,
+    py: 17.5,
   },
-  middleContainerPaper: {
+  topContainer: {
+    width: 1,
+    height: 55,
+    display: 'flex',
+    justifyContent: 'space-between',
+    gap: 1,
+  },
+  topContainerPaper: {
     width: 1 / 3,
     height: 1,
     alignSelf: 'flex-end',
@@ -60,6 +67,7 @@ const styles = {
 
 const BudgetPage: React.FC = () => {
   const [currentDate, setCurrentDate] = useState<string>('Year Month');
+  const [clearAllDialogOpen, setClearAllDialogOpen] = useState<boolean>(false);
   const expenses = useRootSelector(selectExpenses);
   const currentCategory = useRootSelector(selectBudgetCurrentCategory);
   const categoryOptions = useRootSelector(selectBudgetCategories);
@@ -76,28 +84,18 @@ const BudgetPage: React.FC = () => {
     dispatch(createSetBudgetExpenses(currentCategory));
   }, [currentCategory]);
 
-  const addExpense = () => {
+  const openAddExpenseForm = () => {
     dispatch(createBudgetSetFormOpenAction(!formOpen));
-  };
-
-  const clearAll = () => {
-    dispatch(createClearAllExpensesAction());
   };
 
   return (
     <Container sx={{ ...styles.outsideContainer }}>
       <CustomBackDrop open={loading} handleClose={() => dispatch(createBudgetSetLoadingAction(false))} />
       <Box
-        sx={{
-          width: 1,
-          height: 60,
-          display: 'flex',
-          justifyContent: 'space-between',
-          gap: 1,
-        }}
+        sx={{ ...styles.topContainer }}
       >
         <Paper
-          sx={(theme) => ({ ...styles.middleContainerPaper, background: theme.palette.secondary.light })}
+          sx={(theme) => ({ ...styles.topContainerPaper, background: theme.palette.secondary.light })}
         >
           <Typography
             sx={{
@@ -110,30 +108,29 @@ const BudgetPage: React.FC = () => {
           </Typography>
         </Paper>
         <Box sx={{ width: 1 / 3 }}>
-          <CategoryButton height={60} id="all" btnText="All" />
+          <CategoryButton height={55} id="all" btnText="All" />
         </Box>
         <Paper
-          sx={(theme) => ({ ...styles.middleContainerPaper, background: theme.palette.secondary.light })}
+          sx={(theme) => ({ ...styles.topContainerPaper, background: theme.palette.secondary.light })}
         >
           <Button
-            color={formOpen ? 'error' : 'primary'}
-            onClick={addExpense}
+            color="primary"
+            onClick={openAddExpenseForm}
             variant="outlined"
             sx={{ ...styles.addAndClearBtn }}
           >
-            {formOpen
-              ? 'Cancel'
-              : 'Add Expense'}
+            ADD EXPENSE
           </Button>
           {!formOpen && (
             <Button
               variant="outlined"
-              onClick={clearAll}
+              onClick={() => setClearAllDialogOpen(!clearAllDialogOpen)}
               sx={{ ...styles.addAndClearBtn }}
             >
               Clear All
             </Button>
           )}
+          <ClearAllDialog onClose={() => setClearAllDialogOpen(!clearAllDialogOpen)} open={clearAllDialogOpen} />
         </Paper>
       </Box>
       <Grid container spacing={0.7}>
@@ -142,7 +139,7 @@ const BudgetPage: React.FC = () => {
         ))}
       </Grid>
       {formOpen
-        ? <AddExpenseForm />
+        ? <AddExpenseForm closeForm={() => openAddExpenseForm()} openForm={formOpen} />
         : (
           <Table>
             <TableBody>

@@ -63,14 +63,14 @@ namespace BudgetService {
       throw new Error('You have to Sign in!');
     }
 
-    const { data: deletedExpense } = await axios.delete(`${API_SERVER}/expenses/${id}`);
+    await axios.delete(`${API_SERVER}/expenses/${id}`);
     const { data } = await axios.get<User>(`${API_SERVER}/users/${user.id}`);
 
     await axios.patch(
       `${API_SERVER}/users/${user.id}`,
-      { expenses: data.user_expenses.filter((expense) => expense !== deletedExpense.id) },
+      { user_expenses: data.user_expenses.filter((expense) => expense !== id) },
     );
-    return deletedExpense.id;
+    return id;
   };
 
   export const clearAllExpenses: ClearAllExpensesType = async () => {
