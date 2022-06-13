@@ -34,8 +34,8 @@ const CategoryButton: React.FC<GridButtonProps> = ({ id, btnText, height }) => {
       xl={4}
       lg={4}
       md={4}
-      sm={4}
-      xs={4}
+      sm={6}
+      xs={12}
       sx={{
         height: height || 48,
       }}
@@ -46,7 +46,13 @@ const CategoryButton: React.FC<GridButtonProps> = ({ id, btnText, height }) => {
         sx={(theme) => ({
           width: 1,
           height: 1,
-          fontSize: 17,
+          fontSize: {
+            xl: 17,
+            lg: 17,
+            md: 14,
+            sm: 14,
+            xs: 14,
+          },
           letterSpacing: 1.2,
           borderRadius: 0,
           color: active ? 'white' : 'primary.light',

@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 
 import { format } from 'date-fns';
 import {
+  styled,
   Container,
   Grid,
   Table,
   TableBody,
   Paper,
-  Button,
   Box,
   Typography,
 } from '@mui/material';
@@ -32,6 +32,21 @@ import {
 } from '../../store/features/budget/budget-selectors';
 import CustomBackDrop from '../../components/custom-backdrop';
 import ClearAllDialog from './components/clear-all-dialog';
+import CustomButton from './components/custom-button';
+
+const CustomPaper = styled(Paper)(({ theme }) => ({
+  width: '33%',
+  height: '100%',
+  alignSelf: 'flex-end',
+  display: 'flex',
+  justifyContent: 'space-evenly',
+  alignItems: 'center',
+  borderRadius: 0,
+  background: theme.palette.secondary.light,
+  [theme.breakpoints.down('md')]: {
+    width: '100%',
+  },
+}));
 
 const styles = {
   outsideContainer: {
@@ -40,28 +55,26 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
     gap: 2,
-    py: 17.5,
+    py: {
+      xl: 17.5,
+      lg: 17.5,
+      md: 17.5,
+      sm: 14.5,
+      xs: 14.5,
+    },
   },
   topContainer: {
     width: 1,
-    height: 55,
+    height: {
+      xl: 55,
+      lg: 55,
+      md: 55,
+      sm: 55,
+      xs: 55 * 3,
+    },
     display: 'flex',
     justifyContent: 'space-between',
     gap: 1,
-  },
-  topContainerPaper: {
-    width: 1 / 3,
-    height: 1,
-    alignSelf: 'flex-end',
-    display: 'flex',
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    borderRadius: 0,
-  },
-  addAndClearBtn: {
-    px: 1.4,
-    fontSize: 13,
-    letterSpacing: 1,
   },
 };
 
@@ -91,12 +104,18 @@ const BudgetPage: React.FC = () => {
   return (
     <Container sx={{ ...styles.outsideContainer }}>
       <CustomBackDrop open={loading} handleClose={() => dispatch(createBudgetSetLoadingAction(false))} />
+
       <Box
-        sx={{ ...styles.topContainer }}
+        sx={(theme) => ({
+          ...styles.topContainer,
+          [theme.breakpoints.down('sm')]: {
+            flexDirection: 'column',
+            justifyContent: 'center',
+          },
+        })}
       >
-        <Paper
-          sx={(theme) => ({ ...styles.topContainerPaper, background: theme.palette.secondary.light })}
-        >
+
+        <CustomPaper>
           <Typography
             sx={{
               color: 'primary.light',
@@ -106,59 +125,61 @@ const BudgetPage: React.FC = () => {
           >
             {currentDate}
           </Typography>
-        </Paper>
-        <Box sx={{ width: 1 / 3 }}>
+        </CustomPaper>
+
+        <Box sx={{
+          width: {
+            xl: 1 / 3, lg: 1 / 3, md: 1 / 3, sm: 1, xs: 1,
+          },
+        }}
+        >
           <CategoryButton height={55} id="all" btnText="All" />
         </Box>
-        <Paper
-          sx={(theme) => ({ ...styles.topContainerPaper, background: theme.palette.secondary.light })}
-        >
-          <Button
-            color="primary"
-            onClick={openAddExpenseForm}
-            variant="outlined"
-            sx={{ ...styles.addAndClearBtn }}
-          >
-            ADD EXPENSE
-          </Button>
-          {!formOpen && (
-            <Button
-              variant="outlined"
-              onClick={() => setClearAllDialogOpen(!clearAllDialogOpen)}
-              sx={{ ...styles.addAndClearBtn }}
-            >
-              Clear All
-            </Button>
-          )}
+
+        <CustomPaper>
+          <CustomButton btnText="ADD EXPENSE" onClick={openAddExpenseForm} />
+          {!formOpen
+          && <CustomButton btnText="CLEAR ALL" onClick={() => setClearAllDialogOpen(!clearAllDialogOpen)} />}
           <ClearAllDialog onClose={() => setClearAllDialogOpen(!clearAllDialogOpen)} open={clearAllDialogOpen} />
-        </Paper>
+        </CustomPaper>
       </Box>
+
       <Grid container spacing={0.7}>
         {categoryOptions.map((option) => (
           <CategoryButton key={option.id} id={option.id} btnText={option.title} />
         ))}
       </Grid>
+
       {formOpen
         ? <AddExpenseForm closeForm={() => openAddExpenseForm()} openForm={formOpen} />
         : (
-          <Table>
-            <TableBody>
-              <BudgetTableHead />
-              {expenses.map((expense) => (
-                <BudgetTableRow
-                  key={expense.id}
-                  data={{
-                    id: expense.id,
-                    title: expense.title,
-                    category: expense.category,
-                    price: expense.price,
-                    amount: expense.amount,
-                    description: expense.description,
-                  }}
-                />
-              ))}
-            </TableBody>
-          </Table>
+          <Box
+            sx={(theme) => ({
+              width: 1,
+              [theme.breakpoints.down('lg')]: {
+                overflow: 'scroll',
+              },
+            })}
+          >
+            <Table>
+              <TableBody>
+                <BudgetTableHead />
+                {expenses.map((expense) => (
+                  <BudgetTableRow
+                    key={expense.id}
+                    data={{
+                      id: expense.id,
+                      title: expense.title,
+                      category: expense.category,
+                      price: expense.price,
+                      amount: expense.amount,
+                      description: expense.description,
+                    }}
+                  />
+                ))}
+              </TableBody>
+            </Table>
+          </Box>
         )}
     </Container>
   );

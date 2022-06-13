@@ -34,7 +34,7 @@ const ProfilePage: React.FC = () => {
             sm: 13,
             xs: 14,
           },
-          pb: 7,
+          pb: 5,
           [theme.breakpoints.down('md')]: {
             flexDirection: 'column',
             gap: 2,

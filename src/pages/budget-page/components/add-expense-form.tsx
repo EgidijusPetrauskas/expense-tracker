@@ -44,7 +44,7 @@ const initialValues: NewExpenseValues = {
 const validationSchema = Yup.object({
   title: Yup.string()
     .min(3, 'Min 2 symbols')
-    .max(32, 'Max 32 symbols')
+    .max(20, 'Max 20 symbols')
     .required('Title is rquired'),
   category: Yup.string()
     .required('Category is rquired'),
@@ -56,7 +56,7 @@ const validationSchema = Yup.object({
     .required('Amount is rquired'),
   description: Yup.string()
     .min(3, 'Min 3 symbols')
-    .max(50, 'Max 50 symbols'),
+    .max(30, 'Max 30 symbols'),
 });
 
 const categoryOptions: ExpenseCategory[] = [

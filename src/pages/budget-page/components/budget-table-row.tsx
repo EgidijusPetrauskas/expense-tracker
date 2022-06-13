@@ -9,8 +9,6 @@ import { selectBudgetCategories } from '../../../store/features/budget/budget-se
 
 const styles = {
   title: {
-    minWidth: 200,
-    maxWidth: 250,
     fontSize: 14,
     fontFamily: 'roboto',
     color: 'white',
@@ -40,9 +38,6 @@ const BudgetTableRow: React.FC<BudgetTableRowProps> = ({ data }) => {
       sx={(theme) => ({
         width: 1,
         height: 60,
-        display: 'flex',
-        justifyContent: 'space-evenly',
-        alignItems: 'center',
         background: theme.palette.secondary.light,
       })}
     >

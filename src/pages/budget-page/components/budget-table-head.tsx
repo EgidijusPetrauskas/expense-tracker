@@ -4,8 +4,6 @@ import { TableRow, TableCell } from '@mui/material';
 
 const styles = {
   title: {
-    minWidth: 200,
-    maxWidth: 250,
     fontSize: 18,
     fontFamily: 'roboto',
     color: 'white',
@@ -19,9 +17,6 @@ const BudgetTableHead: React.FC = () => (
     sx={(theme) => ({
       width: 1,
       height: 50,
-      display: 'flex',
-      justifyContent: 'space-evenly',
-      alignItems: 'center',
       background: theme.palette.secondary.main,
     })}
   >
