@@ -5,11 +5,13 @@
       "username": "Jonas",
       "password": "Jonas121",
       "watchlist": [
-        "AAPL"
+        "AAPL",
+        "AMZN"
       ],
       "user_expenses": [
-        "00d3937f-cc14-460f-82d0-ac9128657537",
-        "ee0b2a9f-b44d-4b23-b04c-114babb770aa"
+        "b77325ec-6fc8-4008-96ac-96bcf15354d8",
+        "4d86badc-c359-41c6-9985-61bae1eb9a3e",
+        "61ae6561-d107-4607-a9ab-45f1cd15433d"
       ],
       "firstName": "Jonas",
       "lastName": "Jonukas",
@@ -19,19 +21,27 @@
   ],
   "expenses": [
     {
-      "id": "ee0b2a9f-b44d-4b23-b04c-114babb770aa",
-      "title": "AAPL",
-      "category": "5",
-      "price": 420,
-      "amount": 2,
-      "description": "Bought apple shares"
+      "id": "61ae6561-d107-4607-a9ab-45f1cd15433d",
+      "title": "Dentist",
+      "category": "4",
+      "price": 80,
+      "amount": 1,
+      "description": "New crown"
     },
     {
-      "id": "00d3937f-cc14-460f-82d0-ac9128657537",
+      "id": "4d86badc-c359-41c6-9985-61bae1eb9a3e",
+      "title": "Some random stuff",
+      "category": "6",
+      "price": 200,
+      "amount": 1,
+      "description": ""
+    },
+    {
+      "id": "b77325ec-6fc8-4008-96ac-96bcf15354d8",
       "title": "Gas",
       "category": "2",
       "price": 50,
-      "amount": 25,
+      "amount": 20,
       "description": "Trip"
     }
   ],

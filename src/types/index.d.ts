@@ -4,3 +4,4 @@ export * from './temp-user';
 export * from './user-registration';
 export * from './expense';
 export * from './expense-category';
+export * from './calculated-expense';

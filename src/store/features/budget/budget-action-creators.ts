@@ -14,9 +14,12 @@ import {
   BudgetActionType,
   BudgetSetLoadingAction,
   BudgetClearErrorAction,
+  BudgetSetCalculatedExpensesAction,
+  BudgetSetChartIsSetAction,
 } from './types';
 import { ExpenseCategory } from '../../../types/expense-category';
 import BudgetService from './budget-service';
+import { CalculatedExpense } from '../../../types/calculated-expense';
 
 export const budgetClearErrorAction: BudgetClearErrorAction = {
   type: BudgetActionType.BUDGET_CLEAR_ERROR,
@@ -30,9 +33,18 @@ export const budgetClearExpensesAction: BudgetClearExpensesAction = {
   type: BudgetActionType.BUDGET_CLEAR_EXPENSES,
 };
 
+export const budgetSetChartIsSetAction: BudgetSetChartIsSetAction = {
+  type: BudgetActionType.BUDGET_SET_CHART_IS_SET,
+};
+
 export const createBudgetSetLoadingAction = (response: boolean): BudgetSetLoadingAction => ({
   type: BudgetActionType.BUDGET_SET_LOADING,
   payload: response,
+});
+
+export const createSetCalculatedExpensesAction = (calcExpenses: CalculatedExpense[]): BudgetSetCalculatedExpensesAction => ({
+  type: BudgetActionType.BUDGET_SET_CALCULATED_EXPENSES,
+  payload: calcExpenses,
 });
 
 export const createBudgetSetFormOpenAction = (response: boolean): BudgetSetFormOpenAction => ({
@@ -147,6 +159,21 @@ export const createSetCategoriesAction = () => async (dispatch: Dispatch<BudgetA
     const categories = await BudgetService.getCategories();
     const budgetSetCategoriesAction = createBudgetSetCategoriesAction(categories);
     dispatch(budgetSetCategoriesAction);
+  } catch (error) {
+    const errMsg = error instanceof Error ? error.message : String(error);
+    const budgetSetErrorAction = createBudgetSetErrorAction(errMsg);
+    dispatch(budgetSetErrorAction);
+    setTimeout(() => {
+      dispatch(budgetClearErrorAction);
+    }, 1700);
+  }
+};
+
+export const createCalculateExpensesAction = () => async (dispatch: Dispatch<BudgetActions>): Promise<void> => {
+  try {
+    const calcExpenses = await BudgetService.getCalcExpenses();
+    const budgetSetCalculatedExpensesAction = createSetCalculatedExpensesAction(calcExpenses);
+    dispatch(budgetSetCalculatedExpensesAction);
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : String(error);
     const budgetSetErrorAction = createBudgetSetErrorAction(errMsg);

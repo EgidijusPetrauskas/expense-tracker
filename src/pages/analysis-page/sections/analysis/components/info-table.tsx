@@ -6,11 +6,11 @@ import {
   Grid,
   Paper,
 } from '@mui/material';
-import { BudgetChartDataType, budgetChartColors } from './pie-budget-chart';
+import { budgetChartColors } from './pie-budget-chart';
+import { CalculatedExpense } from '../../../../../types';
 
 type InfoTableProps = {
-  data: BudgetChartDataType[],
-  budget: number
+  data: CalculatedExpense[],
 };
 
 const getColor = (name: string) => {
@@ -20,7 +20,7 @@ const getColor = (name: string) => {
   return color;
 };
 
-const InfoTable: React.FC<InfoTableProps> = ({ data, budget }) => {
+const InfoTable: React.FC<InfoTableProps> = ({ data }) => {
   const [currentDate, setCurrentDate] = useState<string>('Year Month');
 
   useEffect(() => {
@@ -71,7 +71,7 @@ const InfoTable: React.FC<InfoTableProps> = ({ data, budget }) => {
           textAlign: 'center',
         })}
       >
-        {`My budget for ${currentDate} - ${budget}€`}
+        {`Expenses for ${currentDate}`}
       </Typography>
       <Grid container>
         {data.map((item) => customGridItem(item))}

@@ -6,11 +6,13 @@ import { BudgetState, BudgetActions, BudgetActionType } from './types';
 const initialState: BudgetState = {
   expenses: [],
   categories: [],
+  calculatedExpenses: [],
   error: null,
   loading: true,
   formOpen: false,
   currentCategory: 'all',
   isSet: false,
+  chartIsSet: false,
 };
 
 const budgetReducer: Reducer<BudgetState, BudgetActions> = (state = initialState, action) => {
@@ -39,6 +41,13 @@ const budgetReducer: Reducer<BudgetState, BudgetActions> = (state = initialState
         ...state,
         error: action.payload.error,
         loading: false,
+      };
+    }
+
+    case BudgetActionType.BUDGET_SET_CALCULATED_EXPENSES: {
+      return {
+        ...state,
+        calculatedExpenses: action.payload,
       };
     }
 
@@ -84,6 +93,13 @@ const budgetReducer: Reducer<BudgetState, BudgetActions> = (state = initialState
       return {
         ...state,
         categories: action.payload.categories,
+      };
+    }
+
+    case BudgetActionType.BUDGET_SET_CHART_IS_SET: {
+      return {
+        ...state,
+        chartIsSet: true,
       };
     }
 

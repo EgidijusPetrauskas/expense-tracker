@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Typography, Paper } from '@mui/material';
 import {
-  PieChart, Pie, Tooltip, ResponsiveContainer, Cell,
+  PieChart,
+  Pie,
+  Tooltip,
+  ResponsiveContainer,
+  Cell,
 } from 'recharts';
 
-export type BudgetChartDataType = { name: string, value: number };
+import { CalculatedExpense } from '../../../../../types';
+import { selectBudgetChartIsSet } from '../../../../../store/features/budget/budget-selectors';
+import { useRootDispatch, useRootSelector } from '../../../../../store/hooks';
+import { budgetSetChartIsSetAction } from '../../../../../store/features/budget/budget-action-creators';
 
 type PieBudgetChartProps = {
-  data: BudgetChartDataType[]
+  data: CalculatedExpense[]
 };
 
 type RenderCustomizedLabelProps = {
@@ -16,9 +23,9 @@ type RenderCustomizedLabelProps = {
 };
 
 export const budgetChartColors = [
-  { name: 'Food and necessities', color: '#267278' },
+  { name: 'Food and Necessities', color: '#267278' },
   { name: 'Transport', color: '#65338D' },
-  { name: 'Leisure and entertainment', color: '#4770B3' },
+  { name: 'Leisure and Entertainment', color: '#4770B3' },
   { name: 'Health', color: '#3B3689' },
   { name: 'Investment', color: '#50AED3' },
   { name: 'Other', color: '#9E9Ea2' },
@@ -33,7 +40,7 @@ const renderCustomizedLabel = ({
   const y = cy + radius * Math.sin(-midAngle * radian);
 
   return (
-    <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+    <text x={x} y={y} fontFamily="roboto" fill="#fff" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
       {`${(percent * 100).toFixed(0)}%`}
     </text>
   );
@@ -58,26 +65,34 @@ const CustomTooltip = ({ active, payload }: any) => {
       </Paper>
     );
   }
-
   return null;
 };
 
-const PieBudgetChart: React.FC<PieBudgetChartProps> = ({ data }) => (
-  <ResponsiveContainer width="50%" height="45%" minWidth={250}>
-    <PieChart>
-      <Pie
-        dataKey="value"
-        data={data}
-        labelLine={false}
-        label={renderCustomizedLabel}
-        outerRadius="90%"
-        animationDuration={1800}
-      >
-        {data.map((entry) => <Cell stroke="none" key={entry.name} fill={budgetChartColors.find((item) => item.name === entry.name)?.color} />)}
-      </Pie>
-      <Tooltip content={<CustomTooltip />} />
-    </PieChart>
-  </ResponsiveContainer>
-);
+const PieBudgetChart: React.FC<PieBudgetChartProps> = ({ data }) => {
+  const chartIsSet = useRootSelector(selectBudgetChartIsSet);
+  const dispatch = useRootDispatch();
+
+  console.log(chartIsSet);
+
+  return (
+    <ResponsiveContainer width="50%" height="45%" minWidth={250}>
+      <PieChart>
+        <Pie
+          dataKey="value"
+          data={data}
+          labelLine={false}
+          label={renderCustomizedLabel}
+          outerRadius="90%"
+          animationDuration={1600}
+          isAnimationActive={!chartIsSet}
+          onAnimationEnd={() => dispatch(budgetSetChartIsSetAction)}
+        >
+          {data.map((entry) => <Cell stroke="none" key={entry.name} fill={budgetChartColors.find((item) => item.name === entry.name)?.color} />)}
+        </Pie>
+        <Tooltip content={<CustomTooltip />} />
+      </PieChart>
+    </ResponsiveContainer>
+  );
+};
 
 export default PieBudgetChart;

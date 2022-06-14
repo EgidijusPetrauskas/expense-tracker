@@ -4,6 +4,7 @@ import axios from 'axios';
 
 import { ExpenseCategory, Expense, User } from '../../../types';
 import { getLocalStorage } from '../../../helpers/local-storage-helper';
+import { CalculatedExpense } from '../../../types/calculated-expense';
 
 const API_SERVER = process.env.REACT_APP_API_SERVER;
 const USER_KEY_IN_LOCAL_STORAGE = process.env.REACT_APP_USER_KEY_IN_LOCAL_STORAGE;
@@ -13,6 +14,7 @@ type GetExpensesType = (categoryId: string) => Promise<Expense[]>;
 type CreateExpenseType = (expenseData: Expense) => Promise<Expense>;
 type RemoveExpenseType = (id: string) => Promise<string>;
 type ClearAllExpensesType = () => Promise<void>;
+type GetCalcExpenses = () => Promise<CalculatedExpense[]>;
 
 namespace BudgetService {
   export const getCategories: GetCategoriesType = async () => {
@@ -88,6 +90,41 @@ namespace BudgetService {
       `${API_SERVER}/users/${user.id}`,
       { user_expenses: [] },
     );
+  };
+
+  export const getCalcExpenses: GetCalcExpenses = async () => {
+    const user: User | null = getLocalStorage(USER_KEY_IN_LOCAL_STORAGE);
+    if (!user) {
+      throw new Error('You have to Sign in!');
+    }
+
+    const { data: currentUser } = await axios.get<User>(`${API_SERVER}/users/${user.id}`);
+    const expenseIds = currentUser.user_expenses;
+    const { data: allExpenses } = await axios.get<Expense[]>(`${API_SERVER}/expenses`);
+    const userExpenses = allExpenses.filter(({ id }) => expenseIds.includes(id));
+
+    const calculatedExpenses: CalculatedExpense[] = [];
+
+    userExpenses
+      .map((expense) => [expense.category, expense.price] as [string, number])
+      .forEach(([cat, price]) => {
+        if (calculatedExpenses.find((exp) => exp.name === cat)) {
+          const indexOfCalcExpense = calculatedExpenses.map((x) => x.name).indexOf(cat);
+          calculatedExpenses[indexOfCalcExpense].value += price;
+          return;
+        }
+        calculatedExpenses.push({ name: cat, value: price });
+      });
+
+    const categories = await getCategories();
+
+    const filteredUserExpenses = calculatedExpenses.map((expense) => {
+      const categoryName = categories.find((cat) => cat.id === expense.name)?.title;
+      if (categoryName === undefined) throw new Error('Data is incorrect');
+      return { name: categoryName, value: expense.value };
+    });
+
+    return filteredUserExpenses;
   };
 }
 
