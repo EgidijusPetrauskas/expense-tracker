@@ -11,6 +11,7 @@ import {
   Box,
   Typography,
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 import CategoryButton from './components/category-button';
 import BudgetTableHead from './components/budget-table-head';
@@ -69,7 +70,7 @@ const styles = {
       xl: 55,
       lg: 55,
       md: 55,
-      sm: 55,
+      sm: 55 * 3,
       xs: 55 * 3,
     },
     display: 'flex',
@@ -87,6 +88,7 @@ const BudgetPage: React.FC = () => {
   const loading = useRootSelector(selectBudgetLoading);
   const formOpen = useRootSelector(selectBudgetFormOpen);
   const dispatch = useRootDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setCurrentDate(format(new Date(), 'yyyy MMMM'));
@@ -108,7 +110,7 @@ const BudgetPage: React.FC = () => {
       <Box
         sx={(theme) => ({
           ...styles.topContainer,
-          [theme.breakpoints.down('sm')]: {
+          [theme.breakpoints.down('md')]: {
             flexDirection: 'column',
             justifyContent: 'center',
           },
@@ -138,6 +140,7 @@ const BudgetPage: React.FC = () => {
 
         <CustomPaper>
           <CustomButton btnText="ADD EXPENSE" onClick={openAddExpenseForm} />
+          <CustomButton btnText="ANALYSIS" onClick={() => navigate('/analysis/analysis')} />
           {!formOpen
           && <CustomButton btnText="CLEAR ALL" onClick={() => setClearAllDialogOpen(!clearAllDialogOpen)} />}
           <ClearAllDialog onClose={() => setClearAllDialogOpen(!clearAllDialogOpen)} open={clearAllDialogOpen} />

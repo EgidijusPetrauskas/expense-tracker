@@ -12,8 +12,21 @@ const CustomButton: React.FC<CustomButtonProps> = ({ onClick, btnText }) => (
     onClick={onClick}
     sx={{
       px: 1.4,
-      fontSize: 13,
+      fontSize: {
+        xl: 13,
+        lg: 13,
+        md: 12,
+        sm: 13,
+        xs: 13,
+      },
       letterSpacing: 1,
+      p: {
+        xl: 0.7,
+        lg: 0.7,
+        md: 0.6,
+        sm: 0.6,
+        xs: 0.6,
+      },
     }}
   >
     {btnText}

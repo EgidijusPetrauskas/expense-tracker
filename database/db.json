@@ -6,22 +6,75 @@
       "password": "Jonas121",
       "watchlist": [
         "AAPL",
-        "AMZN"
+        "MSFT"
       ],
       "user_expenses": [
-        "b77325ec-6fc8-4008-96ac-96bcf15354d8",
-        "4d86badc-c359-41c6-9985-61bae1eb9a3e",
-        "61ae6561-d107-4607-a9ab-45f1cd15433d"
+        "0b7b67c7-a461-4481-ac19-370b03c25bab",
+        "9a7c7e03-43c5-441d-9693-6566c41b49ee",
+        "e33c7e83-b8ba-4b2e-9941-415eb71dab64",
+        "5fcac48c-7ef4-4ed1-b40e-a1375577c5b8",
+        "6068084d-4e15-492f-94b2-bbe8faae8f56",
+        "d86a5449-275b-4186-9dbe-63da21b818b4",
+        "a8114d32-e748-4ae8-8132-bc5cf0ae250d",
+        "b3eb11ee-93a8-4a1e-8bc7-5d398f679950"
       ],
       "firstName": "Jonas",
-      "lastName": "Jonukas",
+      "lastName": "Jonukauskas",
       "email": "jonukas@gmail.com",
       "age": "23"
     }
   ],
   "expenses": [
     {
-      "id": "61ae6561-d107-4607-a9ab-45f1cd15433d",
+      "id": "b3eb11ee-93a8-4a1e-8bc7-5d398f679950",
+      "title": "Gas",
+      "category": "2",
+      "price": 50,
+      "amount": 25,
+      "description": "Trip to: Zarasai"
+    },
+    {
+      "id": "a8114d32-e748-4ae8-8132-bc5cf0ae250d",
+      "title": "Gas",
+      "category": "2",
+      "price": 40,
+      "amount": 20,
+      "description": "4 trips to: Birštonas"
+    },
+    {
+      "id": "d86a5449-275b-4186-9dbe-63da21b818b4",
+      "title": "Lunch",
+      "category": "1",
+      "price": 14.2,
+      "amount": 1,
+      "description": "Luch at Grill London"
+    },
+    {
+      "id": "6068084d-4e15-492f-94b2-bbe8faae8f56",
+      "title": "APPL shares",
+      "category": "5",
+      "price": 420,
+      "amount": 2,
+      "description": "Bought Apple inc shares"
+    },
+    {
+      "id": "5fcac48c-7ef4-4ed1-b40e-a1375577c5b8",
+      "title": "Sevice",
+      "category": "2",
+      "price": 450.24,
+      "amount": 0,
+      "description": "Car service"
+    },
+    {
+      "id": "e33c7e83-b8ba-4b2e-9941-415eb71dab64",
+      "title": "Groceries",
+      "category": "1",
+      "price": 65.25,
+      "amount": 0,
+      "description": ""
+    },
+    {
+      "id": "9a7c7e03-43c5-441d-9693-6566c41b49ee",
       "title": "Dentist",
       "category": "4",
       "price": 80,
@@ -29,20 +82,12 @@
       "description": "New crown"
     },
     {
-      "id": "4d86badc-c359-41c6-9985-61bae1eb9a3e",
-      "title": "Some random stuff",
-      "category": "6",
-      "price": 200,
-      "amount": 1,
-      "description": ""
-    },
-    {
-      "id": "b77325ec-6fc8-4008-96ac-96bcf15354d8",
-      "title": "Gas",
-      "category": "2",
-      "price": 50,
-      "amount": 20,
-      "description": "Trip"
+      "id": "0b7b67c7-a461-4481-ac19-370b03c25bab",
+      "title": "Go cartys",
+      "category": "3",
+      "price": 40,
+      "amount": 30,
+      "description": "30min go carting"
     }
   ],
   "expense_categories": [
