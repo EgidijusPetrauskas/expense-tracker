@@ -1,0 +1,83 @@
+import React from 'react';
+
+import { Typography, Paper } from '@mui/material';
+import {
+  PieChart, Pie, Tooltip, ResponsiveContainer, Cell,
+} from 'recharts';
+
+export type BudgetChartDataType = { name: string, value: number };
+
+type PieBudgetChartProps = {
+  data: BudgetChartDataType[]
+};
+
+type RenderCustomizedLabelProps = {
+  [key: string]: any
+};
+
+export const budgetChartColors = [
+  { name: 'Food and necessities', color: '#267278' },
+  { name: 'Transport', color: '#65338D' },
+  { name: 'Leisure and entertainment', color: '#4770B3' },
+  { name: 'Health', color: '#3B3689' },
+  { name: 'Investment', color: '#50AED3' },
+  { name: 'Other', color: '#9E9Ea2' },
+];
+const radian = Math.PI / 180;
+
+const renderCustomizedLabel = ({
+  cx, cy, midAngle, innerRadius, outerRadius, percent,
+}: RenderCustomizedLabelProps) => {
+  const radius = innerRadius + (outerRadius - innerRadius) * 0.55;
+  const x = cx + radius * Math.cos(-midAngle * radian);
+  const y = cy + radius * Math.sin(-midAngle * radian);
+
+  return (
+    <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+      {`${(percent * 100).toFixed(0)}%`}
+    </text>
+  );
+};
+
+const CustomTooltip = ({ active, payload }: any) => {
+  if (active) {
+    return (
+      <Paper
+        sx={(theme) => ({
+          background: theme.palette.secondary.light,
+          p: 0.8,
+        })}
+      >
+        <Typography
+          sx={(theme) => ({
+            color: theme.palette.primary.main,
+          })}
+        >
+          {`${payload[0].name}: ${payload[0].value}€`}
+        </Typography>
+      </Paper>
+    );
+  }
+
+  return null;
+};
+
+const PieBudgetChart: React.FC<PieBudgetChartProps> = ({ data }) => (
+  <ResponsiveContainer width="50%" height="45%" minWidth={250}>
+    <PieChart>
+      <Pie
+        dataKey="value"
+        data={data}
+        labelLine={false}
+        label={renderCustomizedLabel}
+        outerRadius="90%"
+        animationDuration={1800}
+      >
+        {data.map((entry) => <Cell stroke="none" key={entry.name} fill={budgetChartColors.find((item) => item.name === entry.name)?.color} />)}
+      </Pie>
+      <Tooltip content={<CustomTooltip />} />
+    </PieChart>
+  </ResponsiveContainer>
+);
+
+export default PieBudgetChart;

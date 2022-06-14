@@ -1,13 +1,13 @@
 import React from 'react';
 
 import {
-  TableRow, TableCell, Tooltip, Button,
+  TableRow, TableCell,
 } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
 
 import { WatchlistItem } from '../../../../../../store/features/watchlist/types';
 import { useRootDispatch } from '../../../../../../store/hooks';
 import { createRemoveFromWatchlistAction } from '../../../../../../store/features/watchlist/watchlist-action-creators';
+import DeleteButton from '../../../../../../components/delete-button';
 
 type CustomTableRowProps = {
   data: WatchlistItem,
@@ -43,25 +43,7 @@ const CustomTableRow: React.FC<CustomTableRowProps> = ({ data }) => {
       <TableCell color="secondary.dark" sx={{ ...styles.cell }} align="center">{`$${high}`}</TableCell>
       <TableCell color="secondary.dark" sx={{ ...styles.cell }} align="center">{`$${low}`}</TableCell>
       <TableCell color="secondary.dark" sx={{ ...styles.cell }} align="center">
-        <Tooltip title="Remove from Watchlist" arrow>
-          <Button
-            variant="contained"
-            onClick={() => deleteItem(symbol)}
-            sx={{
-              minWidth: 21,
-              minHeight: 21,
-              borderRadius: 50,
-              p: 1,
-              background: 'primary.main',
-            }}
-          >
-            <DeleteIcon
-              sx={(theme) => ({
-                color: theme.palette.secondary.dark,
-              })}
-            />
-          </Button>
-        </Tooltip>
+        <DeleteButton hoverText="Remove From Watchlist" handleDelete={deleteItem} deleteBy={symbol} />
       </TableCell>
     </TableRow>
   );
