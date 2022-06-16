@@ -77,10 +77,10 @@ export const createRegisterAction = (
   await authenticate(dispatch, async () => AuthService.register(userData), redirect);
 };
 
-export const createAuthenticateAction = (token: string) => async (
+export const createAuthenticateAction = (token: string, redirect: string) => async (
   dispatch: Dispatch<AuthActions>,
 ): Promise<void> => {
-  await authenticate(dispatch, async () => AuthService.authenticate(token));
+  await authenticate(dispatch, async () => AuthService.authenticate(token), redirect);
 };
 
 export const createLogOutAction = () => async (dispatch: Dispatch<GlobalActions>): Promise<void> => {

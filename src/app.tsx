@@ -1,13 +1,13 @@
 import React from 'react';
 
 import {
-  BrowserRouter,
   Routes,
   Route,
+  useLocation,
 } from 'react-router-dom';
 
 import { useRootSelector, useRootDispatch } from './store/hooks';
-import { selectAuthToken, selectLoggedIn, selectAuthLoading } from './store/features/auth/auth-selectors';
+import { selectAuthToken, selectLoggedIn } from './store/features/auth/auth-selectors';
 import { createAuthenticateAction } from './store/action-creators';
 
 import RequireVisitor from './routing/require-visitor';
@@ -26,90 +26,88 @@ import ResearchSection from './pages/analysis-page/sections/stock-research/index
 import InfoCard from './pages/analysis-page/components/info-card';
 
 const App: React.FC = () => {
+  const location = useLocation();
   const token = useRootSelector(selectAuthToken);
   const loggedIn = useRootSelector(selectLoggedIn);
-  const loading = useRootSelector(selectAuthLoading);
   const dispatch = useRootDispatch();
 
-  if (!loggedIn && token && !loading) {
-    dispatch(createAuthenticateAction(token));
+  if (!loggedIn && token) {
+    dispatch(createAuthenticateAction(token, location.pathname));
     return <div />;
   }
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<MainLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route
-            path="/register"
-            element={(
-              <RequireVisitor>
-                <RegisterPage />
-              </RequireVisitor>
+    <Routes>
+      <Route path="/" element={<MainLayout />}>
+        <Route index element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route
+          path="/register"
+          element={(
+            <RequireVisitor>
+              <RegisterPage />
+            </RequireVisitor>
         )}
-          />
-          <Route
-            path="/signin"
-            element={(
-              <RequireVisitor>
-                <SignInPage />
-              </RequireVisitor>
+        />
+        <Route
+          path="/signin"
+          element={(
+            <RequireVisitor>
+              <SignInPage />
+            </RequireVisitor>
             )}
-          />
-          <Route
-            path="/analysis"
-            element={(
-              <RequireAuth>
-                <AnalysisPageLayout />
-              </RequireAuth>
+        />
+        <Route
+          path="/analysis"
+          element={(
+            <RequireAuth>
+              <AnalysisPageLayout />
+            </RequireAuth>
           )}
-          >
-            <Route index element={<InfoCard />} />
-            <Route
-              path="/analysis/analysis"
-              element={(
-                <RequireAuth>
-                  <AnalysisSection />
-                </RequireAuth>
-                        )}
-            />
-            <Route
-              path="/analysis/watchlist"
-              element={(
-                <RequireAuth>
-                  <WatchlistSection />
-                </RequireAuth>
-                        )}
-            />
-            <Route
-              path="/analysis/research"
-              element={(
-                <RequireAuth>
-                  <ResearchSection />
-                </RequireAuth>
-                        )}
-            />
-          </Route>
+        >
+          <Route index element={<InfoCard />} />
           <Route
-            path="/budget"
+            path="/analysis/analysis"
             element={(
               <RequireAuth>
-                <BudgetPage />
+                <AnalysisSection />
               </RequireAuth>
-            )}
+                        )}
           />
           <Route
-            path="/profile"
+            path="/analysis/watchlist"
             element={(
               <RequireAuth>
-                <ProfilePage />
+                <WatchlistSection />
               </RequireAuth>
-            )}
+                        )}
+          />
+          <Route
+            path="/analysis/research"
+            element={(
+              <RequireAuth>
+                <ResearchSection />
+              </RequireAuth>
+                        )}
           />
         </Route>
-      </Routes>
-    </BrowserRouter>
+        <Route
+          path="/budget"
+          element={(
+            <RequireAuth>
+              <BudgetPage />
+            </RequireAuth>
+            )}
+        />
+        <Route
+          path="/profile"
+          element={(
+            <RequireAuth>
+              <ProfilePage />
+            </RequireAuth>
+            )}
+        />
+      </Route>
+    </Routes>
   );
 };
 
