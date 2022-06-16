@@ -12,6 +12,7 @@ import { Credentials } from '../../types/credentials';
 import { useRootDispatch, useRootSelector } from '../../store/hooks';
 import { createRegisterAction } from '../../store/features/auth/auth-action-creators';
 import { selectAuthError } from '../../store/selectors';
+import AuthService from '../../store/features/auth/auth-service';
 
 type RegisterValues = Credentials & {
   repPassword: string
@@ -28,6 +29,21 @@ const initialValues: RegisterValues = {
 const validationSchema: SchemaOf<RegisterValues> = Yup.object({
   username: Yup.string()
     .required('This field is required')
+    .test(
+      'usernameAvailabilityCheck',
+      'Username is not valid',
+      async (username, context) => {
+        if (!username) return false;
+        try {
+          const usernameIsAvailable = await AuthService.checkUsernameAvailability(username);
+          return usernameIsAvailable;
+        } catch (error) {
+          throw context.createError({
+            message: error instanceof Error ? error.message : error as string,
+          });
+        }
+      },
+    )
     .min(2, 'Username is to short')
     .max(20, 'Username is too long')
     .matches(/^[A-Za-z0-9_-]+$/, 'Only alphabets, dashes, and underscores are allowed'),

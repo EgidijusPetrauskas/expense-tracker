@@ -1,6 +1,7 @@
 import { User } from '../../../types/user';
 
 export type AuthState = {
+  token: string | null,
   user: User | null,
   loading: boolean,
   error: string | null,
@@ -17,7 +18,8 @@ export enum AuthActionType {
 export type AuthSetUserAction = {
   type: AuthActionType.AUTH_SET_USER,
   payload: {
-    user: User
+    user: User,
+    token: string
   }
 };
 

@@ -5,7 +5,10 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
-import { Provider } from 'react-redux';
+
+import { useRootSelector, useRootDispatch } from './store/hooks';
+import { selectAuthToken, selectLoggedIn, selectAuthLoading } from './store/features/auth/auth-selectors';
+import { createAuthenticateAction } from './store/action-creators';
 
 import RequireVisitor from './routing/require-visitor';
 import RequireAuth from './routing/require-auth';
@@ -16,16 +19,24 @@ import SignInPage from './pages/sign-in-page';
 import MainLayout from './layouts/main-layout';
 import BudgetPage from './pages/budget-page/index';
 import ProfilePage from './pages/profile-page/index';
-import store from './store/index';
 import AnalysisPageLayout from './layouts/analysis-page-layout';
 import AnalysisSection from './pages/analysis-page/sections/analysis';
 import WatchlistSection from './pages/analysis-page/sections/stock-watchlist/index';
 import ResearchSection from './pages/analysis-page/sections/stock-research/index';
 import InfoCard from './pages/analysis-page/components/info-card';
 
-const App: React.FC = () => (
-  <BrowserRouter>
-    <Provider store={store}>
+const App: React.FC = () => {
+  const token = useRootSelector(selectAuthToken);
+  const loggedIn = useRootSelector(selectLoggedIn);
+  const loading = useRootSelector(selectAuthLoading);
+  const dispatch = useRootDispatch();
+
+  if (!loggedIn && token && !loading) {
+    dispatch(createAuthenticateAction(token));
+    return <div />;
+  }
+  return (
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<HomePage />} />
@@ -98,8 +109,8 @@ const App: React.FC = () => (
           />
         </Route>
       </Routes>
-    </Provider>
-  </BrowserRouter>
-);
+    </BrowserRouter>
+  );
+};
 
 export default App;

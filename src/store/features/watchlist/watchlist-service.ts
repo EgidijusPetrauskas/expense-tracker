@@ -16,7 +16,7 @@ namespace WatchlistService {
   export const addToWatchlist: AddToWatchListType = async (symbol: string) => {
     let response: 'success' | 'failed';
 
-    const user: User | null = getLocalStorage(USER_KEY_IN_LOCAL_STORAGE);
+    const user: User | null = getLocalStorage('user');
 
     if (!user) {
       response = 'failed';
@@ -41,7 +41,7 @@ namespace WatchlistService {
   };
 
   export const removeFromWatchlist: DeleteFromWatchListType = async (symbol: string) => {
-    const user: User | null = getLocalStorage(USER_KEY_IN_LOCAL_STORAGE);
+    const user: User | null = getLocalStorage('user');
     if (!user) {
       throw new Error('You have to Sign in!');
     }
@@ -56,7 +56,7 @@ namespace WatchlistService {
   };
 
   export const loadWatchlist: LoadWatchListType = async () => {
-    const user: User | null = getLocalStorage(USER_KEY_IN_LOCAL_STORAGE);
+    const user: User | null = getLocalStorage('user');
     if (!user) {
       throw new Error('You have to Sign in!');
     }

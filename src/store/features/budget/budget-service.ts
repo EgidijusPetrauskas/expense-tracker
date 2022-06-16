@@ -26,7 +26,7 @@ namespace BudgetService {
   };
 
   export const getExpenses: GetExpensesType = async (categoryId) => {
-    const user: User | null = getLocalStorage(USER_KEY_IN_LOCAL_STORAGE);
+    const user: User | null = getLocalStorage('user');
     if (!user) {
       throw new Error('You have to Sign in!');
     }
@@ -44,7 +44,7 @@ namespace BudgetService {
   };
 
   export const createExpense: CreateExpenseType = async (expenseData) => {
-    const user: User | null = getLocalStorage(USER_KEY_IN_LOCAL_STORAGE);
+    const user: User | null = getLocalStorage('user');
     if (!user) {
       throw new Error('You have to Sign in!');
     }
@@ -60,7 +60,7 @@ namespace BudgetService {
   };
 
   export const removeExpense: RemoveExpenseType = async (id) => {
-    const user: User | null = getLocalStorage(USER_KEY_IN_LOCAL_STORAGE);
+    const user: User | null = getLocalStorage('user');
     if (!user) {
       throw new Error('You have to Sign in!');
     }
@@ -76,7 +76,7 @@ namespace BudgetService {
   };
 
   export const clearAllExpenses: ClearAllExpensesType = async () => {
-    const user: User | null = getLocalStorage(USER_KEY_IN_LOCAL_STORAGE);
+    const user: User | null = getLocalStorage('user');
     if (!user) {
       throw new Error('You have to Sign in!');
     }
@@ -93,7 +93,7 @@ namespace BudgetService {
   };
 
   export const getCalcExpenses: GetCalcExpenses = async () => {
-    const user: User | null = getLocalStorage(USER_KEY_IN_LOCAL_STORAGE);
+    const user: User | null = getLocalStorage('user');
     if (!user) {
       throw new Error('You have to Sign in!');
     }

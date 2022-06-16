@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/default-param-last */
 import { Reducer } from 'redux';
 
-import { User } from '../../../types';
 import { getLocalStorage, setLocalStorage } from '../../../helpers/local-storage-helper';
 import {
   AuthActionType,
@@ -9,10 +8,11 @@ import {
   AuthActions,
 } from './types';
 
-const USER_KEY_IN_LOCAL_STORAGE = process.env.REACT_APP_USER_KEY_IN_LOCAL_STORAGE;
+const { REACT_APP_TOKEN_KEY_IN_LOCAL_STORAGE } = process.env;
 
 const initialState: AuthState = {
-  user: getLocalStorage<User>(USER_KEY_IN_LOCAL_STORAGE),
+  token: getLocalStorage(REACT_APP_TOKEN_KEY_IN_LOCAL_STORAGE),
+  user: null,
   loading: false,
   error: null,
 };
@@ -20,20 +20,20 @@ const initialState: AuthState = {
 const authReducer: Reducer<AuthState, AuthActions> = (state = initialState, action) => {
   switch (action.type) {
     case AuthActionType.AUTH_SET_USER: {
-      setLocalStorage(USER_KEY_IN_LOCAL_STORAGE, { id: action.payload.user.id, username: action.payload.user.username });
+      setLocalStorage(REACT_APP_TOKEN_KEY_IN_LOCAL_STORAGE, action.payload.token);
       return {
         ...state,
         user: action.payload.user,
+        token: action.payload.token,
         loading: false,
       };
     }
 
     case AuthActionType.AUTH_LOADING: {
-      let loading: AuthState['loading'];
-      if (state.loading) { loading = false; } else { loading = true; }
       return {
         ...state,
-        loading,
+        loading: !state.loading,
+        token: null,
       };
     }
 
@@ -41,6 +41,8 @@ const authReducer: Reducer<AuthState, AuthActions> = (state = initialState, acti
       return {
         ...state,
         error: action.payload.error,
+        user: null,
+        token: null,
         loading: false,
       };
     }
@@ -54,10 +56,11 @@ const authReducer: Reducer<AuthState, AuthActions> = (state = initialState, acti
     }
 
     case AuthActionType.AUTH_LOGOUT: {
-      localStorage.removeItem(USER_KEY_IN_LOCAL_STORAGE);
+      localStorage.removeItem(REACT_APP_TOKEN_KEY_IN_LOCAL_STORAGE);
       return {
         ...state,
         user: null,
+        token: null,
         loading: false,
       };
     }

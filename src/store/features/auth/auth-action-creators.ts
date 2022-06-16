@@ -2,8 +2,8 @@ import { Dispatch } from 'redux';
 
 import { Credentials, UserRegistration } from '../../../types';
 import { MainState, GlobalActions } from '../../types';
-import AuthService, { AuthPromiseType } from './auth-service';
-import { User, UserDetails } from '../../../types/user';
+import AuthService, { AuthResponseBody } from './auth-service';
+import { UserDetails } from '../../../types/user';
 import { createNavSetRedirectAction, createNavClearRedirectAction } from '../navigation/nav-action-creators';
 import { watchlistClearListAction } from '../watchlist/watchlist-action-creators';
 import {
@@ -28,9 +28,9 @@ export const authSetLogoutAction: AuthLogoutAction = {
   type: AuthActionType.AUTH_LOGOUT,
 };
 
-export const createAuthSetUserAction = (user: User): AuthSetUserAction => ({
+export const createAuthSetUserAction = (authResponseBody: AuthResponseBody): AuthSetUserAction => ({
   type: AuthActionType.AUTH_SET_USER,
-  payload: { user },
+  payload: authResponseBody,
 });
 
 export const createAuthSetErrorAction = (error: string): AuthErrorAction => ({
@@ -40,16 +40,17 @@ export const createAuthSetErrorAction = (error: string): AuthErrorAction => ({
 
 export const authenticate = async (
   dispatch: Dispatch<GlobalActions>,
-  userData: Credentials,
-  authCallBack: AuthPromiseType,
-  redirect: string,
+  authCallback: () => Promise<AuthResponseBody>,
+  redirect?: string,
 ) => {
   dispatch(authSetLoadingAction);
   try {
-    const user = await authCallBack(userData);
-    const authSetUserAction = createAuthSetUserAction(user);
-    const navSetRedirectAction = createNavSetRedirectAction(redirect);
-    dispatch(navSetRedirectAction);
+    const authResponseBody = await authCallback();
+    const authSetUserAction = createAuthSetUserAction(authResponseBody);
+    if (redirect) {
+      const navSetRedirectAction = createNavSetRedirectAction(redirect);
+      dispatch(navSetRedirectAction);
+    }
     dispatch(authSetUserAction);
     dispatch(createNavClearRedirectAction);
   } catch (err) {
@@ -63,7 +64,7 @@ export const createSignInAction = (
   userData: Credentials,
   redirect: string,
 ) => async (dispatch: Dispatch<AuthActions>): Promise<void> => {
-  await authenticate(dispatch, userData, AuthService.login, redirect);
+  await authenticate(dispatch, async () => AuthService.login(userData), redirect);
 };
 
 export const createRegisterAction = (
@@ -72,7 +73,13 @@ export const createRegisterAction = (
 ) => async (dispatch: Dispatch<AuthActions>): Promise<void> => {
   const { username, password } = userRegistration;
   const userData: Credentials = { username, password };
-  await authenticate(dispatch, userData, AuthService.register, redirect);
+  await authenticate(dispatch, async () => AuthService.register(userData), redirect);
+};
+
+export const createAuthenticateAction = (token: string) => async (
+  dispatch: Dispatch<AuthActions>,
+): Promise<void> => {
+  await authenticate(dispatch, async () => AuthService.authenticate(token));
 };
 
 export const createLogOutAction = () => async (dispatch: Dispatch<GlobalActions>): Promise<void> => {
@@ -86,7 +93,7 @@ export const createUpdateUserAction = (userDetails: UserDetails) => async (dispa
   try {
     const { user } = auth;
     const fullUserData = await AuthService.update(user, userDetails);
-    dispatch(createAuthSetUserAction(fullUserData));
+    // dispatch(createAuthSetUserAction(fullUserData));
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : String(error);
     const authSetErrorAction = createAuthSetErrorAction(errMsg);
@@ -100,7 +107,7 @@ export const createSetUserDetailsAction = () => async (dispatch: Dispatch<AuthAc
     const { user } = auth;
     const userDetails = await AuthService.getDetails(user?.username);
     const fullUserData = await AuthService.update(user, userDetails);
-    dispatch(createAuthSetUserAction(fullUserData));
+    // dispatch(createAuthSetUserAction(fullUserData));
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : String(error);
     const authSetErrorAction = createAuthSetErrorAction(errMsg);
