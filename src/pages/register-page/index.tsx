@@ -10,7 +10,7 @@ import StyledTextField from '../../components/custom-form/custom-form-styles';
 import CustomForm from '../../components/custom-form';
 import { Credentials } from '../../types/credentials';
 import { useRootDispatch, useRootSelector } from '../../store/hooks';
-import { createRegisterAction } from '../../store/features/auth/auth-action-creators';
+import { createRegisterAction } from '../../store/features/auth-and-user/auth-action-creators';
 import { selectAuthError } from '../../store/selectors';
 import AuthService from '../../services/auth-service';
 

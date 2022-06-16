@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 
 import { StyledNavbarButton, StyledMenuList, StyledMenuItem } from './navbar-styles';
-import { createLogOutAction } from '../../store/features/auth/auth-action-creators';
+import { createLogOutAction } from '../../store/features/auth-and-user/auth-action-creators';
 import { useRootDispatch } from '../../store/hooks';
 
 import Logo from '../../components/logo';

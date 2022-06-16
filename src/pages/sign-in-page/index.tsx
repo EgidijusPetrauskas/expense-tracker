@@ -9,7 +9,7 @@ import { SchemaOf } from 'yup';
 import StyledTextField from '../../components/custom-form/custom-form-styles';
 import CustomForm from '../../components/custom-form';
 import { Credentials } from '../../types/credentials';
-import { createSignInAction } from '../../store/features/auth/auth-action-creators';
+import { createSignInAction } from '../../store/features/auth-and-user/auth-action-creators';
 import { useRootDispatch, useRootSelector } from '../../store/hooks';
 import { selectAuthError } from '../../store/selectors';
 

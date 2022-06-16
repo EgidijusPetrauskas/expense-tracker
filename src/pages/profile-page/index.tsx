@@ -5,7 +5,7 @@ import { Container, Button, Box } from '@mui/material';
 import PersonalInfoSection from './personal-info-section';
 import UpdateInfoForm from './update-info-form';
 import { useRootDispatch } from '../../store/hooks';
-import { createSetUserDetailsAction } from '../../store/features/auth/auth-action-creators';
+import { createSetUserDetailsAction } from '../../store/features/auth-and-user/user-action-creators';
 
 const ProfilePage: React.FC = () => {
   const [formOpen, setFormOpen] = useState<boolean>(false);

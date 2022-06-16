@@ -7,9 +7,9 @@ import { Typography } from '@mui/material';
 import CustomForm from '../../components/custom-form/index';
 import StyledTextField from '../../components/custom-form/custom-form-styles';
 import { useRootDispatch, useRootSelector } from '../../store/hooks';
-import { createUpdateUserAction } from '../../store/features/auth/auth-action-creators';
 import { UserDetails } from '../../types';
-import { selectUser } from '../../store/features/auth/auth-selectors';
+import { selectUser } from '../../store/features/auth-and-user/auth-selectors';
+import { createUpdateUserActionThunk } from '../../store/features/auth-and-user/user-action-creators';
 
 type AdditionalInfoValues = UserDetails;
 
@@ -54,7 +54,7 @@ const UpdateInfoForm: React.FC = () => {
   const handleSubmitInfo: AdditionalInfoFomikConfig['onSubmit'] = ({
     firstName, lastName, email, age,
   }) => {
-    dispatch(createUpdateUserAction({
+    dispatch(createUpdateUserActionThunk({
       firstName, lastName, email, age,
     }));
   };

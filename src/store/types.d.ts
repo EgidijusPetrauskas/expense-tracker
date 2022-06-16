@@ -1,4 +1,4 @@
-import { AuthActions, AuthState } from './features/auth/types';
+import { AuthActions, AuthState } from './features/auth-and-user/types';
 import { NavActions, NavState } from './features/navigation/types';
 import { StocksActions, StocksState } from './features/stocks/types';
 import { WatchlistActions, WatchlistState } from './features/watchlist/types';

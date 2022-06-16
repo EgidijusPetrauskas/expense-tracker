@@ -29,11 +29,20 @@ const authReducer: Reducer<AuthState, AuthActions> = (state = initialState, acti
       };
     }
 
+    case AuthActionType.AUTH_UPDATE_USER: {
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          ...action.payload,
+        },
+      };
+    }
+
     case AuthActionType.AUTH_LOADING: {
       return {
         ...state,
         loading: !state.loading,
-        token: null,
       };
     }
 

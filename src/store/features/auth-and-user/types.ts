@@ -9,6 +9,7 @@ export type AuthState = {
 
 export enum AuthActionType {
   AUTH_SET_USER = 'AUTH_SET_USER',
+  AUTH_UPDATE_USER = 'AUTH_UPDATE_USER',
   AUTH_LOADING = 'AUTH_LOADING',
   AUTH_SET_ERROR = 'AUTH_SET_ERROR',
   AUTH_CLEAR_ERROR = 'AUTH_CLEAR_ERROR',
@@ -42,4 +43,9 @@ export type AuthLogoutAction = {
   type: AuthActionType.AUTH_LOGOUT;
 };
 
-export type AuthActions = AuthSetUserAction | AuthLoadingAction | AuthErrorAction | AuthLogoutAction | AuthClearErrorAction;
+export type AuthUserUpdateAction = {
+  type: AuthActionType.AUTH_UPDATE_USER,
+  payload: User
+};
+
+export type AuthActions = AuthSetUserAction | AuthLoadingAction | AuthErrorAction | AuthLogoutAction | AuthClearErrorAction | AuthUserUpdateAction;

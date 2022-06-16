@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 
 import { useRootSelector, useRootDispatch } from './store/hooks';
-import { selectAuthToken, selectLoggedIn } from './store/features/auth/auth-selectors';
+import { selectAuthToken, selectLoggedIn } from './store/features/auth-and-user/auth-selectors';
 import { createAuthenticateAction } from './store/action-creators';
 
 import RequireVisitor from './routing/require-visitor';

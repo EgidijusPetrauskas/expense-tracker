@@ -1,12 +1,10 @@
 import { Dispatch } from 'redux';
 
 import { Credentials, UserRegistration } from '../../../types';
-import { MainState, GlobalActions } from '../../types';
+import { GlobalActions } from '../../types';
 import AuthService, { AuthResponseBody } from '../../../services/auth-service';
-import { UserDetails } from '../../../types/user';
 import { createNavSetRedirectAction, createNavClearRedirectAction } from '../navigation/nav-action-creators';
 import { watchlistClearListAction } from '../watchlist/watchlist-action-creators';
-import UserService from '../../../services/user-services';
 import {
   AuthSetUserAction,
   AuthLoadingAction,
@@ -42,16 +40,14 @@ export const createAuthSetErrorAction = (error: string): AuthErrorAction => ({
 export const authenticate = async (
   dispatch: Dispatch<GlobalActions>,
   authCallback: () => Promise<AuthResponseBody>,
-  redirect?: string,
+  redirect: string,
 ) => {
   dispatch(authSetLoadingAction);
   try {
     const authResponseBody = await authCallback();
     const authSetUserAction = createAuthSetUserAction(authResponseBody);
-    if (redirect) {
-      const navSetRedirectAction = createNavSetRedirectAction(redirect);
-      dispatch(navSetRedirectAction);
-    }
+    const navSetRedirectAction = createNavSetRedirectAction(redirect);
+    dispatch(navSetRedirectAction);
     dispatch(authSetUserAction);
     dispatch(createNavClearRedirectAction);
   } catch (err) {
@@ -86,32 +82,4 @@ export const createAuthenticateAction = (token: string, redirect: string) => asy
 export const createLogOutAction = () => async (dispatch: Dispatch<GlobalActions>): Promise<void> => {
   dispatch(authSetLogoutAction);
   dispatch(watchlistClearListAction);
-};
-
-export const createUpdateUserAction = (userDetails: UserDetails) => async (dispatch: Dispatch<AuthActions>, getState: () => MainState): Promise<void> => {
-  dispatch(authSetLoadingAction);
-  const { auth } = getState();
-  try {
-    const { user } = auth;
-    const fullUserData = await UserService.update(user, userDetails);
-    // dispatch(createAuthSetUserAction(fullUserData));
-  } catch (error) {
-    const errMsg = error instanceof Error ? error.message : String(error);
-    const authSetErrorAction = createAuthSetErrorAction(errMsg);
-    dispatch(authSetErrorAction);
-  }
-};
-
-export const createSetUserDetailsAction = () => async (dispatch: Dispatch<AuthActions>, getState: () => MainState): Promise<void> => {
-  const { auth } = getState();
-  try {
-    const { user } = auth;
-    const userDetails = await UserService.getDetails(user?.username);
-    const fullUserData = await UserService.update(user, userDetails);
-    // dispatch(createAuthSetUserAction(fullUserData));
-  } catch (error) {
-    const errMsg = error instanceof Error ? error.message : String(error);
-    const authSetErrorAction = createAuthSetErrorAction(errMsg);
-    dispatch(authSetErrorAction);
-  }
 };
