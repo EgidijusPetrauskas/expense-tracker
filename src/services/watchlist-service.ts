@@ -3,37 +3,57 @@
 import axios from 'axios';
 
 import { getLocalStorage } from '../helpers/local-storage-helper';
-import { User } from '../types/user';
 
 type AddToWatchListType = (symbol: string) => Promise<string>;
 type DeleteFromWatchListType = (symbol: string) => Promise<void>;
 type LoadWatchListType = () => Promise<string[]>;
 
 const API_SERVER = process.env.REACT_APP_API_SERVER;
-const USER_KEY_IN_LOCAL_STORAGE = process.env.REACT_APP_USER_KEY_IN_LOCAL_STORAGE;
+const { REACT_APP_TOKEN_KEY_IN_LOCAL_STORAGE } = process.env;
 
 namespace WatchlistService {
+  export const loadWatchlist: LoadWatchListType = async () => {
+    const token = getLocalStorage<string>(REACT_APP_TOKEN_KEY_IN_LOCAL_STORAGE);
+    if (token === null) {
+      throw new Error('You have to log in!');
+    }
+
+    const { data } = await axios.get<{ watchlistItems: string[] }>(
+      `${API_SERVER}/api/watchlist`,
+      {
+        headers: {
+          Authorization: token,
+        },
+      },
+    );
+
+    const { watchlistItems } = data;
+    return watchlistItems;
+  };
+
   export const addToWatchlist: AddToWatchListType = async (symbol: string) => {
     let response: 'success' | 'failed';
 
-    const user: User | null = getLocalStorage('user');
-
-    if (!user) {
-      response = 'failed';
-      throw new Error('You have to Sign in!');
+    const token = getLocalStorage<string>(REACT_APP_TOKEN_KEY_IN_LOCAL_STORAGE);
+    if (token === null) {
+      throw new Error('You have to log in!');
     }
 
-    const { data } = await axios.get<User>(`${API_SERVER}/users/${user.id}`);
-    const { watchlist } = data;
+    const watchlist = await loadWatchlist();
 
     if (watchlist.includes(symbol)) {
-      throw new Error(`${symbol} is already in your Watchlist`);
       response = 'failed';
+      throw new Error(`${symbol} is already in your Watchlist`);
     }
 
-    await axios.patch<User>(
-      `${API_SERVER}/users/${user.id}`,
-      { watchlist: [...watchlist, symbol] },
+    await axios.post(
+      `${API_SERVER}/api/watchlist/add-item`,
+      { symbol },
+      {
+        headers: {
+          Authorization: token,
+        },
+      },
     );
     response = 'success';
 
@@ -41,27 +61,19 @@ namespace WatchlistService {
   };
 
   export const removeFromWatchlist: DeleteFromWatchListType = async (symbol: string) => {
-    const user: User | null = getLocalStorage('user');
-    if (!user) {
-      throw new Error('You have to Sign in!');
+    const token = getLocalStorage<string>(REACT_APP_TOKEN_KEY_IN_LOCAL_STORAGE);
+    if (token === null) {
+      throw new Error('You have to log in!');
     }
 
-    const { data } = await axios.get<User>(`${API_SERVER}/users/${user.id}`);
-    const { watchlist } = data;
-
-    await axios.patch<User>(
-      `${API_SERVER}/users/${user.id}`,
-      { watchlist: watchlist.filter((item) => item !== symbol) },
+    await axios.delete(
+      `${API_SERVER}/api/watchlist/delete-item/${symbol}`,
+      {
+        headers: {
+          Authorization: token,
+        },
+      },
     );
-  };
-
-  export const loadWatchlist: LoadWatchListType = async () => {
-    const user: User | null = getLocalStorage('user');
-    if (!user) {
-      throw new Error('You have to Sign in!');
-    }
-    const { data } = await axios.get<User>(`${API_SERVER}/users/${user.id}`);
-    return data.watchlist;
   };
 }
 
