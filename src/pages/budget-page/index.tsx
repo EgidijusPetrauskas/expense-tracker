@@ -84,7 +84,7 @@ const BudgetPage: React.FC = () => {
   const [clearAllDialogOpen, setClearAllDialogOpen] = useState<boolean>(false);
   const expenses = useRootSelector(selectExpenses);
   const currentCategory = useRootSelector(selectBudgetCurrentCategory);
-  const categoryOptions = useRootSelector(selectBudgetCategories);
+  const categories = useRootSelector(selectBudgetCategories);
   const loading = useRootSelector(selectBudgetLoading);
   const formOpen = useRootSelector(selectBudgetFormOpen);
   const dispatch = useRootDispatch();
@@ -148,7 +148,7 @@ const BudgetPage: React.FC = () => {
       </Box>
 
       <Grid container spacing={0.7}>
-        {categoryOptions.map((option) => (
+        {categories.map((option) => (
           <CategoryButton key={option.id} id={option.id} btnText={option.title} />
         ))}
       </Grid>

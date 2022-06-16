@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import axios from 'axios';
-import { formatError, isResponseError } from '../../../helpers/service-helpers';
+import { formatError, isResponseError } from '../helpers/service-helpers';
 
 import {
   Credentials,
   User,
-  TempUser,
   UserDetails,
-} from '../../../types';
+} from '../types';
 
 export type AuthResponseBody = {
   user: User,

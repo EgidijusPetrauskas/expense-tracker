@@ -12,7 +12,7 @@ import { Credentials } from '../../types/credentials';
 import { useRootDispatch, useRootSelector } from '../../store/hooks';
 import { createRegisterAction } from '../../store/features/auth/auth-action-creators';
 import { selectAuthError } from '../../store/selectors';
-import AuthService from '../../store/features/auth/auth-service';
+import AuthService from '../../services/auth-service';
 
 type RegisterValues = Credentials & {
   repPassword: string

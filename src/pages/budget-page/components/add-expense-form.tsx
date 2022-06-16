@@ -2,7 +2,6 @@ import React from 'react';
 
 import { useFormik, FormikConfig } from 'formik';
 import * as Yup from 'yup';
-import { v4 } from 'uuid';
 import { Typography, MenuItem, Dialog } from '@mui/material';
 
 import CustomForm from '../../../components/custom-form';
@@ -10,7 +9,7 @@ import StyledTextField from '../../../components/custom-form/custom-form-styles'
 import { Expense, ExpenseCategory } from '../../../types';
 import { useRootDispatch, useRootSelector } from '../../../store/hooks';
 import { createBudgetAppendExpenseAction, createBudgetSetFormOpenAction } from '../../../store/features/budget/budget-action-creators';
-import { selectBudgetFormOpen } from '../../../store/features/budget/budget-selectors';
+import { selectBudgetFormOpen, selectBudgetCategories } from '../../../store/features/budget/budget-selectors';
 
 type NewExpenseValues = Omit<Expense, 'id'>;
 
@@ -59,36 +58,10 @@ const validationSchema = Yup.object({
     .max(30, 'Max 30 symbols'),
 });
 
-const categoryOptions: ExpenseCategory[] = [
-  {
-    id: '1',
-    title: 'Food and Necessities',
-  },
-  {
-    id: '2',
-    title: 'Transport',
-  },
-  {
-    id: '3',
-    title: 'Leisure and Entertainment',
-  },
-  {
-    id: '4',
-    title: 'Health',
-  },
-  {
-    id: '5',
-    title: 'Investment',
-  },
-  {
-    id: '6',
-    title: 'Other',
-  },
-];
-
 const AddExpenseForm: React.FC<AddExpenseFormProps> = ({ openForm, closeForm }) => {
   const dispatch = useRootDispatch();
   const formOpen = useRootSelector(selectBudgetFormOpen);
+  const categories = useRootSelector<ExpenseCategory[]>(selectBudgetCategories);
 
   const handleSubmitInfo: AdditionalInfoFomikConfig['onSubmit'] = ({
     title,
@@ -98,7 +71,7 @@ const AddExpenseForm: React.FC<AddExpenseFormProps> = ({ openForm, closeForm }) 
     description,
   }) => {
     dispatch(createBudgetAppendExpenseAction({
-      id: v4(), title, category, price, amount, description,
+      title, category, price, amount, description,
     }));
     dispatch(createBudgetSetFormOpenAction(!formOpen));
   };
@@ -164,7 +137,7 @@ const AddExpenseForm: React.FC<AddExpenseFormProps> = ({ openForm, closeForm }) 
           error={touched.category && Boolean(errors.category)}
           helperText={touched.category && errors.category}
         >
-          {categoryOptions.map((opt) => (
+          {categories.map((opt) => (
             <MenuItem
               key={opt.id}
               value={opt.id}

@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import axios from 'axios';
 
-import { getLocalStorage } from '../../../helpers/local-storage-helper';
-import { User } from '../../../types/user';
+import { getLocalStorage } from '../helpers/local-storage-helper';
+import { User } from '../types/user';
 
 type AddToWatchListType = (symbol: string) => Promise<string>;
 type DeleteFromWatchListType = (symbol: string) => Promise<void>;

@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import axios from 'axios';
-import WatchlistService from './watchlist-service';
+import WatchlistService from '../../../services/watchlist-service';
 import { MainState } from '../../types';
 import {
   WatchlistClearListAction,

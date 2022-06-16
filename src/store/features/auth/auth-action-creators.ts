@@ -2,10 +2,11 @@ import { Dispatch } from 'redux';
 
 import { Credentials, UserRegistration } from '../../../types';
 import { MainState, GlobalActions } from '../../types';
-import AuthService, { AuthResponseBody } from './auth-service';
+import AuthService, { AuthResponseBody } from '../../../services/auth-service';
 import { UserDetails } from '../../../types/user';
 import { createNavSetRedirectAction, createNavClearRedirectAction } from '../navigation/nav-action-creators';
 import { watchlistClearListAction } from '../watchlist/watchlist-action-creators';
+import UserService from '../../../services/user-services';
 import {
   AuthSetUserAction,
   AuthLoadingAction,
@@ -92,7 +93,7 @@ export const createUpdateUserAction = (userDetails: UserDetails) => async (dispa
   const { auth } = getState();
   try {
     const { user } = auth;
-    const fullUserData = await AuthService.update(user, userDetails);
+    const fullUserData = await UserService.update(user, userDetails);
     // dispatch(createAuthSetUserAction(fullUserData));
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : String(error);
@@ -105,8 +106,8 @@ export const createSetUserDetailsAction = () => async (dispatch: Dispatch<AuthAc
   const { auth } = getState();
   try {
     const { user } = auth;
-    const userDetails = await AuthService.getDetails(user?.username);
-    const fullUserData = await AuthService.update(user, userDetails);
+    const userDetails = await UserService.getDetails(user?.username);
+    const fullUserData = await UserService.update(user, userDetails);
     // dispatch(createAuthSetUserAction(fullUserData));
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : String(error);

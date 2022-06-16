@@ -18,7 +18,7 @@ import {
   BudgetSetChartIsSetAction,
 } from './types';
 import { ExpenseCategory } from '../../../types/expense-category';
-import BudgetService from './budget-service';
+import BudgetService from '../../../services/budget-service';
 import { CalculatedExpense } from '../../../types/calculated-expense';
 
 export const budgetClearErrorAction: BudgetClearErrorAction = {
@@ -121,7 +121,7 @@ export const createSetBudgetExpenses = (categoryId: string) => async (dispatch: 
 };
 
 export const createBudgetAppendExpenseAction = (
-  expenseData: Expense,
+  expenseData: Omit<Expense, 'id'>,
 ) => async (dispatch: Dispatch<BudgetActions>): Promise<void> => {
   try {
     const newExpense = await BudgetService.createExpense(expenseData);
@@ -141,8 +141,8 @@ export const createBudgetRemoveExpenseAction = (
   id: Expense['id'],
 ) => async (dispatch: Dispatch<BudgetActions>): Promise<void> => {
   try {
-    const removedExpenseId = await BudgetService.removeExpense(id);
-    const budgetDeleteExpenseAction = createDeleteExpenseAction(removedExpenseId);
+    const removedExpense = await BudgetService.removeExpense(id);
+    const budgetDeleteExpenseAction = createDeleteExpenseAction(removedExpense.id);
     dispatch(budgetDeleteExpenseAction);
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : String(error);
