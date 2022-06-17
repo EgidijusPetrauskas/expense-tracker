@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Typography, Paper } from '@mui/material';
 import {
@@ -71,8 +71,6 @@ const CustomTooltip = ({ active, payload }: any) => {
 const PieBudgetChart: React.FC<PieBudgetChartProps> = ({ data }) => {
   const chartIsSet = useRootSelector(selectBudgetChartIsSet);
   const dispatch = useRootDispatch();
-
-  console.log(chartIsSet);
 
   return (
     <ResponsiveContainer width="50%" height="45%" minWidth={250}>

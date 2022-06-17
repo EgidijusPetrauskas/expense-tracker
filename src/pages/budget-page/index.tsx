@@ -173,7 +173,7 @@ const BudgetPage: React.FC = () => {
                     data={{
                       id: expense.id,
                       title: expense.title,
-                      category: expense.category,
+                      category: expense.category[0],
                       price: expense.price,
                       amount: expense.amount,
                       description: expense.description,

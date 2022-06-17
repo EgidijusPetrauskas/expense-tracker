@@ -137,7 +137,7 @@ namespace BudgetService {
     const calculatedExpenses: CalculatedExpense[] = [];
 
     userExpenses
-      .map((expense) => [expense.category, expense.price] as [string, number])
+      .map((expense) => [expense.category[0], expense.price] as [string, number])
       .forEach(([cat, price]) => {
         if (calculatedExpenses.find((exp) => exp.name === cat)) {
           const indexOfCalcExpense = calculatedExpenses.map((x) => x.name).indexOf(cat);
@@ -149,11 +149,12 @@ namespace BudgetService {
 
     const categories = await getCategories();
 
-    const filteredUserExpenses = calculatedExpenses.map((expense) => {
-      const categoryName = categories.find((cat) => cat.id === expense.name[0])?.title;
-      if (categoryName === undefined) throw new Error('Data is incorrect');
-      return { name: categoryName, value: expense.value };
-    });
+    const filteredUserExpenses = calculatedExpenses
+      .map((expense) => {
+        const categoryName = categories.find((cat) => cat.id === expense.name)?.title;
+        if (categoryName === undefined) throw new Error('Data is incorrect');
+        return { name: categoryName, value: expense.value };
+      });
 
     return filteredUserExpenses;
   };
