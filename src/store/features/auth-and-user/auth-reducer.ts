@@ -15,6 +15,7 @@ const initialState: AuthState = {
   user: null,
   loading: false,
   error: null,
+  userUpdateFormOpen: false,
 };
 
 const authReducer: Reducer<AuthState, AuthActions> = (state = initialState, action) => {
@@ -26,16 +27,6 @@ const authReducer: Reducer<AuthState, AuthActions> = (state = initialState, acti
         user: action.payload.user,
         token: action.payload.token,
         loading: false,
-      };
-    }
-
-    case AuthActionType.AUTH_UPDATE_USER: {
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          ...action.payload,
-        },
       };
     }
 
@@ -73,6 +64,24 @@ const authReducer: Reducer<AuthState, AuthActions> = (state = initialState, acti
         loading: false,
       };
     }
+
+    case AuthActionType.USER_UPDATE_USER: {
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          ...action.payload,
+        },
+      };
+    }
+
+    case AuthActionType.USER_SET_UPDATE_FORM_OPEN: {
+      return {
+        ...state,
+        userUpdateFormOpen: !state.userUpdateFormOpen,
+      };
+    }
+
     default:
       return state;
   }

@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { Container, Button, Box } from '@mui/material';
 
 import PersonalInfoSection from './personal-info-section';
 import UpdateInfoForm from './update-info-form';
-import { useRootDispatch } from '../../store/hooks';
-import { createSetUserDetailsAction } from '../../store/features/auth-and-user/user-action-creators';
+import { useRootDispatch, useRootSelector } from '../../store/hooks';
+import { createSetUserDetailsActionThunk, createUserSetUpdateFormOpenAction } from '../../store/features/auth-and-user/user-action-creators';
+import { selectUserUpdateFormOpen } from '../../store/features/auth-and-user/auth-selectors';
 
 const ProfilePage: React.FC = () => {
-  const [formOpen, setFormOpen] = useState<boolean>(false);
+  const formOpen = useRootSelector(selectUserUpdateFormOpen);
   const dispatch = useRootDispatch();
   useEffect(() => {
-    dispatch(createSetUserDetailsAction());
+    dispatch(createSetUserDetailsActionThunk());
   }, []);
   return (
     <Container
@@ -45,7 +46,7 @@ const ProfilePage: React.FC = () => {
           <Button
             variant="outlined"
             color={formOpen ? 'error' : 'primary'}
-            onClick={() => setFormOpen(!formOpen)}
+            onClick={() => dispatch(createUserSetUpdateFormOpenAction)}
             sx={{ fontSize: 16 }}
           >
             {formOpen ? 'Cancel' : 'Update'}

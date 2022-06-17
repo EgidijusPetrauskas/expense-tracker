@@ -9,3 +9,5 @@ export const selectAuthToken = (state: MainState) => state.auth.token;
 export const selectAuthLoading = (state: MainState) => state.auth.loading;
 
 export const selectAuthError = (state: MainState) => state.auth.error;
+
+export const selectUserUpdateFormOpen = (state: MainState) => state.auth.userUpdateFormOpen;

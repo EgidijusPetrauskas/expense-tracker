@@ -1,19 +1,27 @@
 import { Dispatch } from 'redux';
 
 import { UserDetails, User } from '../../../types/user';
-
 import { MainState } from '../../types';
-import { AuthActions, AuthUserUpdateAction, AuthActionType } from './types';
-import { authSetLoadingAction, createAuthSetErrorAction } from './auth-action-creators';
+import {
+  AuthActions,
+  UserUpdateAction,
+  AuthActionType,
+  UserSetUpdateFormOpenAction,
+} from './types';
+
+import { createAuthSetErrorAction } from './auth-action-creators';
 import UserService from '../../../services/user-services';
 
-export const createUpdateUserAction = (user: User): AuthUserUpdateAction => ({
-  type: AuthActionType.AUTH_UPDATE_USER,
+export const createUpdateUserAction = (user: User): UserUpdateAction => ({
+  type: AuthActionType.USER_UPDATE_USER,
   payload: user,
 });
 
+export const createUserSetUpdateFormOpenAction: UserSetUpdateFormOpenAction = {
+  type: AuthActionType.USER_SET_UPDATE_FORM_OPEN,
+};
+
 export const createUpdateUserActionThunk = (userDetails: UserDetails) => async (dispatch: Dispatch<AuthActions>, getState: () => MainState): Promise<void> => {
-  dispatch(authSetLoadingAction);
   const { auth } = getState();
   try {
     const { user } = auth;
@@ -26,7 +34,7 @@ export const createUpdateUserActionThunk = (userDetails: UserDetails) => async (
   }
 };
 
-export const createSetUserDetailsAction = () => async (dispatch: Dispatch<AuthActions>, getState: () => MainState): Promise<void> => {
+export const createSetUserDetailsActionThunk = () => async (dispatch: Dispatch<AuthActions>, getState: () => MainState): Promise<void> => {
   const { auth } = getState();
   try {
     const { user } = auth;

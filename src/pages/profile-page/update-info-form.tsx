@@ -9,7 +9,7 @@ import StyledTextField from '../../components/custom-form/custom-form-styles';
 import { useRootDispatch, useRootSelector } from '../../store/hooks';
 import { UserDetails } from '../../types';
 import { selectUser } from '../../store/features/auth-and-user/auth-selectors';
-import { createUpdateUserActionThunk } from '../../store/features/auth-and-user/user-action-creators';
+import { createUpdateUserActionThunk, createUserSetUpdateFormOpenAction } from '../../store/features/auth-and-user/user-action-creators';
 
 type AdditionalInfoValues = UserDetails;
 
@@ -57,6 +57,7 @@ const UpdateInfoForm: React.FC = () => {
     dispatch(createUpdateUserActionThunk({
       firstName, lastName, email, age,
     }));
+    dispatch(createUserSetUpdateFormOpenAction);
   };
 
   const {
