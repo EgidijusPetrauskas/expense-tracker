@@ -2,12 +2,9 @@ import React, { useState, useEffect } from 'react';
 
 import { format } from 'date-fns';
 import {
-  styled,
-  Container,
   Grid,
   Table,
   TableBody,
-  Paper,
   Box,
   Typography,
 } from '@mui/material';
@@ -30,54 +27,13 @@ import {
   selectBudgetCurrentCategory,
   selectBudgetFormOpen,
   selectBudgetLoading,
+  selectBudgetIsSet,
 } from '../../store/features/budget/budget-selectors';
 import CustomBackDrop from '../../components/custom-backdrop';
 import ClearAllDialog from './components/clear-all-dialog';
 import CustomButton from './components/custom-button';
-
-const CustomPaper = styled(Paper)(({ theme }) => ({
-  width: '33%',
-  height: '100%',
-  alignSelf: 'flex-end',
-  display: 'flex',
-  justifyContent: 'space-evenly',
-  alignItems: 'center',
-  borderRadius: 0,
-  background: theme.palette.secondary.light,
-  [theme.breakpoints.down('md')]: {
-    width: '100%',
-  },
-}));
-
-const styles = {
-  outsideContainer: {
-    width: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: 2,
-    py: {
-      xl: 17.5,
-      lg: 17.5,
-      md: 17.5,
-      sm: 14.5,
-      xs: 14.5,
-    },
-  },
-  topContainer: {
-    width: 1,
-    height: {
-      xl: 55,
-      lg: 55,
-      md: 55,
-      sm: 55 * 3,
-      xs: 55 * 3,
-    },
-    display: 'flex',
-    justifyContent: 'space-between',
-    gap: 1,
-  },
-};
+import { BudgetPageOutsideContainer, BudgetPageTopContainerContainer, CustomPaper } from './budget-page-styles';
+import SectionInfoCard from '../analysis-page/components/section-info-card';
 
 const BudgetPage: React.FC = () => {
   const [currentDate, setCurrentDate] = useState<string>('Year Month');
@@ -87,6 +43,7 @@ const BudgetPage: React.FC = () => {
   const categories = useRootSelector(selectBudgetCategories);
   const loading = useRootSelector(selectBudgetLoading);
   const formOpen = useRootSelector(selectBudgetFormOpen);
+  const isSet = useRootSelector(selectBudgetIsSet);
   const dispatch = useRootDispatch();
   const navigate = useNavigate();
 
@@ -104,19 +61,9 @@ const BudgetPage: React.FC = () => {
   };
 
   return (
-    <Container sx={{ ...styles.outsideContainer }}>
+    <BudgetPageOutsideContainer>
       <CustomBackDrop open={loading} handleClose={() => dispatch(createBudgetSetLoadingAction(false))} />
-
-      <Box
-        sx={(theme) => ({
-          ...styles.topContainer,
-          [theme.breakpoints.down('md')]: {
-            flexDirection: 'column',
-            justifyContent: 'center',
-          },
-        })}
-      >
-
+      <BudgetPageTopContainerContainer>
         <CustomPaper>
           <Typography
             sx={{
@@ -145,25 +92,26 @@ const BudgetPage: React.FC = () => {
           && <CustomButton btnText="CLEAR ALL" onClick={() => setClearAllDialogOpen(!clearAllDialogOpen)} />}
           <ClearAllDialog onClose={() => setClearAllDialogOpen(!clearAllDialogOpen)} open={clearAllDialogOpen} />
         </CustomPaper>
-      </Box>
+      </BudgetPageTopContainerContainer>
 
       <Grid container spacing={0.7}>
         {categories.map((option) => (
           <CategoryButton key={option.id} id={option.id} btnText={option.title} />
         ))}
       </Grid>
-
-      {formOpen
-        ? <AddExpenseForm closeForm={() => openAddExpenseForm()} openForm={formOpen} />
-        : (
-          <Box
-            sx={(theme) => ({
-              width: 1,
-              [theme.breakpoints.down('lg')]: {
-                overflow: 'scroll',
-              },
-            })}
-          >
+      <AddExpenseForm closeForm={() => openAddExpenseForm()} openForm={formOpen} />
+      <Box
+        sx={(theme) => ({
+          width: 1,
+          [theme.breakpoints.down('lg')]: {
+            overflow: 'scroll',
+          },
+        })}
+      >
+        {(expenses.length < 1 && isSet)
+          ? (
+            <SectionInfoCard title="Budget" text="Track Your spending! Start now by pressing ADD EXPENSE" />
+          ) : (
             <Table>
               <TableBody>
                 <BudgetTableHead />
@@ -182,9 +130,9 @@ const BudgetPage: React.FC = () => {
                 ))}
               </TableBody>
             </Table>
-          </Box>
-        )}
-    </Container>
+          )}
+      </Box>
+    </BudgetPageOutsideContainer>
   );
 };
 

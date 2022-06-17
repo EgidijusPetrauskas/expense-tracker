@@ -122,7 +122,7 @@ const ResearchSection: React.FC = () => {
       }}
       >
         {stocks.length <= 0 && <SectionInfoCard title="Stock Reserch" text="Research and analyse the stocks in the market" />}
-        {stocks.map((stock) => (<StockContainer key={stock.symbol} stock={stock} />))}
+        {stocks.map((stock) => (<StockContainer key={stock.id} stock={stock} />))}
       </Box>
     </Box>
   );
