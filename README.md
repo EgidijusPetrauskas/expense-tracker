@@ -10,10 +10,12 @@
 ## System requirements
   * Node.js
 
-## Project configuration
+## Project instructions
+  * Clone BE application and follow instructions
+     * [BE application link](https://github.com/EgidijusPetrauskas/expense-tracker-server)
   * Rename .env.local-example file to .env.local
   * Define variables:
-    * REACT_APP_USER_KEY_IN_LOCAL_STORAGE 
+    * REACT_APP_TOKEN_KEY_IN_LOCAL_STORAGE 
     * REACT_APP_API_SERVER 
     * REACT_APP_ALPHA_VANTAGE_API_KEY 
 
