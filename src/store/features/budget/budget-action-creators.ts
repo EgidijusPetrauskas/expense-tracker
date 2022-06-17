@@ -16,6 +16,7 @@ import {
   BudgetClearErrorAction,
   BudgetSetCalculatedExpensesAction,
   BudgetSetChartIsSetAction,
+  BudgetSetChartDataLoadedAction,
 } from './types';
 import { ExpenseCategory } from '../../../types/expense-category';
 import BudgetService from '../../../services/budget-service';
@@ -31,6 +32,10 @@ export const budgetSetIsSetAction: BudgetSetIsSetAction = {
 
 export const budgetClearExpensesAction: BudgetClearExpensesAction = {
   type: BudgetActionType.BUDGET_CLEAR_EXPENSES,
+};
+
+export const budgetSetChartDataLoaded: BudgetSetChartDataLoadedAction = {
+  type: BudgetActionType.BUDGET_SET_CHART_DATA_LOADED,
 };
 
 export const budgetSetChartIsSetAction: BudgetSetChartIsSetAction = {
@@ -174,6 +179,7 @@ export const createCalculateExpensesAction = () => async (dispatch: Dispatch<Bud
     const calcExpenses = await BudgetService.getCalcExpenses();
     const budgetSetCalculatedExpensesAction = createSetCalculatedExpensesAction(calcExpenses);
     dispatch(budgetSetCalculatedExpensesAction);
+    dispatch(budgetSetChartDataLoaded);
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : String(error);
     const budgetSetErrorAction = createBudgetSetErrorAction(errMsg);

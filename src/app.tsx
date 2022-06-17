@@ -23,7 +23,7 @@ import AnalysisPageLayout from './layouts/analysis-page-layout';
 import AnalysisSection from './pages/analysis-page/sections/analysis';
 import WatchlistSection from './pages/analysis-page/sections/stock-watchlist/index';
 import ResearchSection from './pages/analysis-page/sections/stock-research/index';
-import InfoCard from './pages/analysis-page/components/info-card';
+import InfoCard from './pages/analysis-page/components/general-info-card';
 
 const App: React.FC = () => {
   const location = useLocation();

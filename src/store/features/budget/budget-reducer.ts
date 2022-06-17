@@ -13,6 +13,7 @@ const initialState: BudgetState = {
   currentCategory: 'all',
   isSet: false,
   chartIsSet: false,
+  chartDataLoaded: false,
 };
 
 const budgetReducer: Reducer<BudgetState, BudgetActions> = (state = initialState, action) => {
@@ -44,10 +45,18 @@ const budgetReducer: Reducer<BudgetState, BudgetActions> = (state = initialState
       };
     }
 
+    case BudgetActionType.BUDGET_SET_CHART_DATA_LOADED: {
+      return {
+        ...state,
+        chartDataLoaded: true,
+      };
+    }
+
     case BudgetActionType.BUDGET_SET_CALCULATED_EXPENSES: {
       return {
         ...state,
         calculatedExpenses: action.payload,
+        chartIsSet: false,
       };
     }
 

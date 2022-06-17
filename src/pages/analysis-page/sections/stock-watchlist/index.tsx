@@ -6,7 +6,6 @@ import {
   TableBody,
   TableRow,
   Box,
-  TableCell,
 } from '@mui/material';
 
 import CustomTableRow from './components/table-element/custom-table-row';
@@ -18,6 +17,7 @@ import {
   selectWatchlist,
   selectWatchlistError,
   selectWatchlistLoading,
+  selectWatchlistIsSet,
 } from '../../../../store/features/watchlist/watchlist-selectors';
 import {
   createSetWatchlistAction,
@@ -27,7 +27,7 @@ import {
 import LoadingError from '../../components/loading-error';
 import CustomBackDrop from '../../../../components/custom-backdrop';
 import CustomTableHeader from './components/table-element/custom-table-headers';
-import { SpiningHourglass } from './stock-watchlist-styles';
+import SectionInfoCard from '../../components/section-info-card';
 
 const headerValues = ['SYMBOL', 'EXCHANGE', 'CURRENCY', 'SECTOR', '52 WEEK HIGHT', '52 WEEK LOW', 'REMOVE'];
 
@@ -35,6 +35,7 @@ const WatchlistSection: React.FC = () => {
   const [reload, setReload] = useState(false);
   const watchlist = useRootSelector(selectWatchlist);
   const loading = useRootSelector(selectWatchlistLoading);
+  const isSet = useRootSelector(selectWatchlistIsSet);
   const error = useRootSelector(selectWatchlistError);
   const dispatch = useRootDispatch();
 
@@ -44,11 +45,7 @@ const WatchlistSection: React.FC = () => {
 
   const refresh = () => {
     dispatch(watchlistRefreshAction);
-    if (reload) {
-      setReload(false);
-    } else {
-      setReload(true);
-    }
+    setReload(!reload);
   };
 
   return (
@@ -61,7 +58,7 @@ const WatchlistSection: React.FC = () => {
       },
     })}
     >
-      <CustomBackDrop open={loading} handleClose={() => dispatch(watchlistSetLoadingAction)} />
+      <CustomBackDrop open={loading} handleClose={() => dispatch(watchlistSetLoadingAction(false))} />
       {error
         ? (
           <LoadingError variant="refresh" error={error} onClick={refresh} />
@@ -78,15 +75,9 @@ const WatchlistSection: React.FC = () => {
                 {watchlist.map((item) => (
                   <CustomTableRow key={item.symbol} data={item} />
                 ))}
-                {watchlist.length === 0 && (
-                  <TableRow>
-                    <TableCell sx={{ py: 1 }} align="center" colSpan={headerValues.length}>
-                      <SpiningHourglass color="secondary" />
-                    </TableCell>
-                  </TableRow>
-                )}
               </TableBody>
             </Table>
+            {isSet && watchlist.length < 1 && <SectionInfoCard title="Stocks Watchlist" text="Research stocks in Stock Research section and add them to Your Watchlist" />}
           </Paper>
         )}
     </Box>

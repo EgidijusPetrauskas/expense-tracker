@@ -49,7 +49,8 @@ export type WatchlistClearErrorAction = {
 };
 
 export type WatchlistSetLoadingAction = {
-  type: WatchlistActionType.WATCHLIST_SET_LOADING
+  type: WatchlistActionType.WATCHLIST_SET_LOADING,
+  payload: boolean,
 };
 
 export type WatchlistSetSuccessAction = {

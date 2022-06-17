@@ -7,3 +7,5 @@ export const selectWatchlistError = (state: MainState) => state.watchlist.error;
 export const selectWatchlistLoading = (state: MainState) => state.watchlist.loading;
 
 export const selectWatchlistSuccess = (state: MainState) => state.watchlist.appendSuccess;
+
+export const selectWatchlistIsSet = (state: MainState) => state.watchlist.isSet;

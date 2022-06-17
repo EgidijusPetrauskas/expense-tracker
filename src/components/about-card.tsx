@@ -16,12 +16,13 @@ const AboutCard: React.FC<AboutCardProps> = ({ text, link, children }) => (
       alignItems: 'center',
       justifyContent: 'center',
       gap: 2,
-      minWidth: 250,
+      minWidth: 220,
       maxWidth: 320,
       height: 1,
       border: `6px solid ${theme.palette.secondary.main}`,
       borderRadius: 3,
       p: 4,
+      textAlign: 'center',
     })}
   >
     {children}

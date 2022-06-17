@@ -11,6 +11,7 @@ export type BudgetState = {
   currentCategory: string,
   isSet: boolean,
   chartIsSet: boolean,
+  chartDataLoaded: boolean,
 };
 
 export enum BudgetActionType {
@@ -23,6 +24,7 @@ export enum BudgetActionType {
   BUDGET_SET_CATEGORIES = 'BUDGET_SET_CATEGORIES',
   BUDGET_SET_CURRENT_CATEGORY = 'BUDGET_SET_CURRENT_CATEGORY',
   BUDGET_SET_CHART_IS_SET = 'BUDGET_SET_CHART_IS_SET',
+  BUDGET_SET_CHART_DATA_LOADED = 'BUDGET_SET_CHART_DATA_LOADED',
   BUDGET_CLEAR_EXPENSES = 'BUDGET_CLEAR_EXPENSES',
   BUDGET_CLEAR_ERROR = 'BUDGET_CLEAR_ERROR',
   BUDGET_DELETE_EXPENSE = 'BUDGET_DELETE_EXPENSE',
@@ -85,6 +87,10 @@ export type BudgetSetCurrentCategoryAction = {
   }
 };
 
+export type BudgetSetChartDataLoadedAction = {
+  type: BudgetActionType.BUDGET_SET_CHART_DATA_LOADED
+};
+
 export type BudgetSetCategoriesAction = {
   type: BudgetActionType.BUDGET_SET_CATEGORIES
   payload: {
@@ -92,4 +98,4 @@ export type BudgetSetCategoriesAction = {
   }
 };
 
-export type BudgetActions = BudgetSetExpenseAction | BudgetDeleteExpenseAction | BudgetClearExpensesAction | BudgetSetErrorAction | BudgetSetLoadingAction | BudgetSetFormOpenAction | BudgetSetIsSetAction | BudgetClearErrorAction | BudgetSetCurrentCategoryAction | BudgetSetCategoriesAction | BudgetSetCalculatedExpensesAction | BudgetSetChartIsSetAction;
+export type BudgetActions = BudgetSetExpenseAction | BudgetDeleteExpenseAction | BudgetClearExpensesAction | BudgetSetErrorAction | BudgetSetLoadingAction | BudgetSetFormOpenAction | BudgetSetIsSetAction | BudgetClearErrorAction | BudgetSetCurrentCategoryAction | BudgetSetCategoriesAction | BudgetSetCalculatedExpensesAction | BudgetSetChartIsSetAction | BudgetSetChartDataLoadedAction;

@@ -73,7 +73,7 @@ const PieBudgetChart: React.FC<PieBudgetChartProps> = ({ data }) => {
   const dispatch = useRootDispatch();
 
   return (
-    <ResponsiveContainer width="50%" height="45%" minWidth={250}>
+    <ResponsiveContainer width="50%" height="75%" minWidth={250}>
       <PieChart>
         <Pie
           dataKey="value"
@@ -81,7 +81,7 @@ const PieBudgetChart: React.FC<PieBudgetChartProps> = ({ data }) => {
           labelLine={false}
           label={renderCustomizedLabel}
           outerRadius="90%"
-          animationDuration={1600}
+          animationDuration={1400}
           isAnimationActive={!chartIsSet}
           onAnimationEnd={() => dispatch(budgetSetChartIsSetAction)}
         >

@@ -17,3 +17,5 @@ export const selectBudgetFormOpen = (state: MainState) => state.budget.formOpen;
 export const selectCalculatedExpenses = (state: MainState) => state.budget.calculatedExpenses;
 
 export const selectBudgetChartIsSet = (state: MainState) => state.budget.chartIsSet;
+
+export const selectBudgetChartDataLoaded = (state: MainState) => state.budget.chartDataLoaded;

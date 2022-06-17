@@ -6,7 +6,7 @@ import { WatchlistState, WatchlistActions, WatchlistActionType } from './types';
 const initialState: WatchlistState = {
   list: [],
   error: null,
-  loading: false,
+  loading: true,
   appendSuccess: false,
   isSet: false,
 };
@@ -49,11 +49,9 @@ const watchlistReducer: Reducer<WatchlistState, WatchlistActions> = (state = ini
     }
 
     case WatchlistActionType.WATCHLIST_SET_LOADING: {
-      let loading: WatchlistState['loading'];
-      if (state.loading) { loading = false; } else { loading = true; }
       return {
         ...state,
-        loading,
+        loading: action.payload,
       };
     }
 

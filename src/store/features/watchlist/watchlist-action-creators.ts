@@ -19,10 +19,6 @@ import {
 
 const ALPHA_VANTAGE_API_KEY = process.env.REACT_APP_ALPHA_VANTAGE_API_KEY;
 
-export const watchlistSetLoadingAction: WatchlistSetLoadingAction = {
-  type: WatchlistActionType.WATCHLIST_SET_LOADING,
-};
-
 export const watchlistClearErrorAction: WatchlistClearErrorAction = {
   type: WatchlistActionType.WATCHLIST_CLEAR_ERROR,
 };
@@ -38,6 +34,11 @@ export const watchlistRefreshAction: WatchlistRefreshAction = {
 export const watchlistClearListAction: WatchlistClearListAction = {
   type: WatchlistActionType.WATCHLIST_CLEAR_LIST,
 };
+
+export const watchlistSetLoadingAction = (value: boolean): WatchlistSetLoadingAction => ({
+  type: WatchlistActionType.WATCHLIST_SET_LOADING,
+  payload: value,
+});
 
 export const createWatchlistSetItemAcion = (itemData: WatchlistItem): WatchlistSetItemAction => ({
   type: WatchlistActionType.WATCHLIST_SET_ITEM,
@@ -97,15 +98,15 @@ export const watchListFetchItemAction = async (
 };
 
 export const createSetWatchlistAction = () => async (dispatch: Dispatch<WatchlistActions>, getState: () => MainState): Promise<void> => {
-  dispatch(watchlistSetLoadingAction);
   const { watchlist } = getState();
   if (!watchlist.isSet) {
     dispatch(watchlistClearListAction);
     const watchlistList = await WatchlistService.loadWatchlist();
-    await watchlistList.forEach((listItem) => watchListFetchItemAction(listItem, dispatch));
+    await Promise.all(watchlistList.map((listItem) => watchListFetchItemAction(listItem, dispatch)));
+    dispatch(watchlistSetLoadingAction(false));
     dispatch(watchlistSetIsSetAction);
   }
-  dispatch(watchlistSetLoadingAction);
+  dispatch(watchlistSetLoadingAction(false));
 };
 
 export const createAppendToWatchListAction = (
