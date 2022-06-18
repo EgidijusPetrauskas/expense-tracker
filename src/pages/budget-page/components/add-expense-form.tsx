@@ -69,11 +69,12 @@ const AddExpenseForm: React.FC<AddExpenseFormProps> = ({ openForm, closeForm }) 
     price,
     amount,
     description,
-  }) => {
+  }, { resetForm }) => {
     dispatch(createBudgetAppendExpenseAction({
       title, category, price, amount, description,
     }));
     dispatch(createBudgetSetFormOpenAction(!formOpen));
+    resetForm();
   };
 
   const {
