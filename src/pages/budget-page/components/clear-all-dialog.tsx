@@ -8,7 +8,7 @@ import {
   Button,
 } from '@mui/material';
 import { useRootDispatch } from '../../../store/hooks';
-import { createClearAllExpensesAction } from '../../../store/features/budget/budget-action-creators';
+import { createClearAllExpensesActionThunk } from '../../../store/features/budget/budget-action-creators';
 
 type CustomDialogProps = {
   open: boolean,
@@ -19,7 +19,7 @@ const ClearAllDialog: React.FC<CustomDialogProps> = ({ open, onClose }) => {
   const dispatch = useRootDispatch();
 
   const clearAll = () => {
-    dispatch(createClearAllExpensesAction());
+    dispatch(createClearAllExpensesActionThunk());
     onClose();
   };
 

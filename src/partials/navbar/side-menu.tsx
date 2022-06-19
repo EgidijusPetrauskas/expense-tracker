@@ -1,23 +1,25 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
 
 import { Button, Drawer, Box } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import LogoutIcon from '@mui/icons-material/Logout';
-
 import { useNavigate } from 'react-router-dom';
+
+import { useRootDispatch, useRootSelector } from '../../store/hooks';
+import { selectUserLoggedIn } from '../../store/selectors';
+import { authSetLogoutAction } from '../../store/action-creators';
+
 import NavBarVisitorMenu from './navbar-visitor-menu';
 import NavBarAuthMenu from './navbar-auth-menu';
-import { useRootDispatch, useRootSelector } from '../../store/hooks';
-import { selectLoggedIn } from '../../store/selectors';
-import { authSetLogoutAction } from '../../store/action-creators';
 import Logo from '../../components/logo';
 
 import LogoLg from '../../images/logo-lg.png';
 import Avatar from '../../images/avatar.svg';
 
 const SideMenu: React.FC = () => {
-  const loggedIn = useRootSelector(selectLoggedIn);
+  const loggedIn = useRootSelector(selectUserLoggedIn);
   const [sideMenu, setSideMenu] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useRootDispatch();
@@ -26,7 +28,6 @@ const SideMenu: React.FC = () => {
     dispatch(authSetLogoutAction);
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const toggleDrawer = (open: boolean) => (e: React.MouseEvent<HTMLElement>) => {
     setSideMenu(open);
   };

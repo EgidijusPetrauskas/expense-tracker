@@ -3,8 +3,8 @@ import React from 'react';
 import { Container, useMediaQuery, useTheme } from '@mui/material';
 
 import { StyledNavbarButton } from './navbar-styles';
-import Logo from '../../components/logo';
 
+import Logo from '../../components/logo';
 import LogoLg from '../../images/logo-lg.png';
 
 const NavBarVisitorMenu: React.FC = () => {

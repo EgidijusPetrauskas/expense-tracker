@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
+import { useNavigate } from 'react-router-dom';
 import {
   Container,
   Popper,
@@ -11,9 +11,14 @@ import {
   useTheme,
 } from '@mui/material';
 
-import { StyledNavbarButton, StyledMenuList, StyledMenuItem } from './navbar-styles';
-import { createLogOutAction } from '../../store/features/auth-and-user/auth-action-creators';
+import { createLogOutActionThunk } from '../../store/features/auth-and-user/auth-action-creators';
 import { useRootDispatch } from '../../store/hooks';
+
+import {
+  StyledNavbarButton,
+  StyledMenuList,
+  StyledMenuItem,
+} from './navbar-styles';
 
 import Logo from '../../components/logo';
 import Avatar from '../../images/avatar.svg';
@@ -36,7 +41,7 @@ const NavBarAuthMenu: React.FC = () => {
   };
 
   const handleLogOut = () => {
-    dispatch(createLogOutAction());
+    dispatch(createLogOutActionThunk());
   };
 
   return (

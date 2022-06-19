@@ -3,8 +3,10 @@ import {
   compose,
   applyMiddleware,
 } from 'redux';
+
 import { composeWithDevTools } from '@redux-devtools/extension/';
 import thunk from 'redux-thunk';
+
 import mainReducer from './main-reducer';
 
 const store = createStore(

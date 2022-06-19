@@ -10,10 +10,11 @@ import {
   selectStocksError,
   selectStocksLoading,
 } from '../../../../store/selectors';
-import { useRootDispatch, useRootSelector } from '../../../../store/hooks';
-import { createStocksFetchStockAction } from '../../../../store/action-creators';
+import { createStocksFetchStockActionThunk } from '../../../../store/action-creators';
 import { stocksClearErrorAction } from '../../../../store/features/stocks/stocks-action-creators';
 import { selectWatchlistSuccess } from '../../../../store/features/watchlist/watchlist-selectors';
+import { useRootDispatch, useRootSelector } from '../../../../store/hooks';
+
 import SearchBar from './components/search-bar';
 import LoadingError from '../../components/loading-error';
 import StockContainer from './components/stock-element/stock-container';
@@ -53,7 +54,7 @@ const ResearchSection: React.FC = () => {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    const stocksSetStockAction = createStocksFetchStockAction(searchValue);
+    const stocksSetStockAction = createStocksFetchStockActionThunk(searchValue);
     dispatch(stocksSetStockAction);
     setSearchValue('');
   };

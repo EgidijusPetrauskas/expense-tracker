@@ -1,11 +1,14 @@
 import React from 'react';
+
 import { Paper, Typography, Box } from '@mui/material';
-import WindowButton from '../window-button';
+
+import { createAppendToWatchListActionThunk } from '../../../../../../store/features/watchlist/watchlist-action-creators';
+import { createStocksDeleteStockAction } from '../../../../../../store/features/stocks/stocks-action-creators';
 import { Stock } from '../../../../../../store/features/stocks/types';
+
+import WindowButton from '../window-button';
 import { useRootDispatch } from '../../../../../../store/hooks';
 import StockChart from './stock-chart';
-import { createAppendToWatchListAction } from '../../../../../../store/features/watchlist/watchlist-action-creators';
-import { createStocksDeleteStockAction } from '../../../../../../store/features/stocks/stocks-action-creators';
 
 type StockContainerProps = {
   stock: Stock
@@ -65,7 +68,7 @@ const StockContainer: React.FC<StockContainerProps> = ({ stock }) => {
           />
           <WindowButton
             variant="add"
-            onClick={() => dispatch(createAppendToWatchListAction(stock.symbol))}
+            onClick={() => dispatch(createAppendToWatchListActionThunk(stock.symbol))}
             hoverText="Add To Watchlist"
             color={researchStyles.chartBlue}
           />

@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/default-param-last */
 import { Reducer } from 'redux';
 
-import { getLocalStorage, setLocalStorage } from '../../../helpers/local-storage-helper';
 import {
   AuthActionType,
   AuthState,
   AuthActions,
 } from './types';
+
+import { getLocalStorage, setLocalStorage } from '../../../helpers/local-storage-helper';
 
 const { REACT_APP_TOKEN_KEY_IN_LOCAL_STORAGE } = process.env;
 

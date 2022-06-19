@@ -1,5 +1,4 @@
-import { Expense, CalculatedExpense } from '../../../types';
-import { ExpenseCategory } from '../../../types/expense-category';
+import { Expense, CalculatedExpense, ExpenseCategory } from '../../../types';
 
 export type BudgetState = {
   expenses: Expense[],
@@ -98,4 +97,17 @@ export type BudgetSetCategoriesAction = {
   }
 };
 
-export type BudgetActions = BudgetSetExpenseAction | BudgetDeleteExpenseAction | BudgetClearExpensesAction | BudgetSetErrorAction | BudgetSetLoadingAction | BudgetSetFormOpenAction | BudgetSetIsSetAction | BudgetClearErrorAction | BudgetSetCurrentCategoryAction | BudgetSetCategoriesAction | BudgetSetCalculatedExpensesAction | BudgetSetChartIsSetAction | BudgetSetChartDataLoadedAction;
+export type BudgetActions =
+BudgetSetExpenseAction |
+BudgetDeleteExpenseAction |
+BudgetClearExpensesAction |
+BudgetSetErrorAction |
+BudgetSetLoadingAction |
+BudgetSetFormOpenAction |
+BudgetSetIsSetAction |
+BudgetClearErrorAction |
+BudgetSetCurrentCategoryAction |
+BudgetSetCategoriesAction |
+BudgetSetCalculatedExpensesAction |
+BudgetSetChartIsSetAction |
+BudgetSetChartDataLoadedAction;

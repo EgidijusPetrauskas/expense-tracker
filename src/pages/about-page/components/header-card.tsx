@@ -69,7 +69,7 @@ const HeaderCard: React.FC = () => (
           },
         }}
       >
-        A very good place for You and for Moneyy
+        A very good place for You and for Money
       </Typography>
     </Paper>
   </Grid>

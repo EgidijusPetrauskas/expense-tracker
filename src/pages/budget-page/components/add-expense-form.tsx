@@ -4,12 +4,20 @@ import { useFormik, FormikConfig } from 'formik';
 import * as Yup from 'yup';
 import { Typography, MenuItem, Dialog } from '@mui/material';
 
+import { Expense, ExpenseCategory } from '../../../types';
+
+import {
+  createBudgetAppendExpenseActionThunk,
+  createBudgetSetFormOpenAction,
+} from '../../../store/features/budget/budget-action-creators';
+import {
+  selectBudgetFormOpen,
+  selectBudgetCategories,
+} from '../../../store/features/budget/budget-selectors';
+import { useRootDispatch, useRootSelector } from '../../../store/hooks';
+
 import CustomForm from '../../../components/custom-form';
 import StyledTextField from '../../../components/custom-form/custom-form-styles';
-import { Expense, ExpenseCategory } from '../../../types';
-import { useRootDispatch, useRootSelector } from '../../../store/hooks';
-import { createBudgetAppendExpenseAction, createBudgetSetFormOpenAction } from '../../../store/features/budget/budget-action-creators';
-import { selectBudgetFormOpen, selectBudgetCategories } from '../../../store/features/budget/budget-selectors';
 
 type NewExpenseValues = Omit<Expense, 'id'>;
 
@@ -70,7 +78,7 @@ const AddExpenseForm: React.FC<AddExpenseFormProps> = ({ openForm, closeForm }) 
     amount,
     description,
   }, { resetForm }) => {
-    dispatch(createBudgetAppendExpenseAction({
+    dispatch(createBudgetAppendExpenseActionThunk({
       title, category, price, amount, description,
     }));
     dispatch(createBudgetSetFormOpenAction(!formOpen));

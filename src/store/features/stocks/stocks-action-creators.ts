@@ -38,14 +38,13 @@ export const createStocksSetErrorAction = (error: string): StocksSetErrorAction 
   payload: { error },
 });
 
-export const createStocksFetchStockAction = (
+export const createStocksFetchStockActionThunk = (
   symbol: string,
 ) => async (dispatch: Dispatch<StocksActions>): Promise<void> => {
   dispatch(stocksSetLoadingAction);
   try {
     const API_URL = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${symbol}&outputsize=compact&apikey=${ALPHA_VANTAGE_API_KEY}`;
-    const response = await axios.get(API_URL);
-    const { data } = await response;
+    const { data } = await axios.get(API_URL);
     if (data.Note) {
       throw new Error('To many calls to the server. Try in 1 min');
     }
@@ -55,7 +54,7 @@ export const createStocksFetchStockAction = (
     if (data.Information) {
       throw new Error('Reached maximum requist\'s per day');
     }
-    const stocksSetStockAction = createStocksSetStockAction(data);
+    const stocksSetStockAction = createStocksSetStockAction(data as ResponseStock);
     dispatch(stocksSetStockAction);
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : String(error);

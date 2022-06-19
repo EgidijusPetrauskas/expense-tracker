@@ -8,11 +8,12 @@ import {
   ClickAwayListener,
 } from '@mui/material';
 
-import logoImg from '../../images/main-logo.png';
-import Logo from '../logo';
 import { useRootSelector, useRootDispatch } from '../../store/hooks';
 import { selectAuthError, selectAuthLoading } from '../../store/selectors';
 import { authClearErrorAction } from '../../store/action-creators';
+
+import logoImg from '../../images/main-logo.png';
+import Logo from '../logo';
 
 type CustomFormProps = {
   buttonText: string,
@@ -22,7 +23,7 @@ type CustomFormProps = {
   fullWidth?: boolean,
 };
 
-const formStyles = {
+const styles = {
   outsideContainer: {
     width: 1,
     position: 'relative',
@@ -41,6 +42,24 @@ const formStyles = {
     px: 7,
     py: 9,
   },
+  alert: {
+    width: {
+      xl: 1.7 / 5,
+      lg: 1.7 / 5,
+      md: 2 / 5,
+      sm: 3 / 5,
+      xs: 3 / 5,
+    },
+    position: 'absolute',
+    top: 0,
+    zIndex: 45,
+  },
+  button: {
+    maxWidth: 110,
+    mt: 3,
+    fontWeight: 600,
+    ':disabled': { color: 'secondary.main' },
+  },
 };
 
 const CustomForm: React.FC<CustomFormProps> = ({
@@ -55,25 +74,14 @@ const CustomForm: React.FC<CustomFormProps> = ({
   };
 
   return (
-    <Box sx={{ ...formStyles.outsideContainer }}>
+    <Box sx={{ ...styles.outsideContainer }}>
       {error && (
         <ClickAwayListener onClickAway={clearError}>
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <Alert
               variant="filled"
               severity="error"
-              sx={{
-                width: {
-                  xl: 1.7 / 5,
-                  lg: 1.7 / 5,
-                  md: 2 / 5,
-                  sm: 3 / 5,
-                  xs: 3 / 5,
-                },
-                position: 'absolute',
-                top: 0,
-                zIndex: 45,
-              }}
+              sx={{ ...styles.alert }}
               onClose={clearError}
             >
               {error}
@@ -86,7 +94,7 @@ const CustomForm: React.FC<CustomFormProps> = ({
         component="form"
         autoComplete="off"
         sx={(theme) => ({
-          ...formStyles.mainContainer,
+          ...styles.mainContainer,
           width: fullWidth ? 1 : {
             xl: 1.7 / 5,
             lg: 2 / 5,
@@ -111,12 +119,7 @@ const CustomForm: React.FC<CustomFormProps> = ({
           size="large"
           variant="contained"
           type="submit"
-          sx={{
-            maxWidth: 110,
-            mt: 3,
-            fontWeight: 600,
-            ':disabled': { color: 'secondary.main' },
-          }}
+          sx={{ ...styles.button }}
         >
           {buttonText}
         </Button>

@@ -70,4 +70,13 @@ export type WatchlistClearListAction = {
   type: WatchlistActionType.WATCHLIST_CLEAR_LIST
 };
 
-export type WatchlistActions = WatchlistSetItemAction | WatchlistDeleteItemAction | WatchlistSetErrorAction | WatchlistClearErrorAction | WatchlistSetLoadingAction | WatchlistSetSuccessAction | WatchlistSetIsSetAction | WatchlistRefreshAction | WatchlistClearListAction;
+export type WatchlistActions =
+WatchlistSetItemAction |
+WatchlistDeleteItemAction |
+WatchlistSetErrorAction |
+WatchlistClearErrorAction |
+WatchlistSetLoadingAction |
+WatchlistSetSuccessAction |
+WatchlistSetIsSetAction |
+WatchlistRefreshAction |
+WatchlistClearListAction;

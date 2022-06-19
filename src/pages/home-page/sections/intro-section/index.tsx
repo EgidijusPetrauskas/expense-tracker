@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { Box, Typography, Container } from '@mui/material';
-
 import { NavLink } from 'react-router-dom';
+
 import Image from '../../images/intro-section-bg.jpg';
 
 const IntroSection: React.FC = () => (

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Container, Box } from '@mui/material';
+
 import { StyledButton } from './analysis-page-styles';
 
 const AnalysisPage: React.FC = () => (

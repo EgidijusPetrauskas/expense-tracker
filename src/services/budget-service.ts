@@ -2,12 +2,9 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import axios from 'axios';
 
-import { ExpenseCategory, Expense } from '../types';
-import { getLocalStorage } from '../helpers/local-storage-helper';
-import { CalculatedExpense } from '../types/calculated-expense';
+import { ExpenseCategory, Expense, CalculatedExpense } from '../types';
 
-const API_SERVER = process.env.REACT_APP_API_SERVER;
-const { REACT_APP_TOKEN_KEY_IN_LOCAL_STORAGE } = process.env;
+import { getLocalStorage } from '../helpers/local-storage-helper';
 
 type GetCategoriesType = () => Promise<ExpenseCategory[]>;
 type GetExpensesType = (categoryId: string) => Promise<Expense[]>;
@@ -15,6 +12,9 @@ type CreateExpenseType = (expenseData: Omit<Expense, 'id'>) => Promise<Expense>;
 type RemoveExpenseType = (id: string) => Promise<Expense>;
 type ClearAllExpensesType = () => Promise<string>;
 type GetCalcExpenses = () => Promise<CalculatedExpense[]>;
+
+const API_SERVER = process.env.REACT_APP_API_SERVER;
+const { REACT_APP_TOKEN_KEY_IN_LOCAL_STORAGE } = process.env;
 
 namespace BudgetService {
   export const getCategories: GetCategoriesType = async () => {
@@ -31,8 +31,8 @@ namespace BudgetService {
         },
       },
     );
-
     const { categories } = data;
+
     return categories;
   };
 
@@ -50,7 +50,6 @@ namespace BudgetService {
         },
       },
     );
-
     const { user_expenses: userExpenses } = data;
 
     if (categoryId === 'all') {
@@ -75,8 +74,8 @@ namespace BudgetService {
         },
       },
     );
-
     const { expense } = data;
+
     return expense;
   };
 
@@ -95,6 +94,7 @@ namespace BudgetService {
       },
     );
     const deletedExpense = data.deleted_expense;
+
     return deletedExpense;
   };
 
@@ -114,6 +114,7 @@ namespace BudgetService {
       },
     );
     const { message } = data;
+
     return message;
   };
 
@@ -133,7 +134,6 @@ namespace BudgetService {
     );
 
     const { user_expenses: userExpenses } = data;
-
     const calculatedExpenses: CalculatedExpense[] = [];
 
     userExpenses
@@ -148,7 +148,6 @@ namespace BudgetService {
       });
 
     const categories = await getCategories();
-
     const filteredUserExpenses = calculatedExpenses
       .map((expense) => {
         const categoryName = categories.find((cat) => cat.id === expense.name)?.title;

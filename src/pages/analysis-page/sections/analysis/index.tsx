@@ -2,23 +2,31 @@ import React, { useEffect } from 'react';
 
 import { Container } from '@mui/material';
 
+import {
+  selectBudgetCalculatedExpenses,
+  selectBudgetChartDataLoaded,
+} from '../../../../store/features/budget/budget-selectors';
+import {
+  createBudgetCalculateExpensesActionThunk,
+  budgetSetChartDataLoaded,
+  budgetSetChartIsSetAction,
+} from '../../../../store/features/budget/budget-action-creators';
+
+import { useRootDispatch, useRootSelector } from '../../../../store/hooks';
 import PieBudgetChart from './components/pie-budget-chart';
 import InfoTable from './components/info-table';
-import { useRootDispatch, useRootSelector } from '../../../../store/hooks';
-import { selectCalculatedExpenses, selectBudgetChartDataLoaded } from '../../../../store/features/budget/budget-selectors';
-import { createCalculateExpensesAction, budgetSetChartDataLoaded, budgetSetChartIsSetAction } from '../../../../store/features/budget/budget-action-creators';
 import SectionInfoCard from '../../components/section-info-card';
 import CustomBackDrop from '../../../../components/custom-backdrop';
 
 const AnalysisSection: React.FC = () => {
   const dispatch = useRootDispatch();
-  const calulatedExpenses = useRootSelector(selectCalculatedExpenses);
+  const calulatedExpenses = useRootSelector(selectBudgetCalculatedExpenses);
   const chartDataLoaded = useRootSelector(selectBudgetChartDataLoaded);
 
   const showInfoCard = calulatedExpenses.length === 0;
 
   useEffect(() => {
-    dispatch(createCalculateExpensesAction());
+    dispatch(createBudgetCalculateExpensesActionThunk());
     dispatch(budgetSetChartIsSetAction);
   }, []);
 

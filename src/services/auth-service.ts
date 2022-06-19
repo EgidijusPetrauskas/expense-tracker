@@ -1,22 +1,26 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import axios from 'axios';
-import { formatError, isResponseError } from '../helpers/service-helpers';
 
 import {
   Credentials,
   User,
-  UserDetails,
 } from '../types';
+
+import { formatError, isResponseError } from '../helpers/service-helpers';
 
 export type AuthResponseBody = {
   user: User,
   token: string,
 };
 
+type LoginRegisterType = (credentials: Credentials) => Promise<AuthResponseBody>;
+type AuthenticateType = (token: string) => Promise<AuthResponseBody>;
+type CheckUsernameAvailabilityType = (username: string) => Promise<boolean>;
+
 const API_SERVER = process.env.REACT_APP_API_SERVER;
 
 namespace AuthService {
-  export const login = async (credentials: Credentials): Promise<AuthResponseBody> => {
+  export const login: LoginRegisterType = async (credentials) => {
     try {
       const { data } = await axios.post<AuthResponseBody>(`${API_SERVER}/api/auth/login`, credentials);
 
@@ -34,7 +38,7 @@ namespace AuthService {
     }
   };
 
-  export const register = async (credentials: Credentials): Promise<AuthResponseBody> => {
+  export const register: LoginRegisterType = async (credentials) => {
     try {
       const { data } = await axios.post<AuthResponseBody>(`${API_SERVER}/api/auth/register`, credentials);
 
@@ -44,7 +48,7 @@ namespace AuthService {
     }
   };
 
-  export const authenticate = async (token: string): Promise<AuthResponseBody> => {
+  export const authenticate: AuthenticateType = async (token) => {
     try {
       const response = await axios.post<AuthResponseBody>(`${API_SERVER}/api/auth/authenticate`, {}, {
         headers: {
@@ -61,45 +65,7 @@ namespace AuthService {
     }
   };
 
-  export const update = async (user: User | null, userDetails: UserDetails) => {
-    if (user === null) {
-      throw new Error('Something went wrong..');
-    }
-
-    const filteredUserData = Object.fromEntries(Object.entries(userDetails).map((detail) => (
-      detail[1] === undefined ? [detail[0], ''] : detail)));
-
-    const fullUserData = {
-      ...user,
-      ...filteredUserData,
-    };
-
-    const {
-      firstName, lastName, email, age,
-    } = filteredUserData;
-
-    await axios.patch(
-      `${API_SERVER}/users/${user.id}`,
-      {
-        firstName, lastName, email, age,
-      },
-    );
-
-    return fullUserData;
-  };
-
-  export const getDetails = async (username : Credentials['username'] | undefined): Promise<Required<UserDetails>> => {
-    if (username === undefined) {
-      throw new Error('User doesnt exist!');
-    }
-    const { data: users } = await axios.get<User[]>(`${API_SERVER}/users?username=${username}`);
-    const [fullUser] = users;
-    const userDetails = Object.fromEntries(Object.entries(fullUser).filter((detail) => detail[0] !== 'id' && detail[0] !== 'username' && detail[0] !== 'password' && detail[0] !== 'watchlist' && detail[0] !== 'expenses')) as Required<UserDetails>;
-
-    return userDetails;
-  };
-
-  export const checkUsernameAvailability = async (username: string): Promise<boolean> => {
+  export const checkUsernameAvailability: CheckUsernameAvailabilityType = async (username) => {
     try {
       const response = await axios.get<{ valid: boolean }>(`${API_SERVER}/api/auth/check-username?username=${username}`);
       return response.data.valid;

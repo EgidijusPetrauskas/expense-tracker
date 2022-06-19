@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import { styled } from '@mui/material';
+
 import { NavLink } from 'react-router-dom';
 
 export const StyledButton = styled(NavLink)(({ theme }) => ({

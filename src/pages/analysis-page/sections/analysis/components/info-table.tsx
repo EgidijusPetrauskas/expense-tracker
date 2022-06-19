@@ -6,6 +6,7 @@ import {
   Grid,
   Paper,
 } from '@mui/material';
+
 import { budgetChartColors } from './pie-budget-chart';
 import { CalculatedExpense } from '../../../../../types';
 

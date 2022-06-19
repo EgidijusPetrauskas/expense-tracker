@@ -5,8 +5,9 @@ import {
 } from '@mui/material';
 
 import { WatchlistItem } from '../../../../../../store/features/watchlist/types';
+import { createRemoveFromWatchlistActionThunk } from '../../../../../../store/features/watchlist/watchlist-action-creators';
 import { useRootDispatch } from '../../../../../../store/hooks';
-import { createRemoveFromWatchlistAction } from '../../../../../../store/features/watchlist/watchlist-action-creators';
+
 import DeleteButton from '../../../../../../components/delete-button';
 
 type CustomTableRowProps = {
@@ -24,11 +25,10 @@ const CustomTableRow: React.FC<CustomTableRowProps> = ({ data }) => {
   const {
     symbol, exchange, currency, sector, high, low,
   } = data;
-
   const dispatch = useRootDispatch();
 
   const deleteItem = (itemSymbol: string) => {
-    dispatch(createRemoveFromWatchlistAction(itemSymbol));
+    dispatch(createRemoveFromWatchlistActionThunk(itemSymbol));
   };
 
   return (

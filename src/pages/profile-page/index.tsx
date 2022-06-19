@@ -2,11 +2,15 @@ import React, { useEffect } from 'react';
 
 import { Container, Button, Box } from '@mui/material';
 
+import {
+  createSetUserDetailsActionThunk,
+  createUserSetUpdateFormOpenAction,
+} from '../../store/features/auth-and-user/user-action-creators';
+import { selectUserUpdateFormOpen } from '../../store/features/auth-and-user/auth-selectors';
+import { useRootDispatch, useRootSelector } from '../../store/hooks';
+
 import PersonalInfoSection from './personal-info-section';
 import UpdateInfoForm from './update-info-form';
-import { useRootDispatch, useRootSelector } from '../../store/hooks';
-import { createSetUserDetailsActionThunk, createUserSetUpdateFormOpenAction } from '../../store/features/auth-and-user/user-action-creators';
-import { selectUserUpdateFormOpen } from '../../store/features/auth-and-user/auth-selectors';
 
 const ProfilePage: React.FC = () => {
   const formOpen = useRootSelector(selectUserUpdateFormOpen);

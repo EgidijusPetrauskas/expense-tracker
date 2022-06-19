@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+
 import authReducer from './features/auth-and-user/auth-reducer';
 import navReducer from './features/navigation/nav-reducer';
 import stocksReducer from './features/stocks/stocks-reducer';

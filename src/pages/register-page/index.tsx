@@ -4,15 +4,17 @@ import { Box } from '@mui/material';
 import { FormikConfig, useFormik } from 'formik';
 import * as Yup from 'yup';
 import { SchemaOf } from 'yup';
-
 import { useSearchParams } from 'react-router-dom';
+
+import { Credentials } from '../../types';
+
+import { useRootDispatch, useRootSelector } from '../../store/hooks';
+import { createRegisterActionThunk } from '../../store/features/auth-and-user/auth-action-creators';
+import { selectAuthError } from '../../store/selectors';
+
+import AuthService from '../../services/auth-service';
 import StyledTextField from '../../components/custom-form/custom-form-styles';
 import CustomForm from '../../components/custom-form';
-import { Credentials } from '../../types/credentials';
-import { useRootDispatch, useRootSelector } from '../../store/hooks';
-import { createRegisterAction } from '../../store/features/auth-and-user/auth-action-creators';
-import { selectAuthError } from '../../store/selectors';
-import AuthService from '../../services/auth-service';
 
 type RegisterValues = Credentials & {
   repPassword: string
@@ -72,7 +74,7 @@ const RegisterPage: React.FC = () => {
 
   const handleRegister: SignInFormikConfig['onSubmit'] = ({ username, password, repPassword }) => {
     const redirect = searchParams.get('redirect') ?? '/';
-    const registerAction = createRegisterAction({ username, password, repPassword }, redirect);
+    const registerAction = createRegisterActionThunk({ username, password, repPassword }, redirect);
     dispatch(registerAction);
   };
 

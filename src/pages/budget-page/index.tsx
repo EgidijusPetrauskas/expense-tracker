@@ -10,15 +10,10 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
-import CategoryButton from './components/category-button';
-import BudgetTableHead from './components/budget-table-head';
-import BudgetTableRow from './components/budget-table-row';
-import AddExpenseForm from './components/add-expense-form';
-import { useRootSelector, useRootDispatch } from '../../store/hooks';
-import { selectExpenses } from '../../store/selectors';
+import { selectBudgetExpenses } from '../../store/selectors';
 import {
-  createSetCategoriesAction,
-  createSetBudgetExpenses,
+  createBudgetSetCategoriesActionThunk,
+  createSetBudgetExpensesActionThunk,
   createBudgetSetFormOpenAction,
   createBudgetSetLoadingAction,
 } from '../../store/features/budget/budget-action-creators';
@@ -29,16 +24,25 @@ import {
   selectBudgetLoading,
   selectBudgetIsSet,
 } from '../../store/features/budget/budget-selectors';
+import { useRootSelector, useRootDispatch } from '../../store/hooks';
+
 import CustomBackDrop from '../../components/custom-backdrop';
 import ClearAllDialog from './components/clear-all-dialog';
-import CustomButton from './components/custom-button';
-import { BudgetPageOutsideContainer, BudgetPageTopContainerContainer, CustomPaper } from './budget-page-styles';
+import CustomButton from './components/custom-budget-button';
+import {
+  BudgetPageOutsideContainer,
+  BudgetPageTopContainerContainer, CustomPaper,
+} from './budget-page-styles';
 import SectionInfoCard from '../analysis-page/components/section-info-card';
+import CategoryButton from './components/category-button';
+import BudgetTableHead from './components/budget-table-head';
+import BudgetTableRow from './components/budget-table-row';
+import AddExpenseForm from './components/add-expense-form';
 
 const BudgetPage: React.FC = () => {
   const [currentDate, setCurrentDate] = useState<string>('Year Month');
   const [clearAllDialogOpen, setClearAllDialogOpen] = useState<boolean>(false);
-  const expenses = useRootSelector(selectExpenses);
+  const expenses = useRootSelector(selectBudgetExpenses);
   const currentCategory = useRootSelector(selectBudgetCurrentCategory);
   const categories = useRootSelector(selectBudgetCategories);
   const loading = useRootSelector(selectBudgetLoading);
@@ -49,11 +53,11 @@ const BudgetPage: React.FC = () => {
 
   useEffect(() => {
     setCurrentDate(format(new Date(), 'yyyy MMMM'));
-    dispatch(createSetCategoriesAction());
+    dispatch(createBudgetSetCategoriesActionThunk());
   }, []);
 
   useEffect(() => {
-    dispatch(createSetBudgetExpenses(currentCategory));
+    dispatch(createSetBudgetExpensesActionThunk(currentCategory));
   }, [currentCategory]);
 
   const openAddExpenseForm = () => {

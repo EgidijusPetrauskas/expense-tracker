@@ -1,23 +1,26 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import axios from 'axios';
-import { getLocalStorage } from '../helpers/local-storage-helper';
 
 import {
-  Credentials,
   User,
   UserDetails,
 } from '../types';
+
+import { getLocalStorage } from '../helpers/local-storage-helper';
 
 export type AuthResponseBody = {
   user: User,
   token: string,
 };
 
+type UpdateType = (user: User | null, userDetails: UserDetails) =>Promise<User>;
+type GetUserDetailsType = (user: User | null) => Promise<Required<UserDetails>>;
+
 const API_SERVER = process.env.REACT_APP_API_SERVER;
 const { REACT_APP_TOKEN_KEY_IN_LOCAL_STORAGE } = process.env;
 
 namespace UserService {
-  export const update = async (user: User | null, userDetails: UserDetails) => {
+  export const update: UpdateType = async (user, userDetails) => {
     if (user === null) {
       throw new Error('Something went wrong..');
     }
@@ -54,7 +57,7 @@ namespace UserService {
     return fullUserData;
   };
 
-  export const getDetails = async (user: User | null): Promise<Required<UserDetails>> => {
+  export const getDetails: GetUserDetailsType = async (user) => {
     if (!user) {
       throw new Error('User doesnt exist!');
     }

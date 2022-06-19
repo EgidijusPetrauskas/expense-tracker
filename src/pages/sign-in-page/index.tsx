@@ -6,12 +6,14 @@ import { FormikConfig, useFormik } from 'formik';
 import * as Yup from 'yup';
 import { SchemaOf } from 'yup';
 
-import StyledTextField from '../../components/custom-form/custom-form-styles';
-import CustomForm from '../../components/custom-form';
-import { Credentials } from '../../types/credentials';
-import { createSignInAction } from '../../store/features/auth-and-user/auth-action-creators';
+import { Credentials } from '../../types';
+
+import { createSignInActionThunk } from '../../store/features/auth-and-user/auth-action-creators';
 import { useRootDispatch, useRootSelector } from '../../store/hooks';
 import { selectAuthError } from '../../store/selectors';
+
+import StyledTextField from '../../components/custom-form/custom-form-styles';
+import CustomForm from '../../components/custom-form';
 
 type SignInValues = Credentials;
 
@@ -44,7 +46,7 @@ const SignInPage: React.FC = () => {
 
   const handleSignIn: SignInFormikConfig['onSubmit'] = ({ username, password }) => {
     const redirect = searchParams.get('redirect') ?? '/';
-    const signInAction = createSignInAction({ username, password }, redirect);
+    const signInAction = createSignInActionThunk({ username, password }, redirect);
     dispatch(signInAction);
   };
 

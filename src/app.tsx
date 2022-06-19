@@ -7,8 +7,8 @@ import {
 } from 'react-router-dom';
 
 import { useRootSelector, useRootDispatch } from './store/hooks';
-import { selectAuthToken, selectLoggedIn } from './store/features/auth-and-user/auth-selectors';
-import { createAuthenticateAction } from './store/action-creators';
+import { selectAuthToken, selectUserLoggedIn } from './store/features/auth-and-user/auth-selectors';
+import { createAuthenticateActionThunk } from './store/action-creators';
 
 import RequireVisitor from './routing/require-visitor';
 import RequireAuth from './routing/require-auth';
@@ -28,11 +28,11 @@ import InfoCard from './pages/analysis-page/components/general-info-card';
 const App: React.FC = () => {
   const location = useLocation();
   const token = useRootSelector(selectAuthToken);
-  const loggedIn = useRootSelector(selectLoggedIn);
+  const loggedIn = useRootSelector(selectUserLoggedIn);
   const dispatch = useRootDispatch();
 
   if (!loggedIn && token) {
-    dispatch(createAuthenticateAction(token, location.pathname));
+    dispatch(createAuthenticateActionThunk(token, location.pathname));
     return <div />;
   }
   return (

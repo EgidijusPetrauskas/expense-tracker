@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux';
 
-import { Expense } from '../../../types/expense';
+import { Expense, ExpenseCategory, CalculatedExpense } from '../../../types';
+
 import {
   BudgetSetCategoriesAction,
   BudgetSetCurrentCategoryAction,
@@ -18,9 +19,8 @@ import {
   BudgetSetChartIsSetAction,
   BudgetSetChartDataLoadedAction,
 } from './types';
-import { ExpenseCategory } from '../../../types/expense-category';
+
 import BudgetService from '../../../services/budget-service';
-import { CalculatedExpense } from '../../../types/calculated-expense';
 
 export const budgetClearErrorAction: BudgetClearErrorAction = {
   type: BudgetActionType.BUDGET_CLEAR_ERROR,
@@ -69,7 +69,7 @@ export const createBudgetSetCategoryAcion = (category: string): BudgetSetCurrent
   },
 });
 
-export const createDeleteExpenseAction = (id: Expense['id']): BudgetDeleteExpenseAction => ({
+export const createBudgetDeleteExpenseAction = (id: Expense['id']): BudgetDeleteExpenseAction => ({
   type: BudgetActionType.BUDGET_DELETE_EXPENSE,
   payload: {
     id,
@@ -88,7 +88,7 @@ export const createBudgetSetCategoriesAction = (categories: ExpenseCategory[]): 
   },
 });
 
-export const createClearAllExpensesAction = () => async (dispatch: Dispatch<BudgetActions>) => {
+export const createClearAllExpensesActionThunk = () => async (dispatch: Dispatch<BudgetActions>) => {
   dispatch(createBudgetSetLoadingAction(true));
   try {
     await BudgetService.clearAllExpenses();
@@ -105,7 +105,7 @@ export const createClearAllExpensesAction = () => async (dispatch: Dispatch<Budg
   }
 };
 
-export const createSetBudgetExpenses = (categoryId: string) => async (dispatch: Dispatch<BudgetActions>) => {
+export const createSetBudgetExpensesActionThunk = (categoryId: string) => async (dispatch: Dispatch<BudgetActions>) => {
   try {
     dispatch(budgetClearExpensesAction);
     const expenses = await BudgetService.getExpenses(categoryId);
@@ -125,7 +125,7 @@ export const createSetBudgetExpenses = (categoryId: string) => async (dispatch: 
   }
 };
 
-export const createBudgetAppendExpenseAction = (
+export const createBudgetAppendExpenseActionThunk = (
   expenseData: Omit<Expense, 'id'>,
 ) => async (dispatch: Dispatch<BudgetActions>): Promise<void> => {
   try {
@@ -142,12 +142,12 @@ export const createBudgetAppendExpenseAction = (
   }
 };
 
-export const createBudgetRemoveExpenseAction = (
+export const createBudgetRemoveExpenseActionThunk = (
   id: Expense['id'],
 ) => async (dispatch: Dispatch<BudgetActions>): Promise<void> => {
   try {
     const removedExpense = await BudgetService.removeExpense(id);
-    const budgetDeleteExpenseAction = createDeleteExpenseAction(removedExpense.id);
+    const budgetDeleteExpenseAction = createBudgetDeleteExpenseAction(removedExpense.id);
     dispatch(budgetDeleteExpenseAction);
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : String(error);
@@ -159,7 +159,7 @@ export const createBudgetRemoveExpenseAction = (
   }
 };
 
-export const createSetCategoriesAction = () => async (dispatch: Dispatch<BudgetActions>): Promise<void> => {
+export const createBudgetSetCategoriesActionThunk = () => async (dispatch: Dispatch<BudgetActions>): Promise<void> => {
   try {
     const categories = await BudgetService.getCategories();
     const budgetSetCategoriesAction = createBudgetSetCategoriesAction(categories);
@@ -174,7 +174,7 @@ export const createSetCategoriesAction = () => async (dispatch: Dispatch<BudgetA
   }
 };
 
-export const createCalculateExpensesAction = () => async (dispatch: Dispatch<BudgetActions>): Promise<void> => {
+export const createBudgetCalculateExpensesActionThunk = () => async (dispatch: Dispatch<BudgetActions>): Promise<void> => {
   try {
     const calcExpenses = await BudgetService.getCalcExpenses();
     const budgetSetCalculatedExpensesAction = createSetCalculatedExpensesAction(calcExpenses);

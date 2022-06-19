@@ -1,7 +1,9 @@
 import { Dispatch } from 'redux';
+
 import axios from 'axios';
-import WatchlistService from '../../../services/watchlist-service';
+
 import { MainState } from '../../types';
+
 import {
   WatchlistClearListAction,
   WatchlistDeleteItemAction,
@@ -16,6 +18,8 @@ import {
   WatchlistActionType,
   WatchlistItem,
 } from './types';
+
+import WatchlistService from '../../../services/watchlist-service';
 
 const ALPHA_VANTAGE_API_KEY = process.env.REACT_APP_ALPHA_VANTAGE_API_KEY;
 
@@ -35,7 +39,7 @@ export const watchlistClearListAction: WatchlistClearListAction = {
   type: WatchlistActionType.WATCHLIST_CLEAR_LIST,
 };
 
-export const watchlistSetLoadingAction = (value: boolean): WatchlistSetLoadingAction => ({
+export const createWatchlistSetLoadingAction = (value: boolean): WatchlistSetLoadingAction => ({
   type: WatchlistActionType.WATCHLIST_SET_LOADING,
   payload: value,
 });
@@ -66,8 +70,7 @@ export const watchListFetchItemAction = async (
 ) => {
   try {
     const API_URL = `https://www.alphavantage.co/query?function=OVERVIEW&symbol=${symbol}&apikey=${ALPHA_VANTAGE_API_KEY}`;
-    const response = await axios.get(API_URL);
-    const { data } = await response;
+    const { data } = await axios.get(API_URL);
     if (data.Note) {
       throw new Error('To many calls to the server. Try in 1 min');
     }
@@ -97,19 +100,19 @@ export const watchListFetchItemAction = async (
   }
 };
 
-export const createSetWatchlistAction = () => async (dispatch: Dispatch<WatchlistActions>, getState: () => MainState): Promise<void> => {
+export const createSetWatchlistActionThunk = () => async (dispatch: Dispatch<WatchlistActions>, getState: () => MainState): Promise<void> => {
   const { watchlist } = getState();
   if (!watchlist.isSet) {
     dispatch(watchlistClearListAction);
     const watchlistList = await WatchlistService.loadWatchlist();
     await Promise.all(watchlistList.map((listItem) => watchListFetchItemAction(listItem, dispatch)));
-    dispatch(watchlistSetLoadingAction(false));
+    dispatch(createWatchlistSetLoadingAction(false));
     dispatch(watchlistSetIsSetAction);
   }
-  dispatch(watchlistSetLoadingAction(false));
+  dispatch(createWatchlistSetLoadingAction(false));
 };
 
-export const createAppendToWatchListAction = (
+export const createAppendToWatchListActionThunk = (
   symbol: string,
 ) => async (dispatch: Dispatch<WatchlistActions>): Promise<void> => {
   try {
@@ -135,7 +138,7 @@ export const createAppendToWatchListAction = (
   }
 };
 
-export const createRemoveFromWatchlistAction = (
+export const createRemoveFromWatchlistActionThunk = (
   symbol: string,
 ) => async (dispatch: Dispatch<WatchlistActions>): Promise<void> => {
   try {

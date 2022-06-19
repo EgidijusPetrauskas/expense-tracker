@@ -26,12 +26,12 @@ namespace WatchlistService {
         },
       },
     );
-
     const { watchlistItems } = data;
+
     return watchlistItems;
   };
 
-  export const addToWatchlist: AddToWatchListType = async (symbol: string) => {
+  export const addToWatchlist: AddToWatchListType = async (symbol) => {
     let response: 'success' | 'failed';
 
     const token = getLocalStorage<string>(REACT_APP_TOKEN_KEY_IN_LOCAL_STORAGE);
@@ -60,7 +60,7 @@ namespace WatchlistService {
     return response;
   };
 
-  export const removeFromWatchlist: DeleteFromWatchListType = async (symbol: string) => {
+  export const removeFromWatchlist: DeleteFromWatchListType = async (symbol) => {
     const token = getLocalStorage<string>(REACT_APP_TOKEN_KEY_IN_LOCAL_STORAGE);
     if (token === null) {
       throw new Error('You have to log in!');

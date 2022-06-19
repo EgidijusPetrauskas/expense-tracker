@@ -1,4 +1,4 @@
-import { User } from '../../../types/user';
+import { User } from '../../../types';
 
 export type AuthState = {
   token: string | null,
@@ -54,4 +54,11 @@ export type UserSetUpdateFormOpenAction = {
   type: AuthActionType.USER_SET_UPDATE_FORM_OPEN
 };
 
-export type AuthActions = AuthSetUserAction | AuthLoadingAction | AuthErrorAction | AuthLogoutAction | AuthClearErrorAction | UserUpdateAction | UserSetUpdateFormOpenAction;
+export type AuthActions =
+AuthSetUserAction |
+AuthLoadingAction |
+AuthErrorAction |
+AuthLogoutAction |
+AuthClearErrorAction |
+UserUpdateAction |
+UserSetUpdateFormOpenAction;

@@ -60,4 +60,9 @@ export type StocksSetLoadingAction = {
   type: StocksActionType.STOCKS_SET_LOADING,
 };
 
-export type StocksActions = StocksSetStockAction | StocksDeleteStockAction | StocksSetErrorAction | StocksClearErrorAction | StocksSetLoadingAction;
+export type StocksActions =
+StocksSetStockAction |
+StocksDeleteStockAction |
+StocksSetErrorAction |
+StocksClearErrorAction |
+StocksSetLoadingAction;

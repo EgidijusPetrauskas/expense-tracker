@@ -2,9 +2,7 @@ import { Dispatch } from 'redux';
 
 import { Credentials, UserRegistration } from '../../../types';
 import { GlobalActions } from '../../types';
-import AuthService, { AuthResponseBody } from '../../../services/auth-service';
-import { createNavSetRedirectAction, createNavClearRedirectAction } from '../navigation/nav-action-creators';
-import { watchlistClearListAction } from '../watchlist/watchlist-action-creators';
+
 import {
   AuthSetUserAction,
   AuthLoadingAction,
@@ -14,6 +12,10 @@ import {
   AuthActionType,
   AuthActions,
 } from './types';
+
+import AuthService, { AuthResponseBody } from '../../../services/auth-service';
+import { createNavSetRedirectAction, createNavClearRedirectAction } from '../navigation/nav-action-creators';
+import { watchlistClearListAction } from '../watchlist/watchlist-action-creators';
 
 export const authSetLoadingAction: AuthLoadingAction = {
   type: AuthActionType.AUTH_LOADING,
@@ -57,14 +59,14 @@ export const authenticate = async (
   }
 };
 
-export const createSignInAction = (
+export const createSignInActionThunk = (
   userData: Credentials,
   redirect: string,
 ) => async (dispatch: Dispatch<AuthActions>): Promise<void> => {
   await authenticate(dispatch, async () => AuthService.login(userData), redirect);
 };
 
-export const createRegisterAction = (
+export const createRegisterActionThunk = (
   userRegistration: UserRegistration,
   redirect: string,
 ) => async (dispatch: Dispatch<AuthActions>): Promise<void> => {
@@ -73,13 +75,13 @@ export const createRegisterAction = (
   await authenticate(dispatch, async () => AuthService.register(userData), redirect);
 };
 
-export const createAuthenticateAction = (token: string, redirect: string) => async (
+export const createAuthenticateActionThunk = (token: string, redirect: string) => async (
   dispatch: Dispatch<AuthActions>,
 ): Promise<void> => {
   await authenticate(dispatch, async () => AuthService.authenticate(token), redirect);
 };
 
-export const createLogOutAction = () => async (dispatch: Dispatch<GlobalActions>): Promise<void> => {
+export const createLogOutActionThunk = () => async (dispatch: Dispatch<GlobalActions>): Promise<void> => {
   dispatch(authSetLogoutAction);
   dispatch(watchlistClearListAction);
 };

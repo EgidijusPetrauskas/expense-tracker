@@ -1,11 +1,14 @@
 import React from 'react';
 
 import { TableRow, TableCell } from '@mui/material';
-import DeleteButton from '../../../components/delete-button';
-import { useRootDispatch, useRootSelector } from '../../../store/hooks';
-import { createBudgetRemoveExpenseAction } from '../../../store/features/budget/budget-action-creators';
+
 import { Expense } from '../../../types/expense';
+
+import { useRootDispatch, useRootSelector } from '../../../store/hooks';
+import { createBudgetRemoveExpenseActionThunk } from '../../../store/features/budget/budget-action-creators';
 import { selectBudgetCategories } from '../../../store/features/budget/budget-selectors';
+
+import DeleteButton from '../../../components/delete-button';
 
 const styles = {
   title: {
@@ -30,7 +33,7 @@ const BudgetTableRow: React.FC<BudgetTableRowProps> = ({ data }) => {
   const categories = useRootSelector(selectBudgetCategories);
 
   const handleDelete = (expenseId: string) => {
-    dispatch(createBudgetRemoveExpenseAction(expenseId));
+    dispatch(createBudgetRemoveExpenseActionThunk(expenseId));
   };
 
   return (

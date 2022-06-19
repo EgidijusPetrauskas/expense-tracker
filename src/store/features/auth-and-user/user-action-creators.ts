@@ -25,8 +25,8 @@ export const createUpdateUserActionThunk = (userDetails: UserDetails) => async (
   const { auth } = getState();
   try {
     const { user } = auth;
-    const response = await UserService.update(user, userDetails);
-    dispatch(createUpdateUserAction(response));
+    const updatedUser = await UserService.update(user, userDetails);
+    dispatch(createUpdateUserAction(updatedUser));
   } catch (error) {
     const errMsg = error instanceof Error ? error.message : String(error);
     const authSetErrorAction = createAuthSetErrorAction(errMsg);

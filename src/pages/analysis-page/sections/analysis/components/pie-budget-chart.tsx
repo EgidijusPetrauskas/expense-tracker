@@ -10,6 +10,7 @@ import {
 } from 'recharts';
 
 import { CalculatedExpense } from '../../../../../types';
+
 import { selectBudgetChartIsSet } from '../../../../../store/features/budget/budget-selectors';
 import { useRootDispatch, useRootSelector } from '../../../../../store/hooks';
 import { budgetSetChartIsSetAction } from '../../../../../store/features/budget/budget-action-creators';
@@ -30,6 +31,7 @@ export const budgetChartColors = [
   { name: 'Investment', color: '#50AED3' },
   { name: 'Other', color: '#9E9Ea2' },
 ];
+
 const radian = Math.PI / 180;
 
 const renderCustomizedLabel = ({

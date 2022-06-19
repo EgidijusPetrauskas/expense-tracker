@@ -8,7 +8,6 @@ import {
   Box,
 } from '@mui/material';
 
-import CustomTableRow from './components/table-element/custom-table-row';
 import {
   useRootSelector,
   useRootDispatch,
@@ -19,11 +18,14 @@ import {
   selectWatchlistLoading,
   selectWatchlistIsSet,
 } from '../../../../store/features/watchlist/watchlist-selectors';
+
 import {
-  createSetWatchlistAction,
+  createSetWatchlistActionThunk,
   watchlistRefreshAction,
-  watchlistSetLoadingAction,
+  createWatchlistSetLoadingAction,
 } from '../../../../store/features/watchlist/watchlist-action-creators';
+
+import CustomTableRow from './components/table-element/custom-table-row';
 import LoadingError from '../../components/loading-error';
 import CustomBackDrop from '../../../../components/custom-backdrop';
 import CustomTableHeader from './components/table-element/custom-table-headers';
@@ -40,7 +42,7 @@ const WatchlistSection: React.FC = () => {
   const dispatch = useRootDispatch();
 
   useEffect(() => {
-    dispatch(createSetWatchlistAction());
+    dispatch(createSetWatchlistActionThunk());
   }, [reload]);
 
   const refresh = () => {
@@ -58,7 +60,7 @@ const WatchlistSection: React.FC = () => {
       },
     })}
     >
-      <CustomBackDrop open={loading} handleClose={() => dispatch(watchlistSetLoadingAction(false))} />
+      <CustomBackDrop open={loading} handleClose={() => dispatch(createWatchlistSetLoadingAction(false))} />
       {error
         ? (
           <LoadingError variant="refresh" error={error} onClick={refresh} />
