@@ -2,10 +2,8 @@
   * Application used to track your monthly spending, analyse expenses and research investment opportunities
 
 # Previews 
-<img src="https://github.com/EgidijusPetrauskas/expense-tracker/blob/master/previews/homepage.png" width=410, height=380 />
-<img src="https://github.com/EgidijusPetrauskas/expense-tracker/blob/master/previews/research-section.png" width=410, height=380 />
-<img src="https://github.com/EgidijusPetrauskas/expense-tracker/blob/master/previews/watchlist-section.png" width=410, height=380 />
-<img src="https://github.com/EgidijusPetrauskas/expense-tracker/blob/master/previews/analysis-analysis-section.png" width=410, height=380 />
+<img src="https://github.com/EgidijusPetrauskas/expense-tracker/blob/master/previews/homepage.png" width=410, height=380 /><img src="https://github.com/EgidijusPetrauskas/expense-tracker/blob/master/previews/research-section.png" width=410, height=380 />
+<img src="https://github.com/EgidijusPetrauskas/expense-tracker/blob/master/previews/watchlist-section.png" width=410, height=380 /><img src="https://github.com/EgidijusPetrauskas/expense-tracker/blob/master/previews/analysis-analysis-section.png" width=410, height=380 />
 <img src="https://github.com/EgidijusPetrauskas/expense-tracker/blob/master/previews/budget-page.png" width=410, height=380 />
 
 ## Projeact Status
