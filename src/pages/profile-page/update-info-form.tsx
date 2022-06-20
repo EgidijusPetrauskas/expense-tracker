@@ -14,7 +14,7 @@ import {
 import { useRootDispatch, useRootSelector } from '../../store/hooks';
 
 import CustomForm from '../../components/custom-form/index';
-import StyledTextField from '../../components/custom-form/custom-form-styles';
+import { StyledTextField } from '../../components/custom-form/custom-form-styles';
 
 type AdditionalInfoValues = UserDetails;
 

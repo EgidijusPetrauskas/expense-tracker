@@ -13,7 +13,7 @@ import { createRegisterActionThunk } from '../../store/features/auth-and-user/au
 import { selectAuthError } from '../../store/selectors';
 
 import AuthService from '../../services/auth-service';
-import StyledTextField from '../../components/custom-form/custom-form-styles';
+import { StyledTextField } from '../../components/custom-form/custom-form-styles';
 import CustomForm from '../../components/custom-form';
 
 type RegisterValues = Credentials & {

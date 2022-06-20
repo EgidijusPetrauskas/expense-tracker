@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 
-import {
-  Box,
-  Alert,
-} from '@mui/material';
+import { Box } from '@mui/material';
 
 import {
   selectStocks,
@@ -19,6 +16,7 @@ import SearchBar from './components/search-bar';
 import LoadingError from '../../components/loading-error';
 import StockContainer from './components/stock-element/stock-container';
 import SectionInfoCard from '../../components/section-info-card';
+import SuccesfullAlert from './stock-research-styles';
 
 const researchStyles = {
   aCenter: {
@@ -34,14 +32,6 @@ const researchStyles = {
     flexDirection: 'column',
   },
   chartBlue: '#2451b7',
-  successAlert: {
-    height: 1,
-    alignItems: 'center',
-    position: 'absolute',
-    right: 0,
-    fontSize: 15,
-    letterSpacing: 0.7,
-  },
 };
 
 const ResearchSection: React.FC = () => {
@@ -100,22 +90,13 @@ const ResearchSection: React.FC = () => {
             />
           )}
         {successfullAdd && (
-          <Alert
+          <SuccesfullAlert
             elevation={16}
             variant="filled"
             severity={String(successfullAdd).split(' ')[1] === 'added' ? 'success' : 'error'}
-            sx={(theme) => ({
-              ...researchStyles.successAlert,
-              [theme.breakpoints.down('md')]: {
-                width: 1,
-                height: 35,
-                position: 'static',
-                py: 2,
-              },
-            })}
           >
             {successfullAdd}
-          </Alert>
+          </SuccesfullAlert>
         )}
       </Box>
       <Box sx={{

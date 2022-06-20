@@ -14,6 +14,7 @@ import { authClearErrorAction } from '../../store/action-creators';
 
 import logoImg from '../../images/main-logo.png';
 import Logo from '../logo';
+import { OutsideContainer } from './custom-form-styles';
 
 type CustomFormProps = {
   buttonText: string,
@@ -24,14 +25,6 @@ type CustomFormProps = {
 };
 
 const styles = {
-  outsideContainer: {
-    width: 1,
-    position: 'relative',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   mainContainer: {
     minWidth: 250,
     display: 'flex',
@@ -74,7 +67,7 @@ const CustomForm: React.FC<CustomFormProps> = ({
   };
 
   return (
-    <Box sx={{ ...styles.outsideContainer }}>
+    <OutsideContainer>
       {error && (
         <ClickAwayListener onClickAway={clearError}>
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -124,7 +117,7 @@ const CustomForm: React.FC<CustomFormProps> = ({
           {buttonText}
         </Button>
       </Paper>
-    </Box>
+    </OutsideContainer>
   );
 };
 

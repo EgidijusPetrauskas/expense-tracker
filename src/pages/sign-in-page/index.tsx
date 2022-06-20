@@ -12,7 +12,7 @@ import { createSignInActionThunk } from '../../store/features/auth-and-user/auth
 import { useRootDispatch, useRootSelector } from '../../store/hooks';
 import { selectAuthError } from '../../store/selectors';
 
-import StyledTextField from '../../components/custom-form/custom-form-styles';
+import { StyledTextField } from '../../components/custom-form/custom-form-styles';
 import CustomForm from '../../components/custom-form';
 
 type SignInValues = Credentials;

@@ -17,7 +17,7 @@ import {
 import { useRootDispatch, useRootSelector } from '../../../store/hooks';
 
 import CustomForm from '../../../components/custom-form';
-import StyledTextField from '../../../components/custom-form/custom-form-styles';
+import { StyledTextField } from '../../../components/custom-form/custom-form-styles';
 
 type NewExpenseValues = Omit<Expense, 'id'>;
 

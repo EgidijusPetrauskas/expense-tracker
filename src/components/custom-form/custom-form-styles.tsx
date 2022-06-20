@@ -1,6 +1,10 @@
-import { TextField, styled } from '@mui/material';
+import {
+  TextField,
+  styled,
+  Box,
+} from '@mui/material';
 
-const StyledTextField = styled(TextField)(({ theme }) => ({
+export const StyledTextField = styled(TextField)(({ theme }) => ({
   '& .MuiInputLabel-root': { color: theme.palette.primary.main },
   '& .MuiOutlinedInput-root': {
     '& > fieldset': { borderColor: theme.palette.primary.light },
@@ -21,4 +25,11 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
   },
 }));
 
-export default StyledTextField;
+export const OutsideContainer = styled(Box)({
+  width: '100%',
+  position: 'relative',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center',
+});

@@ -10,11 +10,34 @@ import {
   CartesianGrid,
 } from 'recharts';
 import { parseISO, format } from 'date-fns';
+import { Paper, Typography } from '@mui/material';
 
 import { Stock } from '../../../../../../store/features/stocks/types';
 
 type StockChartProps = {
   chartData: Stock['chartData']
+};
+
+const CustomTooltip = ({ active, payload }: any) => {
+  if (active) {
+    return (
+      <Paper
+        sx={(theme) => ({
+          background: theme.palette.secondary.light,
+          p: 0.8,
+        })}
+      >
+        <Typography
+          sx={(theme) => ({
+            color: theme.palette.primary.main,
+          })}
+        >
+          {`${payload[0].name}: ${(Number(payload[0].value)).toFixed(2)}€`}
+        </Typography>
+      </Paper>
+    );
+  }
+  return null;
 };
 
 const StockChart: React.FC<StockChartProps> = ({ chartData }) => (
@@ -41,7 +64,7 @@ const StockChart: React.FC<StockChartProps> = ({ chartData }) => (
         tickFormatter={(number) => `$${number.toFixed(2)}`}
         style={{ fontFamily: 'roboto' }}
       />
-      <Tooltip />
+      <Tooltip content={<CustomTooltip />} />
       <CartesianGrid opacity={0.1} vertical={false} />
     </AreaChart>
   </ResponsiveContainer>
