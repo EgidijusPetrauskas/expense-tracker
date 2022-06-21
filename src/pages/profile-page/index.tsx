@@ -1,19 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Container, Button, Box } from '@mui/material';
 
 import {
   createSetUserDetailsActionThunk,
-  createUserSetUpdateFormOpenAction,
+  userSetUpdateFormOpenAction,
 } from '../../store/features/auth-and-user/user-action-creators';
 import { selectUserUpdateFormOpen } from '../../store/features/auth-and-user/auth-selectors';
 import { useRootDispatch, useRootSelector } from '../../store/hooks';
 
-import PersonalInfoSection from './personal-info-section';
-import UpdateInfoForm from './update-info-form';
+import PersonalInfoSection from './components/personal-info-section';
+import UpdateInfoForm from './components/update-info-form';
+import DeleteDialog from './components/delete-dialog';
 
 const ProfilePage: React.FC = () => {
   const formOpen = useRootSelector(selectUserUpdateFormOpen);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
   const dispatch = useRootDispatch();
   useEffect(() => {
     dispatch(createSetUserDetailsActionThunk());
@@ -47,14 +49,27 @@ const ProfilePage: React.FC = () => {
         })}
       >
         <PersonalInfoSection>
-          <Button
-            variant="outlined"
-            color={formOpen ? 'error' : 'primary'}
-            onClick={() => dispatch(createUserSetUpdateFormOpenAction)}
-            sx={{ fontSize: 16 }}
-          >
-            {formOpen ? 'Cancel' : 'Update'}
-          </Button>
+          <Box sx={{ display: 'flex', gap: 1 }}>
+            <Button
+              variant="outlined"
+              color={formOpen ? 'error' : 'primary'}
+              onClick={() => dispatch(userSetUpdateFormOpenAction)}
+              sx={{ fontSize: 14 }}
+            >
+              {formOpen ? 'Cancel' : 'Update'}
+            </Button>
+            {!formOpen && (
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={() => setDeleteDialogOpen(!deleteDialogOpen)}
+              sx={{ fontSize: 14 }}
+            >
+              DELETE
+            </Button>
+            )}
+            <DeleteDialog onClose={() => setDeleteDialogOpen(!deleteDialogOpen)} open={deleteDialogOpen} />
+          </Box>
         </PersonalInfoSection>
         {formOpen && <UpdateInfoForm />}
       </Box>

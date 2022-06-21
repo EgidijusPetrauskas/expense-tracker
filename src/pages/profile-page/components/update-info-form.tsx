@@ -4,17 +4,17 @@ import { useFormik, FormikConfig } from 'formik';
 import * as Yup from 'yup';
 import { Typography } from '@mui/material';
 
-import { UserDetails } from '../../types';
+import { UserDetails } from '../../../types';
 
-import { selectUser } from '../../store/features/auth-and-user/auth-selectors';
+import { selectUser } from '../../../store/features/auth-and-user/auth-selectors';
 import {
   createUpdateUserActionThunk,
-  createUserSetUpdateFormOpenAction,
-} from '../../store/features/auth-and-user/user-action-creators';
-import { useRootDispatch, useRootSelector } from '../../store/hooks';
+  userSetUpdateFormOpenAction,
+} from '../../../store/features/auth-and-user/user-action-creators';
+import { useRootDispatch, useRootSelector } from '../../../store/hooks';
 
-import CustomForm from '../../components/custom-form/index';
-import { StyledTextField } from '../../components/custom-form/custom-form-styles';
+import CustomForm from '../../../components/custom-form/index';
+import { StyledTextField } from '../../../components/custom-form/custom-form-styles';
 
 type AdditionalInfoValues = UserDetails;
 
@@ -62,7 +62,7 @@ const UpdateInfoForm: React.FC = () => {
     dispatch(createUpdateUserActionThunk({
       firstName, lastName, email, age,
     }));
-    dispatch(createUserSetUpdateFormOpenAction);
+    dispatch(userSetUpdateFormOpenAction);
   };
 
   const {

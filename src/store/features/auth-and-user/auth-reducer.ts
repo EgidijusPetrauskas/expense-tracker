@@ -38,6 +38,16 @@ const authReducer: Reducer<AuthState, AuthActions> = (state = initialState, acti
       };
     }
 
+    case AuthActionType.USER_DELETE: {
+      return {
+        token: null,
+        user: null,
+        loading: false,
+        error: null,
+        userUpdateFormOpen: false,
+      };
+    }
+
     case AuthActionType.AUTH_SET_ERROR: {
       return {
         ...state,

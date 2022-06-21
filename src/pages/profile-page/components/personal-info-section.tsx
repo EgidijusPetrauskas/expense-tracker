@@ -2,8 +2,8 @@ import React from 'react';
 
 import { Paper, Box, Typography } from '@mui/material';
 
-import { selectUser } from '../../store/features/auth-and-user/auth-selectors';
-import { useRootSelector } from '../../store/hooks';
+import { selectUser } from '../../../store/features/auth-and-user/auth-selectors';
+import { useRootSelector } from '../../../store/hooks';
 
 const styles = {
   mainContainer: {

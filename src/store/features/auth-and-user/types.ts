@@ -10,6 +10,7 @@ export type AuthState = {
 
 export enum AuthActionType {
   USER_UPDATE_USER = 'USER_UPDATE_USER',
+  USER_DELETE = 'USER_DELETE',
   USER_SET_UPDATE_FORM_OPEN = 'USER_SET_UPDATE_FORM_OPEN',
   AUTH_SET_USER = 'AUTH_SET_USER',
   AUTH_LOADING = 'AUTH_LOADING',
@@ -54,6 +55,10 @@ export type UserSetUpdateFormOpenAction = {
   type: AuthActionType.USER_SET_UPDATE_FORM_OPEN
 };
 
+export type UserDeleteAction = {
+  type: AuthActionType.USER_DELETE
+};
+
 export type AuthActions =
 AuthSetUserAction |
 AuthLoadingAction |
@@ -61,4 +66,5 @@ AuthErrorAction |
 AuthLogoutAction |
 AuthClearErrorAction |
 UserUpdateAction |
-UserSetUpdateFormOpenAction;
+UserSetUpdateFormOpenAction |
+UserDeleteAction;
