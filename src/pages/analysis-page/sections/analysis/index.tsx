@@ -9,7 +9,6 @@ import {
 import {
   createBudgetCalculateExpensesActionThunk,
   budgetSetChartDataLoaded,
-  budgetSetChartIsSetAction,
 } from '../../../../store/features/budget/budget-action-creators';
 
 import { useRootDispatch, useRootSelector } from '../../../../store/hooks';
@@ -27,7 +26,6 @@ const AnalysisSection: React.FC = () => {
 
   useEffect(() => {
     dispatch(createBudgetCalculateExpensesActionThunk());
-    dispatch(budgetSetChartIsSetAction);
   }, []);
 
   return (

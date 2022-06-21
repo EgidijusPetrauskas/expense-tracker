@@ -16,7 +16,6 @@ import {
   BudgetSetLoadingAction,
   BudgetClearErrorAction,
   BudgetSetCalculatedExpensesAction,
-  BudgetSetChartIsSetAction,
   BudgetSetChartDataLoadedAction,
 } from './types';
 
@@ -36,10 +35,6 @@ export const budgetClearExpensesAction: BudgetClearExpensesAction = {
 
 export const budgetSetChartDataLoaded: BudgetSetChartDataLoadedAction = {
   type: BudgetActionType.BUDGET_SET_CHART_DATA_LOADED,
-};
-
-export const budgetSetChartIsSetAction: BudgetSetChartIsSetAction = {
-  type: BudgetActionType.BUDGET_SET_CHART_IS_SET,
 };
 
 export const createBudgetSetLoadingAction = (response: boolean): BudgetSetLoadingAction => ({

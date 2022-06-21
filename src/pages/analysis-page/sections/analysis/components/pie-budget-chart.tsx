@@ -11,10 +11,6 @@ import {
 
 import { CalculatedExpense } from '../../../../../types';
 
-import { selectBudgetChartIsSet } from '../../../../../store/features/budget/budget-selectors';
-import { useRootDispatch, useRootSelector } from '../../../../../store/hooks';
-import { budgetSetChartIsSetAction } from '../../../../../store/features/budget/budget-action-creators';
-
 type PieBudgetChartProps = {
   data: CalculatedExpense[]
 };
@@ -70,29 +66,22 @@ const CustomTooltip = ({ active, payload }: any) => {
   return null;
 };
 
-const PieBudgetChart: React.FC<PieBudgetChartProps> = ({ data }) => {
-  const chartIsSet = useRootSelector(selectBudgetChartIsSet);
-  const dispatch = useRootDispatch();
-
-  return (
-    <ResponsiveContainer width="50%" height="75%" minWidth={250}>
-      <PieChart>
-        <Pie
-          dataKey="value"
-          data={data}
-          labelLine={false}
-          label={renderCustomizedLabel}
-          outerRadius="90%"
-          animationDuration={1400}
-          isAnimationActive={!chartIsSet}
-          onAnimationEnd={() => dispatch(budgetSetChartIsSetAction)}
-        >
-          {data.map((entry) => <Cell stroke="none" key={entry.name} fill={budgetChartColors.find((item) => item.name === entry.name)?.color} />)}
-        </Pie>
-        <Tooltip content={<CustomTooltip />} />
-      </PieChart>
-    </ResponsiveContainer>
-  );
-};
+const PieBudgetChart: React.FC<PieBudgetChartProps> = ({ data }) => (
+  <ResponsiveContainer width="50%" height="75%" minWidth={250}>
+    <PieChart>
+      <Pie
+        dataKey="value"
+        data={data}
+        labelLine={false}
+        label={renderCustomizedLabel}
+        outerRadius="90%"
+        isAnimationActive={false}
+      >
+        {data.map((entry) => <Cell stroke="none" key={entry.name} fill={budgetChartColors.find((item) => item.name === entry.name)?.color} />)}
+      </Pie>
+      <Tooltip content={<CustomTooltip />} />
+    </PieChart>
+  </ResponsiveContainer>
+);
 
 export default PieBudgetChart;
